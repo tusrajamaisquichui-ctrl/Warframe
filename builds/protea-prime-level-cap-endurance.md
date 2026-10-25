@@ -1,5 +1,6 @@
 # Protea Prime — Solo Level Cap / Endurance (build BiS)
 
+> **Version 1.1** : corrigée après l'audit hostile [`audit-protea-prime-v1.md`](audit-protea-prime-v1.md) (12 corrections, journal en fin de document).
 > **Patch de référence : Update 44 « Iceblade of Narin » / Hotfix 44.1.3 (22/10/2026).**
 > Toutes les valeurs ci‑dessous (compétences, mods, arcanes, shards, armes) ont été vérifiées sur le wiki officiel (`wiki.warframe.com`) au 25/10/2026, y compris les modules de données (mods, armes, compagnons). Les calculs sont faits à partir de ces valeurs brutes.
 > Changements récents qui impactent ce build : **Arcane Sculptor** (U43), **retrait des dispositions de Riven** (toutes à l'équivalent 1.2, H44.1.3), **cap d'Ammo Efficiency à 75 %** (H44.1.3), conversion « On Headshot » → « On Weak Point » (U44).
@@ -14,14 +15,14 @@
 | Helminth | **Roar** à la place de Temporal Anchor |
 | Aura / Exilus | **Growing Power** / **Primed Sure Footed** |
 | 8 mods | Archon Vitality, Blind Rage, Umbral Intensify, Primed Continuity, Narrow Minded, Stretch, Rolling Guard, Equilibrium |
-| Arcanes | **Molt Augmented** + **Arcane Sculptor** |
-| Archon Shards | 3× Tauforged Azure (Shield Capacity) + 2× Tauforged Crimson (Ability Duration) |
+| Arcanes | **Arcane Sculptor** + **Arcane Escapist** (level cap 9999) / **Molt Augmented** (Endurance hors cap) |
+| Archon Shards | 3× Tauforged Azure (Shield Capacity) + 2× Tauforged Crimson (Ability Duration) — variante cap : 1 Crimson → 1 Tauforged Amber (Casting Speed) |
 | Stats (Arsenal) | Strength **243 %** · Duration **284 %** · Range **79 %** · Efficiency **45 %** (verrouillée à **175 %** en mission par Sculptor) |
-| Survie | Shields **1 230** · Health **740** · Armor 185 · Energy 250 |
+| Survie | Shields **1 230** (gate **2,5 s garanti**) · Health **740** · Armor 185 · Energy 250 |
 | Primary | **Torid Incarnon** — Primary Merciless — Evo : Final Fusillade / Swift Deliverance / Commodore's Fortune |
 | Secondary | **Epitaph Prime** (primer Corrosive) — Secondary Encumber |
 | Melee | **Glaive Prime** (heavy detonation, Viral) — Melee Duplicate |
-| Compagnon | **A :** Nautilus Prime + Verglas Prime (contrôle) · **B :** Panzer Vulpaphyla (viral / immortel) |
+| Compagnon | **A :** Nautilus Prime + Verglas Prime (Endurance, contrôle) · **B :** Panzer Vulpaphyla (**obligatoire au 9999**) |
 
 ---
 
@@ -36,7 +37,7 @@
 | Forma | **5** (dont 1 Umbra Forma) | 3× Vazarin (Archon Vitality, Narrow Minded, **slot Exilus**), 1× Madurai (Primed Continuity), 1× **Umbra** (Umbral Intensify) |
 | Helminth | 1 Rhino (rang 30) subsumé | Débloque Roar |
 | Archon Shards | 3 Tauforged Azure + 2 Tauforged Crimson | Voir 1.10 |
-| Arcanes | Molt Augmented R5 + Arcane Sculptor R5 | 21 exemplaires chacun pour R5 |
+| Arcanes | Arcane Sculptor R5 + Arcane Escapist (R3 = 10 exemplaires minimum, R5 = 21) ; Molt Augmented R5 pour l'Endurance hors cap | 21 exemplaires pour un R5 |
 
 **Polarités finales (Protea Prime : innées Madurai / Naramon / Naramon, Aura universelle « Any », Exilus vierge)**
 
@@ -91,7 +92,11 @@
 - Sur les armes (Glaive, Torid) : gain **linéaire** (×2,1 à ×2,28).
 - Sur les tourelles, rendements décroissants (le wiki le confirme) : les dégâts d'une tourelle croissent ≈ en n² (n = nombre de tirs), donc multiplier les dégâts par k réduit le TTK d'un facteur 1/√k → Roar ×2,1 = **−31 % de TTK direct**, ×4,4 sur la Heat = **−52 % de TTK** sur la partie DoT.
 
-**Verdict.** Pour ton objectif (Endurance stable + nettoyage rapide), **Roar est le bon choix**. La survie de ce build repose sur les satellites (gates de 5 s) et Rolling Guard, pas sur l'ancre, et le ×2,1–2,28 permanent sur armes et compagnon raccourcit chaque engagement. Le prix à payer : tu n'as **plus aucune protection anti‑mort**, donc le moindre instant à 0 shield, sans satellite et Rolling Guard en recharge, est fatal au niveau 9999. Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu restes à 9999 pendant des heures sans chercher à tuer vite. Si tu prends l'option compagnon A, **Sacrifice** (Nautilus) te rend un filet anti‑mort partiel.
+**Verdict.** Pour ton objectif (Endurance stable + nettoyage rapide), **Roar est le bon choix**. La survie de ce build repose sur les satellites et Rolling Guard, pas sur l'ancre, et le ×2,1–2,28 permanent sur armes et compagnon raccourcit chaque engagement.
+
+Le prix à payer : la perte du death gate de l'ancre. **Arcane Escapist** le remplace (v1.1). Chaque Mercy kill donne 1 stack ; sur un coup fatal, 3 stacks sont consommés pour **12 s d'invulnérabilité** (R5). Ça fait jusqu'à 3 sauvetages (9 stacks), et il prend la place de Molt Augmented au niveau cap.
+
+Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu restes à 9999 pendant des heures sans chercher à tuer vite. **Sacrifice** (option A) n'est **pas** un filet fiable au cap : la sentinelle est à terre au moment où tu en as besoin.
 
 ### 1.5 Gestion de l'énergie
 
@@ -122,25 +127,37 @@
 **Mécanique du Shield Gate (valeurs actuelles) :**
 `t = (Shield_max / 350)^0,65 + 1/3` pour 53–1 150 shields, **plafond 2,5 s au‑delà de 1 150**. La durée dépend des shields **regénérés depuis le dernier gate**.
 
-| Shields max | Gate normal | Gate avec satellite accroché (×2) |
+| Shields max | Gate normal (**garanti**) | Satellite accroché : lecture A (×2) / lecture B (seul le minimum doublé) |
 |---|---|---|
-| 555 (Protea Prime nue) | 1,68 s | 3,37 s |
-| 1 005 (3 Azure normales) | 2,32 s | 4,64 s |
-| **1 230 (3 Tauforged Azure)** | **2,50 s** | **5,00 s** |
+| 555 (Protea Prime nue) | 1,68 s | 3,37 s / 1,68 s |
+| 1 005 (3 Azure normales) | 2,32 s | 4,64 s / 2,32 s |
+| **1 230 (3 Tauforged Azure)** | **2,50 s** | **5,00 s / 2,50 s** |
 
-- **Shield Satellites** : si ton gate se déclenche avec un satellite accroché, le satellite est détruit et le gate est **doublé** (jusqu'à **5 s**). Avec ≥ 230 % de Strength, chaque satellite recharge > 1 150 shields : **chaque satellite = un gate complet de 5 s réarmé**. 4 satellites pour 6,25 énergie = jusqu'à 20 s d'invulnérabilité potentielle.
-- **Le piège** : *toute* restauration de shields pendant le gate le **termine immédiatement**. Un satellite libre dans tes 3,95 m s'accroche dès que tu n'en portes plus, ce qui coupe ton gate de 5 s. Lance donc tes satellites à **4–6 m** de ta position : ce sont des « stations de recharge » dans lesquelles tu marches **à la fin** du gate (≈ 4 s), shields pleins + nouveau gate de 5 s.
+- **⚠️ Le doublement à 5 s n'est PAS confirmé.**
+  - La description in‑game dit : *« a Satellite is destroyed to double **minimum** Shield Gate invincibility time »*. Seule la page *Shield* du wiki annonce « 0,66 – 5 s ».
+  - **Construis ton timing sur 2,5 s.** Pour trancher : Simulacrum, ennemi niveau 9999, chrono de la barre de vie grise avec et sans satellite accroché.
+- **Shield Satellites** : avec ≥ 230 % de Strength, chaque satellite recharge > 1 150 shields, donc **chaque satellite réarme un gate complet** (2,5 s garantis). 4 satellites pour 6,25 énergie.
+- **Le piège** : *toute* restauration de shields pendant le gate le **termine immédiatement**.
+  - Un satellite libre dans tes 3,95 m s'accroche dès que tu n'en portes plus et coupe ton gate.
+  - Sous un feu nourri, plusieurs satellites dans le rayon s'accrochent et sont détruits **en chaîne** (le wiki le confirme).
+  - Lance donc tes satellites à **4–6 m** : ce sont des « stations de recharge ». Marche dedans à **~2 s** de gate (avant la fin garantie à 2,5 s) pour récupérer shields pleins + un gate réarmé. Si ton test confirme les 5 s, tu peux attendre ~4,5 s.
 - **Le compagnon peut voler un satellite** (les compagnons sont des cibles éligibles). Place tes satellites hors de sa trajectoire.
-- **Interdits absolus** (ils restaurent des shields pendant le gate et le raccourcissent) : Brief Respite, set Augur, précepte **Guardian**, **Fast Deflection** (avec −45 % de délai, la recharge naturelle démarre à 2,2 s et coupe ton gate de 5 s), Catalyzing Shields (1,33 s fixe = pire que tes 2,5 s), Decaying Dragon Key (gate plafonné à 0,33 s).
-- **Rolling Guard** : 3 s d'invulnérabilité + **purge de tous les statuts** + immunité au knockdown, puis 7 s de recharge (cycle de 10 s). C'est ta réponse aux **dégâts qui traversent les shields** : procs Toxin, procs Slash (Bleed = dégâts True), et **Magnetic** (bloque la régénération et amplifie les dégâts sur shields).
-- **Health 740** (370 × 2 via Archon Vitality) : c'est ton seul tampon face aux ticks Toxin/Slash tant que les ennemis ne one‑shot pas encore. Au 9999, n'importe quel dégât sur la santé est mortel : la règle est **ne jamais encaisser sur la santé**, d'où la purge immédiate via Rolling Guard.
+- **Interdits absolus** (ils restaurent des shields pendant le gate et le raccourcissent) : Brief Respite, set Augur, précepte **Guardian**, **Fast Deflection** (avec −45 % de délai, la recharge naturelle démarre à 2,2 s et coupe ton gate de 2,5 s), Catalyzing Shields (1,33 s fixe = pire que tes 2,5 s), Decaying Dragon Key (gate plafonné à 0,33 s).
+- **Rolling Guard** : 3 s d'invulnérabilité + **purge de tous les statuts** + immunité au knockdown, puis 7 s de recharge (cycle de 10 s). Ses usages :
+  - **Toxin** : la **seule** menace qui traverse les shields, et donc le gate.
+  - **Magnetic** : amplifie les dégâts sur shields, réduit la régénération naturelle et draine l'énergie.
+  - **DoT ennemis (Slash, Heat)** : ils **frappent tes shields** à chaque tick. Un tick sur des shields fraîchement restaurés déclenche un gate et **consomme un satellite**.
+  - Attention : le Slash ignore l'**armure**, **pas** les shields.
+- **Health 740** (370 × 2 via Archon Vitality) : c'est ton seul tampon face au Toxin tant que les ennemis ne one‑shot pas encore. Au 9999, n'importe quel dégât sur la santé est mortel : la règle est **ne jamais encaisser sur la santé**, d'où la purge immédiate via Rolling Guard et le filet Arcane Escapist.
 - **Primed Sure Footed** : 100 % de résistance au knockdown/stagger, **y compris l'auto‑stagger** de l'explosion d'Epitaph Prime (non chargé) et de la détonation du Glaive Prime. Sans lui, ce loadout s'auto‑stagger en boucle.
 - **Armor 185** : inutile au cap (l'armure ne protège pas les shields). Ne mets **aucun** mod d'armure.
 - **Conseil d'options** : inverse Tap/Hold de Grenade Fan (option du jeu) pour que le **tap** lance les satellites : tu gagnes le temps de maintien aux moments critiques.
 
 ### 1.7 Gestion du passif (+100 % Strength additif au 4e cast)
 
-- Le passif s'applique au **4e cast, quel qu'il soit** (Helminth compris). Tu ne peux pas le « sauter ».
+- Le passif s'applique au **4e cast, quel qu'il soit**. Tu ne peux pas le « sauter ».
+- **⚠️ Non documenté** : le wiki ne précise pas si le passif s'applique aux compétences Helminth. Vérifie en jeu : le buff de Roar doit afficher **~110 %** au 4e cast, contre ~80 % sinon.
+- **Règle absolue : la survie passe avant le passif.** Si tu as besoin d'un satellite pendant que les 3 barres sont chargées, lance‑le. Un Roar à +80 % ne tue personne ; un satellite manqué, si.
 - **Cible n°1 : Roar.** 30 % × (2,68 + 1,00) = **+110,4 %** (avant Molt) → **+128,4 %** (Molt max) pendant 85 s, sur tout et en double sur les DoT. Aucune autre cible ne vaut ça.
 - **Contrainte** : Roar ne peut pas être relancé tant qu'il est actif. Procédure d'alignement :
   1. Quand il reste < 5 s à Roar, regarde le compteur du passif.
@@ -163,7 +180,7 @@
 | 4 | **Primed Continuity** | 10 | +55 % Duration | Durée tourelles / Roar / Dispensary |
 | 5 | **Narrow Minded** | 10 | +99 % Duration / −66 % Range | Le plus gros levier de dégâts de tourelle (Duration²) |
 | 6 | **Stretch** | 5 | +45 % Range | Ramène la Range à 79 % (Archon Stretch = même +45 % pour 16 au lieu de 9, effet secondaire mort sur Protea, cf. 5.1) |
-| 7 | **Rolling Guard** | 10 | Roulade : 3 s d'invulnérabilité + purge des statuts, recharge 7 s | Réponse aux dégâts qui traversent les shields |
+| 7 | **Rolling Guard** | 10 | Roulade : 3 s d'invulnérabilité + purge des statuts, recharge 7 s | Purge le Toxin (traverse les shields) et les DoT qui mangent les satellites |
 | 8 | **Equilibrium** | 10 | Health pickups → +110 % énergie ; Energy pickups → +110 % santé | Moteur d'énergie avec Dispensary |
 
 ### 1.9 Les 2 Arcanes
@@ -173,6 +190,13 @@
 | **Molt Augmented** | +0,24 % Strength par kill, 250 stacks = **+60 %**, conservé jusqu'à la mort | Kills de toutes sources (tourelles, compagnon) ; plein en < 2 min d'Endurance. Roar +80 % → +98 % ; satellites 1 340 → 1 640. |
 | **Arcane Sculptor** | À la création d'un objet par une compétence : Efficiency **verrouillée à 175 %** pendant 12 s | Grenade Fan, Blaze Artillery et Dispensary sont des objets valides (liste officielle). Avec une tourelle toutes les ~2,8 s, l'uptime est permanent : tous les casts coûtent 25 %. Remplace Arcane Energize (cf. 1.5). Achat : Hunhow (Pontis Tower, Uranus Proxima) 10 Emerald Talent + 10 Crimson Talent, ou récompense des missions Railjack Scoria's Angel / The Kuva Wytch. |
 
+**Configuration level cap 9999 (v1.1) : Molt Augmented → Arcane Escapist.**
+
+- **Effet** : chaque Mercy kill donne 1 stack (max 9, conservés indéfiniment). Sur un coup fatal, 3 stacks sont consommés : **12 s d'invulnérabilité** au R5 (8 s au R3), +1 revive dès le R3.
+- **Seuil de Mercy** : 10 % minimum sur les unités lourdes au‑delà du niveau ~300. Chaque proc **Impact** ajoute +8 % (jusqu'à 80 %). La détonation du Glaive et le tir direct de l'Epitaph ont un Impact **forcé**. Tu es invulnérable pendant l'animation.
+- **Ce que tu perds** : +60 % de Strength. Roar redescend à +80/+110 % et les satellites à 1 340 shields. Ce n'est que du DPS : le seuil de 1 150 shields reste atteint.
+- **Acquisition** : Kaya Velasco (Höllvania Central Mall), 5 Pix Chip, 1 exemplaire par semaine ; Temporal Archimedea ; échange (MR 11).
+
 > Si tu n'as pas encore Sculptor : **Arcane Energize** en intérim, et remplace **Stretch** par **Streamline**. Garde Blind Rage : sans elle, un satellite ne recharge plus 1 150 shields. Résultat : Efficiency 75 %, consommation **26,8/s** contre 37,5/s produits (+ ~10/s d'Energize), Range 34 % (tourelles 10,2 m, satellites 1,7 m).
 
 ### 1.10 Les 5 Archon Shards
@@ -180,16 +204,18 @@
 | Shard | Bonus | Effet |
 |---|---|---|
 | Tauforged Azure | +225 Shield Capacity | |
-| Tauforged Azure | +225 Shield Capacity | 555 + 675 = **1 230** > 1 150 → gate **2,5 s / 5 s** (plafond) |
+| Tauforged Azure | +225 Shield Capacity | 555 + 675 = **1 230** > 1 150 → gate **2,5 s** (plafond) |
 | Tauforged Azure | +225 Shield Capacity | |
 | Tauforged Crimson | +15 % Ability Duration | Duration 254 % → **284 %** |
 | Tauforged Crimson | +15 % Ability Duration | |
 
 **Justification mathématique :**
 
-- **Shields** : sans shards, gate 1,68 s (3,37 s avec satellite). Les 3 Tauforged amènent au plafond : **+49 % de durée d'invulnérabilité par satellite** (3,37 s → 5,00 s). C'est le meilleur gain de survie disponible pour 3 slots.
+- **Shields** : sans shards, gate 1,68 s. Les 3 Tauforged amènent au plafond de 2,5 s : **+49 % de durée d'invulnérabilité par gate**, quelle que soit la lecture du doublement satellite. C'est le meilleur gain de survie disponible pour 3 slots.
+- **Limite** : ce plafond est **nominal**. Plusieurs modificateurs de mission le cassent (Stunted Shields, standard en Icebind : 1,25 s). Voir 4.5.
 - **Duration plutôt que Strength** : dégâts d'une tourelle ∝ Str × Dur². +15 % de Strength sur 268 % = **×1,056** ; +15 % de Duration sur 254 % = **×1,122**. Duration rapporte ×2,2 plus. Sur Roar, +15 % de Strength ne vaut que ×1,024 de dégâts totaux.
-- **Pourquoi pas d'Amber** : l'efficacité des orbes n'affecte pas Equilibrium ; Casting Speed n'accélère que l'animation de déploiement ; l'énergie initiale est inutile avec Sculptor.
+- **Pourquoi pas d'Amber en Endurance** : l'efficacité des orbes n'affecte pas Equilibrium, et l'énergie initiale est inutile avec Sculptor.
+- **Variante level cap 9999 (v1.1)** : remplace **1 Tauforged Crimson Duration par 1 Tauforged Amber Casting Speed (+37,5 %)**. L'animation de cast est ta fenêtre d'exposition : Grenade Fan est une animation corps entier avec saut forcé. La Casting Speed raccourcit cette animation, mais pas le vol des grenades. Coût : Duration 284 % → 269 %, soit ≈ −10 % de dégâts de tourelle.
 - **Normal vs Tauforged** : avec des shards normaux (+150), il en faut **4 Azure** (555 + 600 = 1 155 ≥ 1 150) + 1 Crimson Duration (+10 %). Avec 3 Azure normales, on plafonne à 1 005 (gate 2,32 s / 4,64 s, −7 %).
 
 ---
@@ -226,6 +252,16 @@
 | **Évo IV** | **Commodore's Fortune** | +20 % CC de base (29 → **49 %**) | 49 % × 3,0 = **147 % CC** : orange garantis à 47 %, CD 6,82 (+1,2 final via Tenacious Bond = ×1,185) |
 
 **Profil forme Incarnon** : 102 de base (Viral ×3,25), CC 147 %, CD 6,82, Status 93,6 %, 6,4 ticks/s, Multishot 1,8 → 3,3 (Galvanized Chamber 5 stacks). Rôle : nettoyer le menu fretin, poser du Viral en masse, empiler Merciless et Galvanized. Au 9999, ce sont les tourelles qui tuent ; la Torid applique les statuts et achève.
+
+**⚠️ Arme à stacks.** Merciless (−1 stack toutes les 4 s sans kill), Galvanized Aptitude et Galvanized Chamber dépendent des kills : **×6,5 d'écart** entre stacks pleins (bucket de base 9,45, Multishot 3,3) et 0 stack (2,65 et 1,8). Au cap, quand le rythme de kills chute, l'arme se dégrade en spirale. Les chiffres ci‑dessus sont des **plafonds**.
+
+**Configurations alternatives (même polarités, sans Forma supplémentaire) :**
+
+| Config | Changements | Éléments | Capacité | Quand |
+|---|---|---|---|---|
+| **Viral** (ci‑dessus) | — | Viral | 60/60 | Corrupted, Endurance standard |
+| **Corrosive** | Primed Cryo Rounds → **Rifle Elementalist** (slot Vazarin) ; Malignant Force → **High Voltage** | Electricity + Toxin innée = **Corrosive** | 57/60 | Grineer / Kuva : 10 stacks en ~2 s sur la cible = **×5,98** contre une armure au plafond, sans dépendre de l'Epitaph |
+| **Magnetic** | Malignant Force → **High Voltage** | Cold + Electricity = **Magnetic** + Toxin innée séparée | 60/60 | **Défaut au cap 9999** (Eximus/Overguard fréquents, le Viral ne touche pas l'Overguard), Corpus |
 
 ### 2.2 Arme secondaire : Epitaph Prime (primer)
 
@@ -274,9 +310,9 @@
 
 - **Éléments** : Toxin (165 %) + Cold (90 %) = **Viral +255 %** (seuls éléments : ordre indifférent), en plus du Blast natif.
 - **Crit** : CC 26 % × 5,4 = **140,4 %**, CD 2,4 × 1,85 = **4,44**. Le CC optimal pour Melee Duplicate est `(3·CD − 4)/(2·CD − 2)` = **135,5 %** (139 % avec Tenacious Bond) : on est **pile dessus**. Duplicate = **×1,60** (60 % de crits jaunes dupliqués).
-- **Combo** : 30 (Corrupt Charge) + 80 (Galvanized Reflex ×4) = **110 de combo initial = multiplicateur ×6 garanti** à chaque détonation ; Efficiency 50 %.
+- **Combo** : 30 (Corrupt Charge) + 80 (Galvanized Reflex ×4) = 110 de combo initial = **×6, à condition de faire 4 kills en mêlée en moins de 20 s**. **Plancher réel : ×2** (Corrupt Charge seul, 30). Sans Tandem Bond (option B), la détonation perd un facteur **×3** dès que les kills ralentissent. Heavy Attack Efficiency : 50 %.
 - **Wind Up** : +120 %, soit 1,2 s → ~0,55 s de charge.
-- **Ordre de grandeur** (avant armure/Viral) : 1 184 × 3,85 × 3,55 × 6 × 7,51 (crit + Tenacious) × 1,6 × 2,1 (Roar) ≈ **2,4 millions par explosion**, en AoE de 4,8 m.
+- **Ordre de grandeur** (avant armure/Viral) : 1 184 × 3,85 × 3,55 × 6 × 7,51 (crit + Tenacious) × 1,6 × 2,1 (Roar) ≈ **2,4 millions par explosion**, en AoE de 4,8 m. C'est un plafond : avec un combo à ×2, sans Tenacious ni Roar, on tombe à ≈ 0,3 M (÷8).
 - **Alternative niveau cap pur** : *Melee Assimilation* (sur rupture de shields : +150 % dégâts Heavy, et les kills Heavy rendent 30 % des shields max). Elle réarme le gate par les kills, mais **coupe** tes gates de 5 s des satellites. Duplicate reste le BiS burst.
 
 ---
@@ -345,7 +381,7 @@
 | Posture | **Protector Posture** | Cible les ennemis à ≤ 15 m de toi (reste dans ta zone Dispensary/tourelles) ; +4 statuts Puncture |
 | 1 | **Bite** (+330 % CC / +220 % CD) | CC **107,5 %**, CD 6,4 → Tenacious Bond actif |
 | 2 | Maul (+330 % Melee Damage) | |
-| 3 | Precision Conditioning (+385 % Melee Damage, physique converti en Slash) | Bleed = True damage |
+| 3 | Precision Conditioning (+385 % Melee Damage, physique converti en Slash) | Le Bleed ignore l'armure |
 | 4 | **Sepsis Claws** (+330 % Toxin / +330 % Status) | Même élément que la Toxin innée : aucune perte à la conversion. Toxin = ignore les shields Corpus |
 | 5 | Venom Teeth (+60 % Toxin / +60 % Status) | Status 12,5 % × 4,9 = **61 %** |
 | 6 | Cull the Weak (+60 % par type de statut ; +240 % sur coup non critique) | |
@@ -361,7 +397,11 @@
 | Survie du joueur | **Sacrifice** (relève) | Aucune relève |
 | Présence au 9999 | Sentinelle souvent détruite (Primed Regen) | **Jamais hors combat** (Devolution) |
 | Synergie Glaive | — | **Tandem Bond** (combo) |
-| **Quand le prendre** | Endurance en couloirs (Survival, Defense, Mirror Defense, Disruption) | Solo level cap 9999, sans riven, loadout centré sur le Glaive |
+| **Quand le prendre** | Endurance en couloirs (Survival, Defense, Mirror Defense, Disruption) **tant que la sentinelle survit** | **Obligatoire au 9999** ; aussi sans riven, ou avec un loadout centré sur le Glaive |
+
+**Correction v1.1 : l'option A n'est pas une option level cap.** Nautilus Prime a 560 PV et 350 shields (1 225 avec Calculated Redirection) : au 9999, un coup suffit à la mettre à terre. À terre, il n'y a plus de Cordon, plus d'Assault Mode (Growing Power ne repose plus que sur l'Epitaph) et plus de Sacrifice ; seul Vacuum continue de fonctionner. Le comportement de Tenacious Bond quand le compagnon est à terre n'est pas documenté.
+
+**Option B, ajout possible :** **Martyr Symbiosis** (précepte Vulpaphyla, coût 3) à la place de Restorative Bond. Il stocke de la santé sur les cadavres et se sacrifie pour te soigner sous 10 % de santé (1 s d'invulnérabilité), et le wiki indique qu'il se déclenche **avant** Arcane Escapist sans consommer ses stacks. Son comportement face à un one‑shot depuis la santé pleine n'est pas documenté.
 
 ---
 
@@ -375,7 +415,7 @@
 | Kuva Grineer | Impact, **Corrosive** | **Heat** | **Tourelles ×0,5** : la mêlée et Roar prennent le relais |
 | Corpus | Puncture, **Magnetic** | — | Shields : Toxin les ignore, Viral non |
 | Corpus Amalgam | Electricity, **Magnetic** | **Blast** | Détonation du Glaive ×0,5 |
-| Infested | Slash, **Heat** | — | **Tourelles ×1,5 : la meilleure faction pour Protea** |
+| Infested | Slash, **Heat** | — | Tourelles ×1,5 : **la meilleure en dégâts, la pire en survie** (Toxin partout : Toxic Ancient, Mutalist Osprey, Septic Eximus) |
 | Infested (Deimos) | **Blast**, **Gas** | **Viral** | Retire le Viral |
 | Corrupted (Orokin) | Puncture, **Viral** | Radiation | **Loadout par défaut = optimal** |
 
@@ -384,7 +424,8 @@
 | Faction | Torid Incarnon | Epitaph Prime | Glaive Prime |
 |---|---|---|---|
 | Corrupted | Défaut (Viral) | Défaut (Corrosive) | Défaut (Viral) |
-| Grineer / Kuva | Défaut (Viral : neutre, Corrosive vient d'Epitaph) | Défaut (Corrosive, prime **en priorité**) | North Wind → **Voltaic Strike** = **Corrosive** (×1,5) |
+| Grineer / Kuva | Config **Corrosive** (cf. 2.1 : Rifle Elementalist + High Voltage, 57/60) | Défaut (Corrosive, prime **en priorité**) | North Wind → **Voltaic Strike** = **Corrosive** (×1,5) |
+| **Level cap 9999 (toutes factions)** | Config **Magnetic** (Overguard des Eximus) | Défaut | Défaut, ou Magnetic (ligne Corpus) contre l'Overguard |
 | Corpus / Amalgam | Malignant Force → **High Voltage** = **Magnetic** + Toxin innée séparée (ignore les shields) | Pistol Pestilence → **Frostbite** = **Magnetic** | Primed Fever Strike → **Voltaic Strike** (+1 capacité, 70/70) = **Magnetic** |
 | Infested (Deimos) | Malignant Force → **Thermite Rounds** = **Blast** + Toxin innée | Défaut | North Wind → **Volcanic Edge** = **Gas** (Blast natif ×1,5 aussi) |
 
@@ -422,7 +463,25 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 4. **Critical Damage / palier de crit** : Tenacious Bond (+1,2 final) = ×1,29 Glaive, ×1,185 Torid ; Melee Duplicate ×1,60.
 5. **Éléments** : bucket additif. Important pour *choisir* le type (faiblesses), moins pour empiler.
 6. **Dégâts directs (base %)** : le bucket **le plus saturé** (Serration 165 + Merciless 360 + Galvanized : +40 % par type de statut et par stack). +165 % dessus ne vaut que ×1,2–1,3.
-7. **Slash** : le Bleed est en dégâts **True** (ignore armure **et** shields). Son intérêt est **inversement proportionnel** à ton retrait d'armure : roi tant que l'armure est pleine, marginal une fois à −80/−100 %. Les procs Slash forcés du Glaive et les griffes en Slash servent de filet de sécurité.
+7. **Slash** : le Bleed (dégâts Cinematic) **ignore l'armure mais pas les shields** (correction v1.1 : c'est le Toxin qui traverse les shields). Son intérêt est **inversement proportionnel** à ton retrait d'armure : roi tant que l'armure est pleine, marginal une fois à −80/−100 %. Les procs Slash forcés du Glaive et les griffes en Slash servent de filet de sécurité contre les Grineer et Corrupted blindés.
+
+### 4.5 Modificateurs de mission qui cassent le build (ajout v1.1)
+
+| Modificateur (source) | Effet sur ce build | Réponse |
+|---|---|---|
+| **Stunted Shields** (Icebind, **trait standard**, niveau 999+) | Gate 2,5 → **1,25 s** | Entrer dans le satellite suivant à ~1 s ; Arcane Escapist obligatoire |
+| **Cryogenic Leakage** (aléa d'environnement, −50 % de shields) | 615 shields → gate 1,78 s (2,25 s si appliqué avant les shards) | Sortir de la zone, timing satellites à ~1,5 s |
+| **Anemic Shields** (Archimedea, plafond 500) | Gate 1,59 s | Idem |
+| **Flankable** (Icebind, −75 % de shields) | Gate 1,25 s (0,63 s avec Stunted) | Reste face aux ennemis (bouclier Volt frontal) ; build à éviter |
+| **Bruised Shields** (Icebind : shields restaurés uniquement par la mêlée) | **Satellites inopérants** | Melee Assimilation sur le Glaive (les kills Heavy rendent 30 % des shields) ; sinon, autre Warframe |
+| **Untreatable** (Icebind : Health Orbs non ramassables) | Énergie Dispensary : 37,5 → **6,5/s** | Sculptor garde le build à +1,1/s ; zéro marge |
+| **Constricted** (Icebind : énergie max −75 %) | Max 62,5 | Jouable **uniquement** avec Sculptor (cast max 18,75) |
+| **Framecurse Syndrome** (Icebind / Archimedea : 50 PV + 150 shields par cast) | ~27 casts/min : −1 350 PV/min | Réduire les recasts de tourelles ; build à éviter |
+| **Abbreviated Abilities** (Icebind : −50 % de durée) | Tourelles 4,3 s, Roar 42,6 s, Dispensary 35,5 s | Variante Duration impossible à compenser ; accepter |
+| **Miasmic Militia** (Icebind : ennemis immunisés Toxin/Gas/Viral/Corrosive) | Tout le plan de statuts tombe | Torid Magnetic, Glaive Magnetic |
+| **Archaic Armor** (Icebind : armure non retirable) | Corrosive et Heat ne retirent plus d'armure | Slash (ignore l'armure) |
+| **Inferno** (Icebind : la Heat nourrit l'Inferno) | **La Heat des tourelles est une menace** | Build à éviter |
+| **Decaying Dragon Key** | Gate à 0,33 s | Ne jamais l'équiper |
 
 ---
 
@@ -452,10 +511,10 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 **Phase 0 — Ouverture (0–10 s)**
 
 1. **Epitaph** (non chargé) sur le premier groupe → Growing Power actif (6 s) + Corrosive.
-2. **Grenade Fan, satellites** → 38,75 énergie (le seul cast plein tarif) → **Sculptor actif**. Passif : 1.
-3. **Dispensary** (18,75) près de ta position d'ancrage. Passif : 2.
+2. **Grenade Fan, satellites** → 38,75 énergie (le seul cast plein tarif). Passif : 1. **Attends que les grenades aient atterri et que les satellites apparaissent** : un objet ne déclenche Sculptor qu'une fois posé.
+3. **Dispensary** (18,75 une fois Sculptor actif, 116,25 si tu le lances trop tôt) près de ta position d'ancrage. Passif : 2.
 4. **Blaze Artillery** face à la voie d'arrivée principale (12,5). Passif : 3.
-5. **Roar** (18,75) → **4e cast = +110 %** (+128 % une fois Molt plein). 85 s.
+5. **Roar** (18,75) → **4e cast = +110 %** (+128 % une fois Molt plein, configuration Endurance). 85 s.
 
 **Phase 1 — Montée (0 → 250 kills, Molt)**
 
@@ -470,24 +529,26 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 | Recast de la tourelle la plus ancienne | toutes les ~2,8 s | Garde 3 tourelles actives ; garantit aussi Sculptor |
 | Satellites | toutes les 10–13 s, ou dès qu'un gate consomme le tien | Lance‑les à 4–6 m : « stations de recharge » |
 | Tir d'Epitaph | toutes les ≤ 6 s | Growing Power permanent + Corrosive (15,2 s) |
-| Détonation du Glaive | sur chaque groupe à ≤ 5 m | Les kills alimentent Galvanized Reflex (combo ×6 garanti) |
+| Détonation du Glaive | sur chaque groupe à ≤ 5 m | Les kills alimentent Galvanized Reflex (combo ×6 si 4 kills en 20 s, plancher ×2 ; Tandem Bond le maintient) |
 | Torid Incarnon | trash / couloirs | 5 grenades directes pour recharger |
 | Dispensary | toutes les 71 s | Reste dans l'anneau d'apparition ; ramasse l'**Ammo Pack avec l'arme qui en a besoin équipée** (il ne recharge que l'arme en main) |
 | Roar | toutes les 85 s | Alignement du passif (cf. 1.7) |
 
 **Phase 3 — Protocole Level Cap (dès qu'une rafale vide tes 1 230 shields d'un coup, jusqu'au 9999)**
 
-1. **Jamais à 0 shield sans satellite accroché.** Avant chaque engagement, vérifie le buff satellite.
-2. **Gate déclenché** (barre de vie grise, 5 s) : repositionne‑toi et relance pendant ces 5 s. **N'entre dans un satellite libre qu'à ~4 s**, sauf urgence.
-3. **Rolling Guard** sur tout proc **Toxin, Slash ou Magnetic**, ou pour couvrir un trou : enchaîne gate (5 s) → RG (3 s) → satellite (gate 5 s). Ne superpose **jamais** RG et un gate (gaspillage).
+1. **Jamais à 0 shield sans satellite accroché.** Avant chaque engagement, vérifie le buff satellite. Le satellite est **proactif**, jamais réactif : le cast + le vol des grenades laissent une fenêtre non couverte.
+2. **Gate déclenché** (barre de vie grise, **2,5 s garantis**) : repositionne‑toi et relance pendant le gate. **Entre dans un satellite libre à ~2 s** (~1 s sous Stunted Shields). Si ton test confirme les 5 s, tu peux attendre ~4,5 s.
+3. **Rolling Guard** sur tout proc **Toxin** (traverse les shields) ou **Magnetic**, et sur les DoT Slash/Heat qui mangent tes satellites. Pour couvrir un trou, enchaîne gate (2,5 s) → RG (3 s) → satellite. Ne superpose **jamais** RG et un gate (gaspillage).
 4. **Casts à animation lourde** (Grenade Fan = animation corps entier avec saut forcé de 1 m) : lance‑les **pendant** un gate ou une RG.
-5. **Ordre de kill** : Septic/Venomous Eximus → Energy Leech Eximus → Toxic Ancient / Ancient Disruptor → Nullifier → unités à knockdown de zone.
+5. **Stacks d'Arcane Escapist** : fais un Mercy kill dès que l'invite apparaît sur une unité lourde (seuil relevé par les Impact du Glaive et de l'Epitaph). Vise 9 stacks avant de pousser le niveau.
+6. **Ordre de kill** : Septic/Venomous Eximus → Energy Leech Eximus → Toxic Ancient / Ancient Disruptor → Nullifier → unités à knockdown de zone.
 
 ### 5.4 Moments critiques
 
 | Situation | Réponse immédiate |
 |---|---|
-| **0 shield, aucun satellite, RG en recharge** | Grenade Fan satellites **visée au sol à tes pieds** (les grenades tombent dans tes 3,95 m) |
+| **0 shield, aucun satellite, RG disponible** | **RG d'abord** (3 s), puis pendant la RG : satellites à 4–6 m, et entre dans l'un d'eux avant la fin de la RG |
+| **0 shield, aucun satellite, RG en recharge** | Dernier recours : satellites **à tes pieds**. Sous un feu nourri, les 4 s'accrocheront et seront détruits en chaîne : prévois **2 casts** et compte sur Arcane Escapist |
 | **Sculptor retombé** (aucun objet créé depuis 12 s, ex. long trajet entre objectifs) | 1er cast = **Grenade Fan** (le moins cher), *jamais* Roar ni Dispensary plein tarif (116,25) |
 | **Énergie basse** | Marche sur le Dispensary : 1 Empowered Health Orb = 110 énergie. Chaque Eximus tué ≈ +104 |
 | **Proc Magnetic** (Corpus, Energy Leech) | **RG immédiate** : le Magnetic bloque la régénération et amplifie les dégâts sur shields |
@@ -502,6 +563,10 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 - Ouvrir une mission (ou relancer après un trajet) avec un cast à 116,25.
 - Lancer Roar sans Growing Power actif (−7,5 points de Roar) ou hors du 4e cast (−30 points).
 - Rester dans le rayon de 3,95 m d'un satellite libre pendant un gate.
+- Bâtir un timing sur un gate de 5 s non vérifié (v1.0).
+- Jouer au cap avec l'option A (sentinelle) ou sans Arcane Escapist.
+- Considérer les Infested comme une faction « facile » : leur Toxin ignore toute ta couche défensive.
+- Lire les chiffres de dégâts du guide comme des valeurs de travail : ce sont des plafonds à stacks pleins.
 
 ---
 
@@ -514,3 +579,25 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 - Compagnons : [Panzer Vulpaphyla](https://wiki.warframe.com/w/Panzer_Vulpaphyla) · [Verglas Prime](https://wiki.warframe.com/w/Verglas_Prime) · [Tenacious Bond](https://wiki.warframe.com/w/Tenacious_Bond) · [Bond Mods](https://wiki.warframe.com/w/Bond_Mods)
 - Factions / Eximus : [Damage/Overview Table](https://wiki.warframe.com/w/Damage/Overview_Table) · [Eximus](https://wiki.warframe.com/w/Eximus)
 - Patchs : [Update 43](https://wiki.warframe.com/w/Update_43) · [Update 44](https://wiki.warframe.com/w/Update_44)
+- Ajouts v1.1 : [Arcane Escapist](https://wiki.warframe.com/w/Arcane_Escapist) · [Mercy](https://wiki.warframe.com/w/Mercy) · [Slash Damage](https://wiki.warframe.com/w/Damage/Slash_Damage) · [Toxin Damage](https://wiki.warframe.com/w/Damage/Toxin_Damage) · [Magnetic Damage](https://wiki.warframe.com/w/Damage/Magnetic_Damage) · [Protea Passive](https://wiki.warframe.com/w/Protea/Abilities/Passive) · [Deep Archimedea](https://wiki.warframe.com/w/Deep_Archimedea) · [Martyr Symbiosis](https://wiki.warframe.com/w/Martyr_Symbiosis)
+
+---
+
+## Journal des versions
+
+**v1.1 (25/10/2026)** — corrections issues de [l'audit hostile](audit-protea-prime-v1.md) :
+
+1. Gate de satellite : 2,5 s garantis, doublement à 5 s marqué non confirmé (description in‑game : « double minimum »), timing d'entrée ramené à ~2 s.
+2. Slash : ignore l'armure, pas les shields (seul le Toxin traverse les shields). Les DoT ennemis mangent les satellites.
+3. Ajout d'Arcane Escapist (anti‑mort) à la place de Molt Augmented au cap.
+4. Procédure d'urgence satellite réécrite (RG d'abord ; « à tes pieds » en dernier recours seulement).
+5. Torid : configurations Corrosive (Grineer) et Magnetic (défaut au cap) ; avertissement sur l'effondrement des stacks (×6,5).
+6. Glaive : plancher de combo ×2 annoncé, ×6 conditionnel.
+7. Infested : meilleure faction en dégâts, pire en survie.
+8. Passif sur l'Helminth : à vérifier en jeu ; règle survie > passif.
+9. Nouvelle section 4.5 : modificateurs de mission.
+10. Ouverture : attendre l'atterrissage des grenades avant le cast suivant (Sculptor).
+11. Option A limitée à l'Endurance ; option B obligatoire au 9999 ; Martyr Symbiosis en option.
+12. Variante Amber Casting Speed pour le cap.
+
+**v1.0 (25/10/2026)** — version initiale.
