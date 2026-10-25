@@ -5,7 +5,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "@kimtaeyoon83/mcp-server-youtube-transcript"
+        "@sinco-lab/mcp-youtube-transcript"
       ],
       "env": {}
     }
