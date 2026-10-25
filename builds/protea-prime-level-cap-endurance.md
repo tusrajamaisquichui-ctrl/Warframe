@@ -216,7 +216,7 @@ Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu r
 - **Duration plutôt que Strength** : dégâts d'une tourelle ∝ Str × Dur². +15 % de Strength sur 268 % = **×1,056** ; +15 % de Duration sur 254 % = **×1,122**. Duration rapporte ×2,2 plus. Sur Roar, +15 % de Strength ne vaut que ×1,024 de dégâts totaux.
 - **Pourquoi pas d'Amber en Endurance** : l'efficacité des orbes n'affecte pas Equilibrium, et l'énergie initiale est inutile avec Sculptor.
 - **Variante level cap 9999 (v1.1)** : remplace **1 Tauforged Crimson Duration par 1 Tauforged Amber Casting Speed (+37,5 %)**. L'animation de cast est ta fenêtre d'exposition : Grenade Fan est une animation corps entier avec saut forcé. La Casting Speed raccourcit cette animation, mais pas le vol des grenades. Coût : Duration 284 % → 269 %, soit ≈ −10 % de dégâts de tourelle.
-- **Normal vs Tauforged** : avec des shards normaux (+150), il en faut **4 Azure** (555 + 600 = 1 155 ≥ 1 150) + 1 Crimson Duration (+10 %). Avec 3 Azure normales, on plafonne à 1 005 (gate 2,32 s / 4,64 s, −7 %).
+- **Normal vs Tauforged** : avec des shards normaux (+150), il en faut **4 Azure** (555 + 600 = 1 155 ≥ 1 150) + 1 Crimson Duration (+10 %). Avec 3 Azure normales, on plafonne à 1 005 (gate 2,32 s, −7 %).
 
 ---
 
@@ -313,7 +313,7 @@ Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu r
 - **Combo** : 30 (Corrupt Charge) + 80 (Galvanized Reflex ×4) = 110 de combo initial = **×6, à condition de faire 4 kills en mêlée en moins de 20 s**. **Plancher réel : ×2** (Corrupt Charge seul, 30). Sans Tandem Bond (option B), la détonation perd un facteur **×3** dès que les kills ralentissent. Heavy Attack Efficiency : 50 %.
 - **Wind Up** : +120 %, soit 1,2 s → ~0,55 s de charge.
 - **Ordre de grandeur** (avant armure/Viral) : 1 184 × 3,85 × 3,55 × 6 × 7,51 (crit + Tenacious) × 1,6 × 2,1 (Roar) ≈ **2,4 millions par explosion**, en AoE de 4,8 m. C'est un plafond : avec un combo à ×2, sans Tenacious ni Roar, on tombe à ≈ 0,3 M (÷8).
-- **Alternative niveau cap pur** : *Melee Assimilation* (sur rupture de shields : +150 % dégâts Heavy, et les kills Heavy rendent 30 % des shields max). Elle réarme le gate par les kills, mais **coupe** tes gates de 5 s des satellites. Duplicate reste le BiS burst.
+- **Alternative niveau cap pur** : *Melee Assimilation* (sur rupture de shields : +150 % dégâts Heavy, et les kills Heavy rendent 30 % des shields max). Elle réarme le gate par les kills, mais **coupe** les gates des satellites en cours. Duplicate reste le BiS burst.
 
 ---
 
@@ -551,8 +551,8 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 | **0 shield, aucun satellite, RG en recharge** | Dernier recours : satellites **à tes pieds**. Sous un feu nourri, les 4 s'accrocheront et seront détruits en chaîne : prévois **2 casts** et compte sur Arcane Escapist |
 | **Sculptor retombé** (aucun objet créé depuis 12 s, ex. long trajet entre objectifs) | 1er cast = **Grenade Fan** (le moins cher), *jamais* Roar ni Dispensary plein tarif (116,25) |
 | **Énergie basse** | Marche sur le Dispensary : 1 Empowered Health Orb = 110 énergie. Chaque Eximus tué ≈ +104 |
-| **Proc Magnetic** (Corpus, Energy Leech) | **RG immédiate** : le Magnetic bloque la régénération et amplifie les dégâts sur shields |
-| **Kuva Grineer** (Heat résistée) | Primer Corrosive à fond, la détonation du Glaive devient ta source de dégâts n°1, Roar au passif impératif |
+| **Proc Magnetic** (Corpus, Energy Leech) | **RG immédiate** : le Magnetic réduit la régénération naturelle, amplifie les dégâts sur shields et draine l'énergie |
+| **Kuva Grineer** (Heat résistée) | Primer Corrosive à fond (ou Torid en config Corrosive), la détonation du Glaive devient ta source de dégâts n°1, Roar au passif impératif |
 | **Nullifier qui avance** | Éclate la bulle **avant** qu'elle touche tes tourelles ou toi (elle dissipe Roar) |
 | **Compagnon qui vole tes satellites** | Lance tes satellites du côté opposé au compagnon |
 
@@ -563,7 +563,7 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 - Ouvrir une mission (ou relancer après un trajet) avec un cast à 116,25.
 - Lancer Roar sans Growing Power actif (−7,5 points de Roar) ou hors du 4e cast (−30 points).
 - Rester dans le rayon de 3,95 m d'un satellite libre pendant un gate.
-- Bâtir un timing sur un gate de 5 s non vérifié (v1.0).
+- Bâtir un timing sur un gate de 5 s non vérifié (erreur de la v1.0).
 - Jouer au cap avec l'option A (sentinelle) ou sans Arcane Escapist.
 - Considérer les Infested comme une faction « facile » : leur Toxin ignore toute ta couche défensive.
 - Lire les chiffres de dégâts du guide comme des valeurs de travail : ce sont des plafonds à stacks pleins.
