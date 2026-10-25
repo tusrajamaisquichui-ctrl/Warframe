@@ -1,9 +1,10 @@
 # Protea Prime — Solo Level Cap / Endurance (build BiS)
 
-> **Version 1.1** : corrigée après l'audit hostile [`audit-protea-prime-v1.md`](audit-protea-prime-v1.md) (12 corrections, journal en fin de document).
+> **Version 1.2** : croisement avec deux vidéos d'octobre 2026 (SyrexLeon Gaming, RexChamp Sean) : variante « ancre mobile » avec Temporal Artillery (1.11), couches de survie Secondary Fortifier + Vazarin (1.12), arsenal alternatif (2.4). La v1.1 intégrait les 12 corrections de l'audit hostile [`audit-protea-prime-v1.md`](audit-protea-prime-v1.md). Journal en fin de document.
 > **Patch de référence : Update 44 « Iceblade of Narin » / Hotfix 44.1.3 (22/10/2026).**
 > Toutes les valeurs ci‑dessous (compétences, mods, arcanes, shards, armes) ont été vérifiées sur le wiki officiel (`wiki.warframe.com`) au 25/10/2026, y compris les modules de données (mods, armes, compagnons). Les calculs sont faits à partir de ces valeurs brutes.
 > Changements récents qui impactent ce build : **Arcane Sculptor** (U43), **retrait des dispositions de Riven** (toutes à l'équivalent 1.2, H44.1.3), **cap d'Ammo Efficiency à 75 %** (H44.1.3), conversion « On Headshot » → « On Weak Point » (U44).
+> **Limite de la v1.2** : les deux vidéos n'ont pas pu être visionnées depuis l'environnement de rédaction (accès YouTube bloqué). Les choix évalués sont ceux qu'elles mettent en avant (Temporal Artillery, Phantasma Prime, Kuva Nukor, Hate, Secondary Fortifier, Vazarin), et chaque mécanique a été revérifiée sur le wiki. Leurs listes de mods exactes ne sont pas reprises.
 
 ---
 
@@ -12,7 +13,7 @@
 | Élément | Choix |
 |---|---|
 | Warframe | **Protea Prime** (Protea standard : build identique, +1 Forma) |
-| Helminth | **Roar** à la place de Temporal Anchor |
+| Helminth | **Roar** à la place de Temporal Anchor — **variante C** (level cap) : Roar à la place de **Dispensary**, Temporal Anchor + **Temporal Artillery** (cf. 1.11) |
 | Aura / Exilus | **Growing Power** / **Primed Sure Footed** |
 | 8 mods | Archon Vitality, Blind Rage, Umbral Intensify, Primed Continuity, Narrow Minded, Stretch, Rolling Guard, Equilibrium |
 | Arcanes | **Arcane Sculptor** + **Arcane Escapist** (level cap 9999) / **Molt Augmented** (Endurance hors cap) |
@@ -20,9 +21,11 @@
 | Stats (Arsenal) | Strength **243 %** · Duration **284 %** · Range **79 %** · Efficiency **45 %** (verrouillée à **175 %** en mission par Sculptor) |
 | Survie | Shields **1 230** (gate **2,5 s garanti**) · Health **740** · Armor 185 · Energy 250 |
 | Primary | **Torid Incarnon** — Primary Merciless — Evo : Final Fusillade / Swift Deliverance / Commodore's Fortune |
-| Secondary | **Epitaph Prime** (primer Corrosive) — Secondary Encumber |
+| Secondary | **Epitaph Prime** (primer Corrosive) — Secondary Encumber (Endurance) / **Secondary Fortifier** (level cap, cf. 1.12) |
 | Melee | **Glaive Prime** (heavy detonation, Viral) — Melee Duplicate |
 | Compagnon | **A :** Nautilus Prime + Verglas Prime (Endurance, contrôle) · **B :** Panzer Vulpaphyla (**obligatoire au 9999**) |
+| Focus | **Vazarin** (Protective Sling, Mending Soul) — ne jamais lancer Guardian Shell (cf. 1.12) |
+| Arsenal alternatif | **B :** Phantasma Prime (primer) + Kuva Nukor (Secondary Fortifier) + Glaive Prime ; Hate Incarnon en mêlée de confort (cf. 2.4) |
 
 ---
 
@@ -98,6 +101,8 @@ Le prix à payer : la perte du death gate de l'ancre. **Arcane Escapist** le rem
 
 Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu restes à 9999 pendant des heures sans chercher à tuer vite. **Sacrifice** (option A) n'est **pas** un filet fiable au cap : la sentinelle est à terre au moment où tu en as besoin.
 
+**v1.2 : le choix n'est pas binaire.** Roar peut remplacer **Dispensary** au lieu de Temporal Anchor. Tu gardes alors Roar **et** l'ancre (death gate, 3 s d'invulnérabilité), et tu débloques Temporal Artillery. Le prix : le moteur d'énergie du Dispensary. C'est la variante C, détaillée en 1.11.
+
 ### 1.5 Gestion de l'énergie
 
 **Coûts réels (Efficiency 45 % sans Sculptor, 175 % avec) :**
@@ -142,7 +147,7 @@ Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu r
   - Sous un feu nourri, plusieurs satellites dans le rayon s'accrochent et sont détruits **en chaîne** (le wiki le confirme).
   - Lance donc tes satellites à **4–6 m** : ce sont des « stations de recharge ». Marche dedans à **~2 s** de gate (avant la fin garantie à 2,5 s) pour récupérer shields pleins + un gate réarmé. Si ton test confirme les 5 s, tu peux attendre ~4,5 s.
 - **Le compagnon peut voler un satellite** (les compagnons sont des cibles éligibles). Place tes satellites hors de sa trajectoire.
-- **Interdits absolus** (ils restaurent des shields pendant le gate et le raccourcissent) : Brief Respite, set Augur, précepte **Guardian**, **Fast Deflection** (avec −45 % de délai, la recharge naturelle démarre à 2,2 s et coupe ton gate de 2,5 s), Catalyzing Shields (1,33 s fixe = pire que tes 2,5 s), Decaying Dragon Key (gate plafonné à 0,33 s).
+- **Interdits absolus** (ils restaurent des shields pendant le gate et le raccourcissent) : Brief Respite, set Augur, précepte **Guardian**, **Fast Deflection** (avec −45 % de délai, la recharge naturelle démarre à 2,2 s et coupe ton gate de 2,5 s), Catalyzing Shields (1,33 s fixe = pire que tes 2,5 s), Decaying Dragon Key (gate plafonné à 0,33 s), **Guardian Shell** de Vazarin (sa rupture déclenche Guardian Break : −80 % de délai de regen pendant 12 s, cf. 1.12).
 - **Rolling Guard** : 3 s d'invulnérabilité + **purge de tous les statuts** + immunité au knockdown, puis 7 s de recharge (cycle de 10 s). Ses usages :
   - **Toxin** : la **seule** menace qui traverse les shields, et donc le gate.
   - **Magnetic** : amplifie les dégâts sur shields, réduit la régénération naturelle et draine l'énergie.
@@ -218,6 +223,147 @@ Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu r
 - **Variante level cap 9999 (v1.1)** : remplace **1 Tauforged Crimson Duration par 1 Tauforged Amber Casting Speed (+37,5 %)**. L'animation de cast est ta fenêtre d'exposition : Grenade Fan est une animation corps entier avec saut forcé. La Casting Speed raccourcit cette animation, mais pas le vol des grenades. Coût : Duration 284 % → 269 %, soit ≈ −10 % de dégâts de tourelle.
 - **Normal vs Tauforged** : avec des shards normaux (+150), il en faut **4 Azure** (555 + 600 = 1 155 ≥ 1 150) + 1 Crimson Duration (+10 %). Avec 3 Azure normales, on plafonne à 1 005 (gate 2,32 s, −7 %).
 
+### 1.11 Variante C — « ancre mobile » avec Temporal Artillery (ajout v1.2)
+
+**Ce que fait l'augment (description in‑game et notes du wiki) :**
+
+- *« When Temporal Anchor is activated, one existing Artillery unit will attach to Protea, halting its duration countdown. Max combo count is 20x. »*
+- À l'activation de **Temporal Anchor**, la tourelle active **la plus proche** s'attache à Protea et la suit. Son compte à rebours est **suspendu** tant que l'ancre est active.
+- Elle perd son cône frontal de 130° et vise **tous les ennemis à portée** (23,7 m avec ce build), donc à 360°. Sans cible, elle tire là où tu vises.
+- Contrepartie : son multiplicateur de combo est **plafonné à 20×** (14× au R0, non modifiable par les mods). Si elle dépassait 20× au moment de l'attache, elle redescend à 20×.
+- À la fin de l'ancre, elle redevient une tourelle fixe normale (cône de 130°, combo non plafonné) et son compte à rebours reprend.
+- Les 2 autres tourelles restent fixes. Un cast au‑delà de 3 remplace une tourelle fixe, jamais la suiveuse.
+- Polarité Zenurik, coût 9 au R3. Achat : Arbiters of Hexis (rang Maxim) ou The Perrin Sequence (rang Partner), 25 000 standing.
+
+**⚠️ Inutilisable dans la configuration A (v1.1).** L'augment exige Temporal Anchor actif, et la v1.1 remplace justement Temporal Anchor par Roar. L'intégrer impose de réorganiser le kit :
+
+| Config | Kit (1 / 2 / 3 / 4) | Roar | Death gate de l'ancre | Tourelle suiveuse | Énergie | Verdict |
+|---|---|---|---|---|---|---|
+| **A — v1.1** | Grenade Fan / Blaze / Dispensary / **Roar** | ✔ | ✘ (Arcane Escapist seul) | ✘ | Dispensary + Equilibrium : **+37,5/s** | Défaut Endurance ; défaut au cap tant que C n'est pas validée |
+| **B — kit natif** | Grenade Fan / Blaze / Dispensary / Temporal Anchor | ✘ | ✔ | ✔ | Dispensary + remboursement au rembobinage | Confort maximal, mais sans Roar : **−44 à −56 %** de dégâts directs, **−69 à −81 %** sur la Heat. Non retenue |
+| **C — ancre mobile** | Grenade Fan / Blaze / **Roar** / Temporal Anchor | ✔ | ✔ | ✔ | Remboursement au rembobinage : **−25 net par ancre** | **Candidate au 9999** (3 tests ci‑dessous) |
+
+**Mods de la variante C** (Equilibrium → Temporal Artillery, 1 Forma Zenurik sur le slot 3) :
+
+| Slot | Polarité | Mod | Coût |
+|---|---|---|---|
+| Aura | Universelle (innée) | Growing Power | **+14** capacité |
+| Exilus | Vazarin (Forma) | Primed Sure Footed | 8 |
+| 1 | Madurai (innée) | Blind Rage | 8 |
+| 2 | Naramon (innée) | Stretch | 5 |
+| 3 | **Zenurik (Forma)** | **Temporal Artillery** (R3) | 5 |
+| 4 | Vazarin (Forma) | Archon Vitality | 8 |
+| 5 | Umbra (Forma) | Umbral Intensify | 8 |
+| 6 | Madurai (Forma) | Primed Continuity | 7 |
+| 7 | Vazarin (Forma) | Narrow Minded | 8 |
+| 8 | Vierge | Rolling Guard | 12 |
+| **Total** | | | **69 / 74** |
+
+- **6 Forma** au total. Sans la Forma Zenurik, l'augment coûte 11–12 en slot Naramon et le build passe à 75–76/74.
+- **Pourquoi Equilibrium sort** : sans Dispensary, il ne convertit plus que les orbes d'Eximus et de Synth Deconstruct, et le rembobinage efface l'énergie ramassée pendant l'ancre (voir l'économie ci‑dessous).
+- **Stats inchangées** : 243 % / 284 % / 79 % / 45 % (175 % sous Sculptor). Arcanes, shards et compagnon B identiques.
+
+**Valeurs propres à la variante C :**
+
+| Élément | Valeur |
+|---|---|
+| **Temporal Anchor** (4) | 155 au 1er cast / **25** sous Sculptor · **22,7 s** · 3 s d'invulnérabilité au cast · death gate · au rembobinage : purge de tous les statuts, énergie / shields / santé / munitions / combo ramenés à la valeur enregistrée |
+| **Implosion** | **67 %** des dégâts enregistrés (92 % sur le 4e cast), Blast, 11,85 m, knockdown + aspiration. Les tourelles (DoT compris) et les Shrapnel Vortex alimentent l'enregistrement |
+| **Tourelle suiveuse** | 360°, 23,7 m, **20 × 1 340 = 26 800 Heat par tir** au plafond (×2 stacks de Heat via Archon Vitality, ×Roar), sans expiration tant que l'ancre tient |
+| **Roar** (3, Helminth) | Inchangé : 116,25 / 18,75, +80 % à +128 %, 85 s |
+
+**Suiveuse (plafond 20×) contre tourelle fixe (non plafonnée).** Le multiplicateur d'un tir vaut 1 + k × (nombre de tirs précédents), avec k = ennemis touchés par tir. Sur les 25 tirs d'une tourelle fixe (8,52 s) :
+
+| Ennemis touchés par tir (k) | Tourelle fixe (multiplicateur moyen) | Suiveuse |
+|---|---|---|
+| 1 | 13× | **20×** (atteint au 20e tir, puis conservé) |
+| 2 | 25× | 20× |
+| 3 | 37× | 20× |
+| 5 | 61× | 20× |
+
+- **Seuil ≈ 1,6 ennemi par tir.** En dessous (cibles éparses, contournements, ennemis dans ton dos), la suiveuse fait mieux qu'une tourelle fixe. Au‑dessus (couloir dense, Cordon), elle tombe au **tiers** d'une tourelle fixe.
+- En couloir dense, C perd donc jusqu'à **~22 %** des dégâts de tourelles (1 tourelle sur 3 au tiers) ; l'implosion périodique compense en partie. En contenu mobile, C gagne.
+
+**Économie d'énergie.** Selon le wiki, le rembobinage rembourse tout ce qui a été dépensé pendant l'ancre, sauf le coût de l'ancre elle‑même :
+
+| Poste (par ancre de 22,7 s, sous Sculptor) | Énergie |
+|---|---|
+| 2 tourelles fixes (~5,3 casts × 12,5) | 66 (remboursés) |
+| Satellites (~1,75 cast × 6,25) | 11 (remboursés) |
+| Roar (~0,27 cast × 18,75) | 5 (remboursé) |
+| Temporal Anchor | **25 (non remboursé)** |
+| **Net** | **−25 par ancre (−1,1/s)**, contre +37,5/s en A |
+
+- Réserve de 250 : **~10 ancres (~3,8 min) sans aucun apport**. Il faut ≈ 110 d'énergie au moment de poser l'ancre pour couvrir la fenêtre.
+- **Piège** : le rembobinage **ramène** l'énergie à la valeur enregistrée. Une orbe ramassée pendant l'ancre est donc perdue. Deux parades :
+  - ramasse les orbes (Eximus : Large Energy Orb de 50) **entre** le rembobinage et la pose de l'ancre suivante ;
+  - si ta jauge dépasse la valeur enregistrée juste avant l'expiration, **maintiens 4** (destruction de l'ancre sans rembobinage), puis repose‑la.
+- Même logique pour les munitions : l'Epitaph (40 max) et la Torid reviennent à la valeur enregistrée. La charge Incarnon n'est pas restaurée.
+- **Nullifier** : une bulle dissipe l'ancre **sans rembobinage**, donc sans remboursement de la fenêtre en cours.
+
+**Ce que C gagne en survie** (par rapport à A) :
+
+- **Death gate** : un coup fatal pendant l'ancre te ramène à l'ancre avec 5 % de PV (ragdoll) ; relance l'ancre aussitôt pour ses 3 s d'invulnérabilité.
+- **3 s d'invulnérabilité à chaque ancre** (≈ 13 % d'uptime).
+- **Purge de tous les statuts** au rembobinage, Toxin compris.
+- **Insensible à Untreatable** : plus aucune dépendance aux Health Orbs du Dispensary (cf. 4.5).
+
+**Ce que C coûte :**
+
+- Dispensary (plus d'Empowered Health Orbs : sans effet au 9999, mais tampon de santé perdu en Endurance) et Equilibrium.
+- Le rembobinage te **téléporte** à l'ancre toutes les 22,7 s : pose‑la à un endroit sûr. Pour te déplacer, maintiens 4 et repose‑la plus loin, mais tu perds le remboursement de la fenêtre.
+- Une Forma de plus et un augment à acheter.
+
+**Ouverture C :** Epitaph → Grenade Fan, satellites (38,75) → attends l'atterrissage (Sculptor) → Blaze ×2 → **Roar (4e cast, +110 %)** → 3e Blaze **près de toi** (elle sera la plus proche) → Temporal Anchor (la suiveuse s'attache).
+
+**Tests à faire en Simulacrum avant d'adopter C au 9999 :**
+
+1. Le rembobinage rend‑il bien l'énergie dépensée en tourelles ? Une orbe ramassée pendant l'ancre est‑elle effacée ?
+2. Après un rembobinage puis une nouvelle ancre, la même tourelle se rattache‑t‑elle, avec son combo à 20× ?
+3. Coup fatal pendant l'ancre avec Arcane Escapist chargé : lequel se déclenche en premier, et Escapist consomme‑t‑il ses stacks ?
+
+**Verdict.** C garde Roar **et** récupère le death gate que la v1.1 avait sacrifié : sur le papier, c'est la configuration level cap la plus sûre, à dégâts comparables. En échange, elle remplace un moteur d'énergie excédentaire (+37,5/s) par une boucle de remboursement à **−1,1/s** qui demande de la gestion. **A reste le défaut en Endurance** (couloirs denses, Dispensary utile). **C devient la référence au 9999 si les tests 1 et 2 passent.** Bonus : C rend aussi accessible **Temporal Erosion** (l'autre augment de l'ancre : Grenade Fan et Blaze Artillery retirent de l'armure pendant l'ancre), mais il faut lui trouver un slot (piste non chiffrée).
+
+### 1.12 Couches de survie complémentaires : Secondary Fortifier et Vazarin (ajout v1.2)
+
+**Ce ne sont pas des alternatives à Arcane Escapist.** Escapist occupe un slot d'arcane de Warframe ; Secondary Fortifier, le slot d'arcane de l'arme secondaire (à la place de Secondary Encumber) ; Vazarin est une école de Focus (le guide n'en imposait aucune). Les trois s'empilent sans rien retirer au build de la Warframe. **Escapist reste en place.**
+
+**Secondary Fortifier (sur l'Epitaph Prime, au level cap)**
+
+- Texte (R5) : *« Gain 1 Overguard for every 100 Damage dealt to an enemy's Overguard. Deals x8 Extra Damage to Overguard. »* Plafond : **15 000 Overguard**.
+- **Pourquoi c'est fort ici** : sur un joueur, l'Overguard est neutre à tous les types de dégâts sauf Void, **annule tous les statuts** (Toxin et Magnetic compris) et ouvre un **gate de 0,5 s** à sa rupture, sans débordement sur les shields. C'est la seule couche du build qui arrête un tir **Toxin**, la menace n°1 de l'audit.
+- **Bonus offensif** : ×8 sur l'Overguard des Eximus, principale résistance au cap (le Viral ne le touche pas, cf. 4.3). L'AoE de 14,4 m de l'Epitaph touche plusieurs Eximus à la fois.
+- **Limites :**
+  - Il ne se recharge **que** sur un ennemi doté d'Overguard (Eximus). Sans Eximus, l'arcane ne fait rien.
+  - 15 000 = **un coup** au 9999, plus 0,5 s. Ce n'est pas un mur, c'est un gate de plus.
+  - **Non documenté** : un gain d'Overguard pendant un shield gate le coupe‑t‑il, comme une recharge de shields ? À tester. En attendant, ne tire pas sur un Eximus pendant ton gate.
+- **Ce que tu perds** : Secondary Encumber (+24 % de chance d'un second statut aléatoire), soit en moyenne moins d'un type de statut en plus sur la cible. Coût faible au cap, où ce sont les tourelles qui tuent. **Garde Encumber en Endurance.**
+- **Usage** : avant de tuer un Eximus, **remplis ton Overguard sur lui**. Au 9999, son Overguard est en général assez gros pour te recharger plusieurs fois.
+
+**École de Focus : Vazarin**
+
+- **Protective Sling** : un allié touché par ton Void Sling est **invulnérable 5 s** et soigné de 60 % sur 5 s, **ta propre Warframe comprise**. Coût : 10 énergie, aucun temps de recharge indiqué.
+  - Procédure : Transference (ta Warframe est en règle générale invulnérable tant que l'Operator est sorti) → Void Sling **à travers ta Warframe** → retour. Le wiki indique que l'invulnérabilité est conservée au retour (sauf Excalibur Umbra).
+  - **Risque** : au 9999, l'Operator meurt en un coup. Tu reviens alors dans la Warframe **shields vides**, avec un stack de Transference Static (−20 % de santé max ; au 4e stack, bleedout immédiat). Fais‑le vite, hors de la ligne de tir.
+  - C'est un bouton **proactif**. Escapist (et, en variante C, le death gate de l'ancre) restent les seuls filets **automatiques** sur coup fatal.
+- **Mending Soul** (passif) : les **4 premières réanimations sont instantanées**, soit 4 relevés immédiats par mission une fois à terre (non rechargeables).
+- **Nidri Tauron Strike / Deathless Currents** (ultime) : 20 s de vortex qui réanime instantanément dans sa zone, même là où l'auto‑réanimation est désactivée.
+- **⚠️ Piège : Guardian Shell.** Sa rupture déclenche **Guardian Break** (+150 % de régénération de shields, **−80 % de délai** pendant 12 s). Pour la même raison que Fast Deflection (cf. 1.6), la recharge naturelle démarrerait pendant ton gate et le couperait. **Ne lance jamais Guardian Shell.**
+
+**Pile de filets au 9999 (v1.2) :**
+
+| # | Couche | Couverture | Déclenchement | Source |
+|---|---|---|---|---|
+| 1 | Overguard (≤ 15 000) | 1 coup de tout type + 0,5 s, statuts annulés | Automatique, s'il est chargé | Secondary Fortifier |
+| 2 | Shield gate (+ satellite) | 2,5 s | Automatique | Shields 1 230 / Grenade Fan |
+| 3 | Rolling Guard | 3 s + purge des statuts | Roulade, recharge 7 s | Mod |
+| 4 | Protective Sling | 5 s | Manuel (Operator) | Vazarin |
+| 5 | Death gate de l'ancre | Retour à l'ancre, 5 % de PV | Coup fatal, ancre active | Variante C uniquement |
+| 6 | Arcane Escapist | 12 s | Coup fatal, 3 stacks | Arcane |
+| 7 | Mending Soul | Réanimation instantanée | À terre (×4 par mission) | Vazarin |
+
+Seul l'ordre Martyr Symbiosis → Escapist est documenté (cf. 3). L'ordre entre le death gate de l'ancre et Escapist est à tester (test 3 de 1.11).
+
 ---
 
 ## 2. LOADOUT COMPLET DES ARMES
@@ -279,7 +425,7 @@ Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu r
 | 7 | Naramon | Primed Quickdraw (+88 % Reload) | 6 |
 | 8 | Vierge | Pistol Elementalist (+90 % Status Damage / +60 % Reload) | 9 |
 | Exilus | Naramon | Primed Pistol Ammo Mutation (seulement 40 munitions max) | 5 |
-| Arcane | — | **Secondary Encumber** (+24 % de chance de déclencher un second statut aléatoire parmi 13) | — |
+| Arcane | — | **Secondary Encumber** (+24 % de chance de déclencher un second statut aléatoire parmi 13) — au level cap : **Secondary Fortifier** (cf. 1.12) | — |
 | | | **Total** | **57 / 60** |
 
 - **Éléments** : Toxin + Electricity = **Corrosive** (seuls éléments, ordre indifférent). L'AoE garde son Blast natif.
@@ -314,6 +460,76 @@ Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu r
 - **Wind Up** : +120 %, soit 1,2 s → ~0,55 s de charge.
 - **Ordre de grandeur** (avant armure/Viral) : 1 184 × 3,85 × 3,55 × 6 × 7,51 (crit + Tenacious) × 1,6 × 2,1 (Roar) ≈ **2,4 millions par explosion**, en AoE de 4,8 m. C'est un plafond : avec un combo à ×2, sans Tenacious ni Roar, on tombe à ≈ 0,3 M (÷8).
 - **Alternative niveau cap pur** : *Melee Assimilation* (sur rupture de shields : +150 % dégâts Heavy, et les kills Heavy rendent 30 % des shields max). Elle réarme le gate par les kills, mais **coupe** les gates des satellites en cours. Duplicate reste le BiS burst.
+
+### 2.4 Arsenal alternatif (ajout v1.2)
+
+Les deux vidéos construisent l'arsenal autrement. Le **primer passe en arme principale** (Phantasma Prime), la secondaire devient une arme d'Overguard et de dégâts (Kuva Nukor), et la mêlée est une faux (Hate). Valeurs : wiki, au 25/10/2026.
+
+**Phantasma Prime (primer principal, à la place de la Torid Incarnon)**
+
+| Stat | Valeur |
+|---|---|
+| Faisceau | 6 rayons × 15 (5 Impact + 10 Radiation), **12 ticks/s**, hitscan, 25 m |
+| Statut | 22,2 % par rayon (≈ 1,33 proc par tick sans mods) |
+| Crit | 11 % / 1,9× |
+| Perforation | **Infinie à travers les corps** (pas les surfaces) |
+| Munitions | 0,5 par tick (6/s) ; 330 max ≈ 55 s de tir continu ; chargeur 11, reload 0,5 s |
+| Polarités | Madurai, Madurai, Naramon (Exilus Madurai). **Vaultée** : reliques en stock, échange ou Prime Resurgence |
+
+- **Pourquoi c'est pertinent** : au cap, ce sont les tourelles qui tuent, et la Torid n'est plus qu'un applicateur de statuts dont les dégâts s'effondrent avec ses stacks (×6,5, cf. 2.1). Phantasma Prime fait ce travail **sans dépendre des kills**.
+  - Avec +200 % de statut (Galvanized Savvy + deux mods doubles 60/60), un rayon atteint 66,6 % : ≈ **4 procs par tick, ~48 par seconde**, sur **toute une ligne** d'ennemis.
+  - C'est la même géométrie que les tourelles (perforation infinie des corps).
+- **Éléments** : Toxic Barrage + Frigid Blast = **Viral** (+ Radiation innée, séparée) ; Toxic Barrage + Shell Shock = **Corrosive** (+ Radiation). La Radiation est résistée par les Corrupted, mais son statut (confusion) est un vrai contrôle au cap.
+- **Synergie Escapist** : l'Impact représente 1/3 des dégâts de base, donc beaucoup de procs Impact, qui relèvent le seuil de Mercy (+8 % par proc).
+- **Arcane** : **Primary Crux** (sur Weak Point : +30 % de statut et +6 % d'Ammo Efficiency par stack, 10 s, jusqu'à 10 stacks = +300 %). Primary Merciless n'a pas de sens sur un primer, et Primary Debilitate est moins efficace sur les faisceaux (wiki).
+- **Contre** : 25 m (contre 37 m pour le rayon Incarnon de la Torid), crit faible, arme vaultée, munitions à surveiller (cap d'Ammo Efficiency à 75 %).
+- **Verdict** : **meilleur primer de ligne que l'Epitaph**, mais sans l'AoE de 14,4 m ni le Cold forcé. Son vrai intérêt : il libère le slot secondaire pour le Kuva Nukor (arsenal B). Liste de mods complète et capacité non chiffrées ici.
+
+**Kuva Nukor (secondaire, à la place de l'Epitaph Prime)**
+
+| Stat | Valeur |
+|---|---|
+| Faisceau | 21 Radiation (+25 à 60 % d'élément Kuva selon le progéniteur), **10 ticks/s**, hitscan, 29 m |
+| Chaînage | 2 ennemis à 9 m, 50 % des dégâts (les cadavres servent de relais) |
+| Crit | 7 % / **5,0×** (multiplicateur le plus élevé du jeu) |
+| Statut | 50 % ; inflige **Microwave** (statut invisible, compté comme un type distinct par Galvanized) |
+| Munitions | Chargeur 77, reload 2 s, 210 max |
+| Polarités | Aucune (Exilus Madurai) : Forma à prévoir. Obtention : Kuva Lich |
+
+- **Pourquoi c'est pertinent** : la cadence de 10/s et le chaînage en font l'arme qui exploite le mieux **Secondary Fortifier** (vol d'Overguard continu sur plusieurs Eximus, au‑dessus du seuil de 2 tirs/s cité par le wiki).
+  - En **Magnetic** (Frostbite + Jolt, + Radiation innée), il amplifie les dégâts sur l'Overguard (jusqu'à +325 % à 10 stacks) en plus du ×8 de Fortifier.
+  - Le multiplicateur de 5× en fait aussi une vraie arme de dégâts. Le wiki conseille les bonus de crit plat (Secondary Enervate), mais ce slot d'arcane est pris par Fortifier : Primed Pistol Gambit fait monter le CC à ~20 %.
+- **Ce que tu perds par rapport à l'Epitaph** : l'AoE de 14,4 m, le Cold et l'**Impact forcés** (seuil de Mercy pour Escapist), le Corrosive de 15,2 s. Le Nukor ne prime qu'une cible + 2.
+- **Verdict** : l'Epitaph reste le primer par défaut de l'arsenal A. Le Nukor devient la bonne secondaire **dès que le primer passe en principale** (arsenal B).
+
+**Hate Incarnon (mêlée, à la place du Glaive Prime)**
+
+| Stat | Valeur |
+|---|---|
+| Base | 230 (161 Slash, 34,5 Impact, 34,5 Puncture), crit 30 % / 2,5×, statut 20 %, portée 2,8 m, 0,917 attaque/s |
+| Heavy | Heavy Attack 1 380 ; Heavy Slam 690 Blast sur 9 m (Lifted forcé) |
+| Incarnon (Évo I) | Combo 6× puis Heavy Attack : 180 s, conservé au bleedout. Les combos avant/neutre lancent une lame spectrale (60 m/s) qui explose en **Heat sur 3 m** après 0,4 s, sans auto‑stagger |
+| Évolutions | II : Swordsman's Flourish / Stalker's Legacy (+30 de base) · III : Orokin Reach / Swift Break (+60 % de Wind Up) / Resolute Force · IV : Absolute Valor / Absolute Dominion / Subtle Force |
+| Obtention | Plan sur le Stalker ; Incarnon Genesis : Circuit Steel Path, 120 platinum chez Cavalero |
+
+- **Pour** : arme Slash (le Bleed ignore l'armure, utile sous Archaic Armor), Incarnon persistant, pas de micro lancer/rappel, lames à distance sans auto‑stagger.
+- **Contre :**
+  - Les lames spectrales **ne profitent pas** du +30 de base, du +100 % de l'Incarnon ni des mods de dégâts de mêlée (Pressure Point) : elles scalent mal au 9999.
+  - Le reste du kit (Heavy, Slam) se joue **au contact**, là où le Glaive détone à distance.
+  - L'attaque normale n'a pas d'Impact forcé (seul le Slam en a) : moins de Mercy pour Escapist.
+- **Verdict** : le **Glaive Prime reste le BiS** de ce build (détonation à distance de 4,8 m, Impact + Slash forcés, crit calé sur Melee Duplicate). Hate Incarnon est une alternative de confort si tu ne veux pas gérer le lancer/rappel, ou contre l'armure non retirable.
+
+**Arsenal B (primer en principale)**
+
+| Slot | Arsenal A (défaut) | Arsenal B (inspiré des vidéos) |
+|---|---|---|
+| Principale | Torid Incarnon (nettoyage + Viral) — Primary Merciless | **Phantasma Prime** (primer de ligne) — **Primary Crux** |
+| Secondaire | Epitaph Prime (primer AoE) — Encumber / Fortifier | **Kuva Nukor** (Magnetic, moteur d'Overguard) — **Secondary Fortifier** |
+| Mêlée | Glaive Prime — Melee Duplicate | Glaive Prime (ou Hate Incarnon) |
+
+- **B est plus fort contre les Eximus** (Magnetic + ×8 sur l'Overguard, Overguard du joueur entretenu en continu) et ne s'effondre pas quand le rythme de kills chute.
+- **A garde l'avantage** en AoE de priming (Epitaph, 14,4 m), en Mercy (Impact forcé) et en accessibilité (Phantasma Prime est vaultée, le Nukor exige une Kuva Lich).
+- Growing Power reste à 100 % d'uptime dans les deux cas (statuts d'arme en continu).
 
 ---
 
@@ -401,7 +617,7 @@ Le seul cas où Temporal Anchor redevient BiS : une tentative de record où tu r
 
 **Correction v1.1 : l'option A n'est pas une option level cap.** Nautilus Prime a 560 PV et 350 shields (1 225 avec Calculated Redirection) : au 9999, un coup suffit à la mettre à terre. À terre, il n'y a plus de Cordon, plus d'Assault Mode (Growing Power ne repose plus que sur l'Epitaph) et plus de Sacrifice ; seul Vacuum continue de fonctionner. Le comportement de Tenacious Bond quand le compagnon est à terre n'est pas documenté.
 
-**Option B, ajout possible :** **Martyr Symbiosis** (précepte Vulpaphyla, coût 3) à la place de Restorative Bond. Il stocke de la santé sur les cadavres et se sacrifie pour te soigner sous 10 % de santé (1 s d'invulnérabilité), et le wiki indique qu'il se déclenche **avant** Arcane Escapist sans consommer ses stacks. Son comportement face à un one‑shot depuis la santé pleine n'est pas documenté.
+**Option B, ajout possible :** **Martyr Symbiosis** (précepte Vulpaphyla, coût 3) à la place de Restorative Bond. Il stocke de la santé sur les cadavres et se sacrifie pour te soigner sous 10 % de santé (1 s d'invulnérabilité), et le wiki indique qu'il se déclenche **avant** Arcane Escapist sans consommer ses stacks. Son comportement face à un one‑shot depuis la santé pleine n'est pas documenté. **En variante C** (sans Dispensary), Restorative Bond perd sa synergie : Martyr Symbiosis y devient le choix par défaut.
 
 ---
 
@@ -439,6 +655,7 @@ Menaces de faction prioritaires :
 
 - **Overguard** : immunisé aux CC, **le Viral ne touche pas l'Overguard**. Le **Magnetic** amplifie les dégâts sur l'Overguard (+100 % au 1er stack → +325 % à 10 stacks) et inflige des dégâts Electricity à sa rupture. Le Cold fonctionne jusqu'à 4 stacks.
   - Swap anti‑Eximus = le swap Corpus (Magnetic). Encumber pose aussi du Magnetic au hasard.
+  - **v1.2 : Secondary Fortifier** (cf. 1.12) multiplie par ×8 les dégâts de la secondaire sur l'Overguard, et chaque tranche de 100 dégâts sur l'Overguard ennemi te rend 1 Overguard (plafond 15 000). Au cap, c'est la meilleure réponse aux Eximus, et elle te protège en même temps.
 - **Ordre de kill au cap** :
   1. **Septic / Venomous** : aura Toxin de 3,5 m avec proc Toxin garanti, qui ignore les shields. Tue‑les **à distance**, jamais au contact.
   2. **Energy Leech / Parasitic** : zone qui s'effondre en 3 s avec dégâts **Magnetic** et proc garanti (shields détruits, énergie drainée). Sors de la zone, et Rolling Guard si tu prends le proc.
@@ -473,8 +690,8 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 | **Cryogenic Leakage** (aléa d'environnement, −50 % de shields) | 615 shields → gate 1,78 s (2,25 s si appliqué avant les shards) | Sortir de la zone, timing satellites à ~1,5 s |
 | **Anemic Shields** (Archimedea, plafond 500) | Gate 1,59 s | Idem |
 | **Flankable** (Icebind, −75 % de shields) | Gate 1,25 s (0,63 s avec Stunted) | Reste face aux ennemis (bouclier Volt frontal) ; build à éviter |
-| **Bruised Shields** (Icebind : shields restaurés uniquement par la mêlée) | **Satellites inopérants** | Melee Assimilation sur le Glaive (les kills Heavy rendent 30 % des shields) ; sinon, autre Warframe |
-| **Untreatable** (Icebind : Health Orbs non ramassables) | Énergie Dispensary : 37,5 → **6,5/s** | Sculptor garde le build à +1,1/s ; zéro marge |
+| **Bruised Shields** (Icebind : shields restaurés uniquement par la mêlée) | **Satellites inopérants** | Melee Assimilation sur le Glaive (les kills Heavy rendent 30 % des shields) ; l'Overguard de Secondary Fortifier n'est pas un shield et devrait rester utilisable (à tester) ; sinon, autre Warframe |
+| **Untreatable** (Icebind : Health Orbs non ramassables) | Énergie Dispensary : 37,5 → **6,5/s** | Sculptor garde le build à +1,1/s ; zéro marge. **Variante C** (1.11) : non concernée, elle ne dépend pas des Health Orbs |
 | **Constricted** (Icebind : énergie max −75 %) | Max 62,5 | Jouable **uniquement** avec Sculptor (cast max 18,75) |
 | **Framecurse Syndrome** (Icebind / Archimedea : 50 PV + 150 shields par cast) | ~27 casts/min : −1 350 PV/min | Réduire les recasts de tourelles ; build à éviter |
 | **Abbreviated Abilities** (Icebind : −50 % de durée) | Tourelles 4,3 s, Roar 42,6 s, Dispensary 35,5 s | Variante Duration impossible à compenser ; accepter |
@@ -541,14 +758,16 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 3. **Rolling Guard** sur tout proc **Toxin** (traverse les shields) ou **Magnetic**, et sur les DoT Slash/Heat qui mangent tes satellites. Pour couvrir un trou, enchaîne gate (2,5 s) → RG (3 s) → satellite. Ne superpose **jamais** RG et un gate (gaspillage).
 4. **Casts à animation lourde** (Grenade Fan = animation corps entier avec saut forcé de 1 m) : lance‑les **pendant** un gate ou une RG.
 5. **Stacks d'Arcane Escapist** : fais un Mercy kill dès que l'invite apparaît sur une unité lourde (seuil relevé par les Impact du Glaive et de l'Epitaph). Vise 9 stacks avant de pousser le niveau.
-6. **Ordre de kill** : Septic/Venomous Eximus → Energy Leech Eximus → Toxic Ancient / Ancient Disruptor → Nullifier → unités à knockdown de zone.
+6. **Overguard (Secondary Fortifier, v1.2)** : sur chaque Eximus, remplis ton Overguard **avant** de le tuer. Tant qu'il tient, un tir Toxin ne passe pas. Évite de le recharger pendant un shield gate (interaction non documentée, cf. 1.12).
+7. **Ordre de kill** : Septic/Venomous Eximus → Energy Leech Eximus → Toxic Ancient / Ancient Disruptor → Nullifier → unités à knockdown de zone.
 
 ### 5.4 Moments critiques
 
 | Situation | Réponse immédiate |
 |---|---|
 | **0 shield, aucun satellite, RG disponible** | **RG d'abord** (3 s), puis pendant la RG : satellites à 4–6 m, et entre dans l'un d'eux avant la fin de la RG |
-| **0 shield, aucun satellite, RG en recharge** | Dernier recours : satellites **à tes pieds**. Sous un feu nourri, les 4 s'accrocheront et seront détruits en chaîne : prévois **2 casts** et compte sur Arcane Escapist |
+| **0 shield, aucun satellite, RG en recharge** | **Protective Sling** si tu as une seconde à couvert : Transference → Void Sling à travers ta Warframe → retour = 5 s d'invulnérabilité pour reposer des satellites à 4–6 m. Sinon, dernier recours : satellites **à tes pieds**. Sous un feu nourri, les 4 s'accrocheront et seront détruits en chaîne : prévois **2 casts** et compte sur Arcane Escapist |
+| **Variante C : rembobinage imminent dans une zone dangereuse** | Maintiens 4 (destruction de l'ancre sans rembobinage) et repose‑la ici. Tu perds le remboursement de la fenêtre, pas ta position |
 | **Sculptor retombé** (aucun objet créé depuis 12 s, ex. long trajet entre objectifs) | 1er cast = **Grenade Fan** (le moins cher), *jamais* Roar ni Dispensary plein tarif (116,25) |
 | **Énergie basse** | Marche sur le Dispensary : 1 Empowered Health Orb = 110 énergie. Chaque Eximus tué ≈ +104 |
 | **Proc Magnetic** (Corpus, Energy Leech) | **RG immédiate** : le Magnetic réduit la régénération naturelle, amplifie les dégâts sur shields et draine l'énergie |
@@ -567,6 +786,9 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 - Jouer au cap avec l'option A (sentinelle) ou sans Arcane Escapist.
 - Considérer les Infested comme une faction « facile » : leur Toxin ignore toute ta couche défensive.
 - Lire les chiffres de dégâts du guide comme des valeurs de travail : ce sont des plafonds à stacks pleins.
+- Équiper Temporal Artillery dans la configuration A : sans Temporal Anchor dans le kit, l'augment ne fait rien.
+- Lancer Guardian Shell (Vazarin) : Guardian Break coupe tes gates.
+- En variante C, ramasser des orbes pendant l'ancre en croyant les garder : le rembobinage les efface.
 
 ---
 
@@ -580,10 +802,23 @@ Formule simplifiée : `Dégâts = Base × (1+Σ%Base) × Multishot × (1+Σ%Él�
 - Factions / Eximus : [Damage/Overview Table](https://wiki.warframe.com/w/Damage/Overview_Table) · [Eximus](https://wiki.warframe.com/w/Eximus)
 - Patchs : [Update 43](https://wiki.warframe.com/w/Update_43) · [Update 44](https://wiki.warframe.com/w/Update_44)
 - Ajouts v1.1 : [Arcane Escapist](https://wiki.warframe.com/w/Arcane_Escapist) · [Mercy](https://wiki.warframe.com/w/Mercy) · [Slash Damage](https://wiki.warframe.com/w/Damage/Slash_Damage) · [Toxin Damage](https://wiki.warframe.com/w/Damage/Toxin_Damage) · [Magnetic Damage](https://wiki.warframe.com/w/Damage/Magnetic_Damage) · [Protea Passive](https://wiki.warframe.com/w/Protea/Abilities/Passive) · [Deep Archimedea](https://wiki.warframe.com/w/Deep_Archimedea) · [Martyr Symbiosis](https://wiki.warframe.com/w/Martyr_Symbiosis)
+- Ajouts v1.2 (wiki) : [Temporal Artillery](https://wiki.warframe.com/w/Temporal_Artillery) · [Temporal Anchor](https://wiki.warframe.com/w/Temporal_Anchor) · [Blaze Artillery](https://wiki.warframe.com/w/Blaze_Artillery) · [Secondary Fortifier](https://wiki.warframe.com/w/Secondary_Fortifier) · [Overguard](https://wiki.warframe.com/w/Overguard) · [Vazarin](https://wiki.warframe.com/w/Vazarin) · [Protective Sling](https://wiki.warframe.com/w/Protective_Sling) · [Transference](https://wiki.warframe.com/w/Transference) · [Phantasma Prime](https://wiki.warframe.com/w/Phantasma_Prime) · [Phantasma](https://wiki.warframe.com/w/Phantasma) · [Primary Crux](https://wiki.warframe.com/w/Primary_Crux) · [Primary Debilitate](https://wiki.warframe.com/w/Primary_Debilitate) · [Kuva Nukor](https://wiki.warframe.com/w/Kuva_Nukor) · [Hate](https://wiki.warframe.com/w/Hate) · [Arcane Enhancement](https://wiki.warframe.com/w/Arcane_Enhancement)
+- Vidéos croisées en v1.2 (non visionnées, cf. en‑tête) : [« [WARFRAME] PROTEA PRIME vs Level 9999 – You Can Make Tea While Playing »](https://youtu.be/RmMHVDMDNG4) (SyrexLeon Gaming) · [« Why Protea NEVER Leaves S-Tier »](https://youtu.be/fJbfRbPUTW8) (RexChamp Sean)
 
 ---
 
 ## Journal des versions
+
+**v1.2 (25/10/2026)** — croisement avec deux vidéos (SyrexLeon Gaming, RexChamp Sean) :
+
+1. Temporal Artillery : inutilisable dans la configuration A (pas de Temporal Anchor). Nouvelle **variante C** : Roar à la place de Dispensary, Temporal Anchor + Temporal Artillery à la place d'Equilibrium (69/74, 6 Forma). Candidate au 9999 sous réserve de 3 tests (1.11).
+2. Comparatif tourelle suiveuse (plafond 20×) / tourelle fixe : seuil à ~1,6 ennemi par tir ; jusqu'à −22 % de dégâts de tourelles en couloir dense.
+3. Économie d'énergie de la variante C chiffrée (remboursement au rembobinage, −1,1/s net), avec ses pièges (orbes effacées, Nullifier).
+4. **Secondary Fortifier** sur l'Epitaph au level cap (Overguard jusqu'à 15 000 : arrête le Toxin, ×8 sur l'Overguard des Eximus) ; Secondary Encumber conservé en Endurance.
+5. École de Focus **Vazarin** ajoutée (Protective Sling 5 s, Mending Soul ×4) ; **Guardian Shell** ajouté aux interdits.
+6. **Arcane Escapist conservé** : Fortifier et Vazarin s'ajoutent sans le remplacer. Pile de filets ordonnée (1.12), protocole level cap et moments critiques mis à jour.
+7. Arsenal alternatif évalué (2.4) : Phantasma Prime (primer de ligne, Primary Crux), Kuva Nukor (Fortifier, Magnetic), Hate Incarnon. Arsenal B défini ; l'arsenal A reste le défaut.
+8. Limite : vidéos non visionnées depuis l'environnement de rédaction ; leurs listes de mods exactes ne sont pas reprises.
 
 **v1.1 (25/10/2026)** — corrections issues de [l'audit hostile](audit-protea-prime-v1.md) :
 
