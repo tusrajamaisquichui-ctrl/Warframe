@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Audit hostile v1 · Protea Prime</title>
+<meta name="description" content="Audit de la v1.0 : 12 défauts relevés, corrigés en v1.1.">
+<meta name="theme-color" content="#0b0e13">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Audit hostile v1 · Protea Prime">
+<meta property="og:description" content="Audit de la v1.0 : 12 défauts relevés, corrigés en v1.1.">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css?v=ff893343bd">
+<script>document.documentElement.classList.add("js")</script>
+<script src="assets/app.js?v=4630ae5505" defer></script>
+</head>
+<body class="page-audit">
+<a class="skip-link" href="#main">Aller au contenu</a>
+<header class="site-header"><div class="bar"><a class="brand" href="index.html"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32 4 56 18v28L32 60 8 46V18z" fill="#141a22" stroke="#e9b44c" stroke-width="4" stroke-linejoin="round"/><path fill="#e9b44c" fill-rule="evenodd" d="M24 45V19h10.5c5.8 0 9.5 3.3 9.5 8.4S40.3 35.8 34.5 35.8H30V45zm6-20.8v6.4h4.1c2.3 0 3.7-1.2 3.7-3.2s-1.4-3.2-3.7-3.2z"/></svg><span class="brand-text"><span class="brand-name">Protea Prime</span><span class="brand-context" data-context>Audit hostile v1</span></span></a><span class="chip chip-version">Audit v1</span><button class="toc-toggle" type="button" aria-expanded="false" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg><span>Sommaire</span></button></div></header>
+<nav class="tabs" aria-label="Sections du guide"><div class="tabs-inner"><a class="tab" href="index.html#accueil" data-accent="home"><span class="tab-ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z"/></svg></span><span class="tab-short">Accueil</span><span class="tab-long">Accueil</span></a><a class="tab" href="index.html#bloc-1" data-accent="c1"><span class="tab-ico"><span class="tab-mark">1</span></span><span class="tab-short">Socle</span><span class="tab-long">① Socle commun</span></a><a class="tab" href="index.html#bloc-2" data-accent="c2"><span class="tab-ico"><span class="tab-mark">2</span></span><span class="tab-short">Endurance</span><span class="tab-long">② Endurance standard</span></a><a class="tab" href="index.html#bloc-3" data-accent="c3"><span class="tab-ico"><span class="tab-mark">3</span></span><span class="tab-short">Level Cap</span><span class="tab-long">③ Level Cap 9999</span></a><a class="tab is-current" href="index.html#annexes" data-accent="annex"><span class="tab-ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 4H19v13H6.5A2.5 2.5 0 0 0 4 19.5v-13A2.5 2.5 0 0 1 6.5 4z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H19v-5"/></svg></span><span class="tab-short">Annexes</span><span class="tab-long">Annexes</span></a></div></nav>
+<main id="main" tabindex="-1">
+<section class="panel accent-annex has-toc" id="audit" data-label="Audit hostile v1"><div class="panel-inner"><nav class="toc" id="toc-audit" aria-label="Sommaire : Audit hostile v1"><div class="toc-head"><span class="toc-title">Sommaire</span><button class="toc-close" type="button" aria-label="Fermer le sommaire"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><ol class="toc-list"><li><a href="#synthese"><span class="toc-text">Synthèse</span></a></li><li><a href="#s1"><span class="toc-num">1</span><span class="toc-text">Durabilité et Shield Gating</span></a><ol class="toc-sub"><li><a href="#s1-1"><span class="toc-num">1.1</span><span class="toc-text">🔴 La promesse « 5 s de gate avec satellite » n&#x27;est pas démontrée</span></a></li><li><a href="#s1-2"><span class="toc-num">1.2</span><span class="toc-text">🔴 Les 3 Tauforged Azure ignorent les pénalités de mission</span></a></li><li><a href="#s1-3"><span class="toc-num">1.3</span><span class="toc-text">🔴 La micro‑fenêtre mortelle existe, et le guide l&#x27;aggrave</span></a></li><li><a href="#s1-4"><span class="toc-num">1.4</span><span class="toc-text">🔴 Erreur de mécanique : le Slash ne traverse PAS les shields</span></a></li><li><a href="#s1-5"><span class="toc-num">1.5</span><span class="toc-text">🟠 Infested = « meilleure faction » ? Pour les dégâts, oui. Pour survivre, c&#x27;est la pire</span></a></li><li><a href="#s1-6"><span class="toc-num">1.6</span><span class="toc-text">🔴 Zéro anti‑mort, alors qu&#x27;une option existe</span></a></li></ol></li><li><a href="#s2"><span class="toc-num">2</span><span class="toc-text">Économie et stacking</span></a><ol class="toc-sub"><li><a href="#s2-1"><span class="toc-num">2.1</span><span class="toc-text">🟢 Arcane Sculptor : le choix est confirmé, et c&#x27;est l&#x27;autre arcane qui est mal choisi</span></a></li><li><a href="#s2-2"><span class="toc-num">2.2</span><span class="toc-text">🟠 Roar : le « dead time » est réel, mais pas là où on le pense</span></a></li></ol></li><li><a href="#s3"><span class="toc-num">3</span><span class="toc-text">Loadout et armes</span></a><ol class="toc-sub"><li><a href="#s3-1"><span class="toc-num">3.1</span><span class="toc-text">🔴 Torid Incarnon : le Viral par défaut est un choix de facilité, et les chiffres sont des chiffres de papier</span></a></li><li><a href="#s3-2"><span class="toc-num">3.2</span><span class="toc-text">🟠 Glaive Prime : « combo ×6 garanti » est faux</span></a></li><li><a href="#s3-3"><span class="toc-num">3.3</span><span class="toc-text">🟠 Verglas Prime / Tenacious Bond : le riven n&#x27;est pas le vrai problème, la mortalité de la sentinelle l&#x27;est</span></a></li></ol></li><li><a href="#s4"><span class="toc-num">4</span><span class="toc-text">Verdict de robustesse</span></a><ol class="toc-sub"><li><a href="#note-de-tolerance-a-l-erreur-4-10"><span class="toc-text">Note de tolérance à l&#x27;erreur : 4/10 (v1.0)</span></a></li><li><a href="#les-3-plus-gros-risques-de-mort-en-mission"><span class="toc-text">Les 3 plus gros risques de mort en mission réelle</span></a></li></ol></li><li><a href="#corrections-appliquees-dans-le-guide-v1-1"><span class="toc-text">Corrections appliquées dans le guide v1.1</span></a></li><li><a href="#sources-ajoutees"><span class="toc-text">Sources ajoutées</span></a></li></ol></nav><article class="prose"><header class="hero"><p class="hero-kicker"><a href="index.html#annexes">Annexes</a> › Audit hostile v1</p><h1>Audit hostile<span class="sub">Protea Prime Solo Level Cap / Endurance (guide v1.0)</span></h1></header><blockquote class="callout">
+<p><strong>Cible :</strong> <code>builds/protea-prime-level-cap-endurance.md</code>, version 1.0 (commit <code>0c8c172</code>).
+<strong>Méthode :</strong> re-vérification de chaque affirmation critique contre le wiki officiel (descriptions in‑game, modules de données, patch notes U43–U44.1.3), recalcul des chiffres, recherche des contradictions internes.
+<strong>Légende :</strong> 🔴 erreur ou risque de mort · 🟠 surestimation ou angle mort · 🟡 imprécision.
+Les corrections sont appliquées dans la <strong>v1.1</strong> du guide (dernière section).</p>
+</blockquote>
+<hr />
+<h2 id="synthese">Synthèse<a class="h-anchor" href="#synthese" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>Le guide v1.0 est <strong>chiffré, mais vendu plus solide qu'il ne l'est</strong>. Les faiblesses sont les suivantes :</p>
+<ul>
+<li>Sa promesse de survie centrale (gate de 5 s avec satellite) repose sur une page wiki que <strong>la description in‑game ne confirme pas</strong>.</li>
+<li>Il contient <strong>deux erreurs de mécanique</strong> : le Slash « qui traverse les shields », et l'absence d'anti‑mort.</li>
+<li>Il présente des <strong>valeurs de dégâts « stacks pleins » comme des garanties</strong> au niveau cap, précisément là où ces stacks s'effondrent.</li>
+<li>Il ignore <strong>toutes les pénalités de mission</strong>, alors que le mode endgame actuel (The Icebind, niveau 999+) <strong>réduit le Shield Gate de 50 % par défaut</strong>.</li>
+</ul>
+<hr />
+<h2 id="s1">1. Durabilité et Shield Gating<a class="h-anchor" href="#s1" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="s1-1">🔴 1.1 La promesse « 5 s de gate avec satellite » n'est pas démontrée<a class="h-anchor" href="#s1-1" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li><strong>Ce que dit le guide :</strong> satellite accroché = gate <strong>doublé</strong>, 2,5 s → <strong>5 s</strong>.</li>
+<li><strong>Ce que disent les sources :</strong>
+<ul>
+<li>Description <strong>in‑game</strong> de Grenade Fan : <em>« When Shields break, a Satellite is destroyed to double <strong>minimum</strong> Shield Gate invincibility time. »</em></li>
+<li>Champ technique du wiki : <em>« 2x s (minimum shield gate extension) »</em>.</li>
+<li>Seule la page <em>Shield</em> du wiki affirme « 0,66 – 5 s ». C'est une interprétation éditoriale, sans patch note ni test cité.</li>
+</ul>
+</li>
+<li><strong>Les deux lectures possibles :</strong>
+<ul>
+<li><strong>A</strong> : toute la courbe est doublée (0,66–5 s).</li>
+<li><strong>B</strong> : seul le plancher de 0,33 s passe à 0,66 s. Avec 1 230 shields, le gate reste alors à <strong>2,5 s</strong> et le satellite n'ajoute <strong>rien</strong>.</li>
+</ul>
+</li>
+<li><strong>Conséquence :</strong> le protocole v1.0 dit « n'entre dans le satellite suivant qu'à ~4 s ». <strong>Si la lecture B est la bonne, tu passes 1,5 s à 0 shield au niveau 9999 = mort.</strong> C'est l'instruction la plus dangereuse du guide.</li>
+<li><strong>Verdict :</strong> seule la durée de <strong>2,5 s</strong> est garantie. Le doublement doit être <strong>mesuré</strong> (Simulacrum, ennemi niveau 9999, chrono de la barre de vie grise avec et sans satellite) avant de bâtir un timing dessus.</li>
+</ul>
+<h3 id="s1-2">🔴 1.2 Les 3 Tauforged Azure ignorent les pénalités de mission<a class="h-anchor" href="#s1-2" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>Le calcul est <strong>juste</strong> en conditions nominales (555 + 675 = 1 230 &gt; 1 150 → 2,5 s). Il est <strong>robuste aux variations de mods</strong>, parce que la courbe est plate près du seuil :</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Strength (recharge satellite)</th>
+<th class="nw">Gate obtenu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="Strength (recharge satellite)">243 % (1 215)</td>
+<td data-label="Gate obtenu" class="nw">2,50 s</td>
+</tr>
+<tr>
+<td data-label="Strength (recharge satellite)">229 % (fallback Intensify : 1 145)</td>
+<td data-label="Gate obtenu" class="nw">2,49 s</td>
+</tr>
+<tr>
+<td data-label="Strength (recharge satellite)">200 % (1 000)</td>
+<td data-label="Gate obtenu" class="nw">2,31 s</td>
+</tr>
+<tr>
+<td data-label="Strength (recharge satellite)">150 % (750)</td>
+<td data-label="Gate obtenu" class="nw">1,97 s</td>
+</tr>
+</tbody>
+</table></div>
+<p>Il est en revanche <strong>fragile aux pénalités de mission</strong>, que la v1.0 ne mentionne pas :</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pénalité (source)</th>
+<th class="nw">Shields</th>
+<th>Gate réel</th>
+<th>Satellite (si lecture A)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="Pénalité (source)">Nominal</td>
+<td data-label="Shields" class="nw">1 230</td>
+<td data-label="Gate réel">2,50 s</td>
+<td data-label="Satellite (si lecture A)">5,00 s</td>
+</tr>
+<tr>
+<td data-label="Pénalité (source)"><strong>Stunted Shields</strong> (Icebind, <strong>trait standard</strong>, niveau 999+)</td>
+<td data-label="Shields" class="nw">1 230</td>
+<td data-label="Gate réel"><strong>1,25 s</strong></td>
+<td data-label="Satellite (si lecture A)">2,50 s</td>
+</tr>
+<tr>
+<td data-label="Pénalité (source)">Cryogenic Leakage (−50 %, appliqué au total)</td>
+<td data-label="Shields" class="nw">615</td>
+<td data-label="Gate réel">1,78 s</td>
+<td data-label="Satellite (si lecture A)">3,55 s</td>
+</tr>
+<tr>
+<td data-label="Pénalité (source)">Anemic Shields (Archimedea, plafond 500)</td>
+<td data-label="Shields" class="nw">500</td>
+<td data-label="Gate réel">1,59 s</td>
+<td data-label="Satellite (si lecture A)">3,19 s</td>
+</tr>
+<tr>
+<td data-label="Pénalité (source)">Flankable (Icebind, −75 %)</td>
+<td data-label="Shields" class="nw">308</td>
+<td data-label="Gate réel">1,25 s</td>
+<td data-label="Satellite (si lecture A)">2,51 s</td>
+</tr>
+<tr>
+<td data-label="Pénalité (source)">Flankable + Stunted</td>
+<td data-label="Shields" class="nw">308</td>
+<td data-label="Gate réel"><strong>0,63 s</strong></td>
+<td data-label="Satellite (si lecture A)">1,25 s</td>
+</tr>
+<tr>
+<td data-label="Pénalité (source)"><strong>Bruised Shields</strong> (Icebind : shields restaurés <strong>uniquement</strong> par la mêlée)</td>
+<td data-label="Shields" class="nw">—</td>
+<td data-label="Gate réel">Satellites <strong>inopérants</strong></td>
+<td data-label="Satellite (si lecture A)">—</td>
+</tr>
+<tr>
+<td data-label="Pénalité (source)"><strong>Untreatable</strong> (Icebind : Health Orbs impossibles à ramasser)</td>
+<td data-label="Shields" class="nw">—</td>
+<td data-label="Gate réel">Le moteur d'énergie meurt (cf. 2.1)</td>
+<td data-label="Satellite (si lecture A)">—</td>
+</tr>
+<tr>
+<td data-label="Pénalité (source)">Decaying Dragon Key</td>
+<td data-label="Shields" class="nw">—</td>
+<td data-label="Gate réel">0,33 s fixe</td>
+<td data-label="Satellite (si lecture A)">—</td>
+</tr>
+</tbody>
+</table></div>
+<p>L'ordre d'application de Cryogenic Leakage par rapport aux shards plats n'est <strong>pas documenté</strong> (si la pénalité s'applique avant les shards : 952 shields, 2,25 s).</p>
+<h3 id="s1-3">🔴 1.3 La micro‑fenêtre mortelle existe, et le guide l'aggrave<a class="h-anchor" href="#s1-3" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li>
+<p><strong>Latence réseau :</strong> non pertinente en solo (tu es l'hôte).</p>
+</li>
+<li>
+<p><strong>Le vrai délai</strong> se décompose ainsi :</p>
+<ol>
+<li>Animation <strong>corps entier</strong> de Grenade Fan, avec saut forcé de 1 m. Elle n'est accélérée par <strong>aucun</strong> Casting Speed dans le build, et la v1.0 a écarté l'Amber Casting Speed comme « inutile ».</li>
+<li>Vol des grenades, rebonds jusqu'à une surface horizontale, puis déploiement du satellite.</li>
+<li>Accroche quand tu es dans le rayon de 3,95 m.</li>
+</ol>
+<p>Ce délai n'est <strong>pas mesuré</strong> dans le guide. Pendant ce temps, à 0 shield au niveau 9999, n'importe quel tir touche la santé.</p>
+</li>
+<li>
+<p><strong>Contradiction interne :</strong> la section 1.6 dit de lancer les satellites <strong>à 4–6 m</strong> pour éviter qu'ils s'accrochent en chaîne. La procédure d'urgence (5.4) dit de les viser <strong>à tes pieds</strong>. Le wiki confirme le problème : <em>« heavy fire can cause a single ally to acquire and lose a series of shield satellites very quickly »</em>. Viser à tes pieds sous un feu nourri, c'est <strong>brûler les 4 satellites en une fraction de seconde</strong>.</p>
+</li>
+<li>
+<p><strong>Verdict :</strong> au niveau cap, le satellite <strong>réactif</strong> ne marche pas. La seule méthode viable est <strong>proactive</strong> : un satellite toujours accroché, et les casts de Grenade Fan faits <strong>pendant</strong> un gate ou une Rolling Guard.</p>
+</li>
+</ul>
+<h3 id="s1-4">🔴 1.4 Erreur de mécanique : le Slash ne traverse PAS les shields<a class="h-anchor" href="#s1-4" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li><strong>Ce que dit le guide</strong> (sections 1.6, 1.8 et 4.4) : <em>« Bleed = dégâts True (ignore armure et shields) »</em>.</li>
+<li><strong>Ce qui est vrai</strong> (wiki, refonte des dégâts) : <em>« Toxin bypasses Shields (but not Armor) whereas Slash Status bypasses Armor but not Shields »</em>. Le Bleed inflige des dégâts <strong>Cinematic</strong> : il ignore l'<strong>armure</strong>, pas les shields.</li>
+<li><strong>Conséquences réelles :</strong>
+<ul>
+<li>La seule menace qui ignore réellement les shields est le <strong>Toxin</strong> (plus les drains de santé type Leech).</li>
+<li>Les DoT ennemis (Slash, Heat) <strong>frappent tes shields</strong> à chaque tick. Un tick qui casse des shields fraîchement restaurés <strong>déclenche un gate et consomme un satellite</strong>.</li>
+<li>Rolling Guard ne sert donc pas à « sauver la santé » contre le Slash : elle sert à <strong>empêcher les DoT de manger tes satellites</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="s1-5">🟠 1.5 Infested = « meilleure faction » ? Pour les dégâts, oui. Pour survivre, c'est la pire<a class="h-anchor" href="#s1-5" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li>La Heat fait ×1,5 contre les Infested, d'où l'étiquette de la v1.0.</li>
+<li>Mais leurs dégâts sont saturés de <strong>Toxin</strong> : Toxic Ancient, nuages de Mutalist Osprey, aura de 3,5 m des Septic/Venomous Eximus. Le Toxin ignore les shields <strong>et donc le Shield Gating</strong>. Avec 740 PV, c'est un one‑shot au cap.</li>
+<li>Le guide a fusionné « faction où l'on tue le plus vite » et « faction la plus sûre » : c'est faux.</li>
+</ul>
+<h3 id="s1-6">🔴 1.6 Zéro anti‑mort, alors qu'une option existe<a class="h-anchor" href="#s1-6" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li><strong>Ce que dit le guide :</strong> « tu n'as plus aucune protection anti‑mort », avec Sacrifice comme seul filet partiel.</li>
+<li><strong>C'est faux. Arcane Escapist existe</strong> :
+<ul>
+<li>Chaque Mercy kill donne 1 stack (maximum 9, conservés indéfiniment).</li>
+<li>Sur un dégât fatal, il consomme 3 stacks : <strong>12 s d'invulnérabilité</strong> au R5, et +1 revive dès le R3.</li>
+<li>Seuil de Mercy au cap : 10 % minimum sur les unités lourdes au‑delà du niveau ~300. Chaque proc <strong>Impact</strong> ajoute +8 % au seuil (jusqu'à 80 %).</li>
+<li>Synergie directe : le Glaive Prime (Impact forcé sur la détonation) et l'Epitaph Prime (Impact forcé sur le tir direct) font monter le seuil tout seuls.</li>
+<li>Tu es invulnérable pendant l'animation de Mercy.</li>
+</ul>
+</li>
+<li><strong>Le bon échange n'est pas « Sculptor ou Escapist »</strong>, mais <strong>Molt Augmented → Arcane Escapist</strong> au niveau cap :
+<ul>
+<li>Molt donne +60 % de Strength, ce qui fait passer Roar de +80 % à +98 %. C'est du DPS.</li>
+<li>Il n'apporte rien à la survie : le seuil de recharge des satellites (1 150) est déjà atteint à 243 %.</li>
+</ul>
+</li>
+<li><strong>Coût réel :</strong> R5 = 21 exemplaires. En achat hebdomadaire chez Kaya Velasco (5 Pix Chip, 1 par semaine), c'est <strong>21 semaines</strong>. Pour aller plus vite : Temporal Archimedea ou échange (MR 11). Le R3 (10 exemplaires) donne déjà 8 s d'invulnérabilité et +1 revive.</li>
+</ul>
+<hr />
+<h2 id="s2">2. Économie et stacking<a class="h-anchor" href="#s2" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="s2-1">🟢 2.1 Arcane Sculptor : le choix est confirmé, et c'est l'autre arcane qui est mal choisi<a class="h-anchor" href="#s2-1" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>Comparaison avec Molt Efficiency (+6 % de Duration par seconde tant que les shields sont actifs, plafond +36 %) :</p>
+<div class="table-wrap stack"><table>
+<thead>
+<tr>
+<th>Pire situation d'endurance</th>
+<th>Avec Sculptor</th>
+<th>Sans Sculptor (Efficiency 45 %)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="Pire situation d'endurance">Nominal</td>
+<td data-label="Avec Sculptor">+32,2 énergie/s</td>
+<td data-label="Sans Sculptor (Efficiency 45 %)">+4,3/s (aucune marge réelle)</td>
+</tr>
+<tr>
+<td data-label="Pire situation d'endurance"><strong>Untreatable</strong> (Health Orbs non ramassables)</td>
+<td data-label="Avec Sculptor"><strong>+1,1/s</strong></td>
+<td data-label="Sans Sculptor (Efficiency 45 %)"><strong>−26,8/s : 250 d'énergie vidés en 9,3 s</strong></td>
+</tr>
+<tr>
+<td data-label="Pire situation d'endurance"><strong>Constricted</strong> (énergie max −75 % → 62,5)</td>
+<td data-label="Avec Sculptor">Cast max à 18,75 : jouable</td>
+<td data-label="Sans Sculptor (Efficiency 45 %)"><strong>Dispensary et Roar (116,25) incastables</strong></td>
+</tr>
+<tr>
+<td data-label="Pire situation d'endurance">Energy Exhaustion (−2/s par ennemi à 10 m, 10 ennemis)</td>
+<td data-label="Avec Sculptor">+12,2/s</td>
+<td data-label="Sans Sculptor (Efficiency 45 %)">−15,8/s</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Molt Efficiency ne produit <strong>pas un seul point d'énergie</strong>. Au niveau cap, ses shields sont cassés en permanence, donc son uptime est proche de <strong>0</strong>. Il est inférieur à Sculptor dans <strong>toutes</strong> les pires situations.</li>
+<li><strong>Le vrai défaut du duo d'arcanes v1.0 :</strong> les deux arcanes sont DPS/économie. <strong>Aucun n'est défensif</strong>, dans un guide qui annonce « survie prioritaire ». Correction en 1.6 : remplacer Molt Augmented par Arcane Escapist.</li>
+<li><strong>Défaut secondaire de Sculptor :</strong> un objet n'est « valide » qu'une fois posé (le wiki prend l'exemple de Brightbonnet). Les grenades de Grenade Fan déclenchent donc Sculptor <strong>à l'atterrissage</strong>, pas au cast. L'ouverture v1.0 « Grenade Fan, puis Dispensary immédiatement » peut <strong>payer le Dispensary plein tarif</strong> (116,25).</li>
+</ul>
+<h3 id="s2-2">🟠 2.2 Roar : le « dead time » est réel, mais pas là où on le pense<a class="h-anchor" href="#s2-2" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li><strong>Ce n'est pas le passif qui se « maintient » :</strong> c'est un compteur (3 barres sur le HUD). Avec 27,3 casts/min, un 4e cast tombe toutes les <strong>8,8 s</strong>, soit <strong>9,7 procs par cycle de Roar de 85 s</strong>.</li>
+<li><strong>1 seul de ces procs</strong> va sur Roar. Les ~8,7 autres tombent surtout sur des tourelles (rendement en √k) ou sur des satellites (aucun gain : le seuil est déjà atteint). <strong>Environ 90 % des procs du passif sont du rendement marginal.</strong></li>
+<li><strong>Le vrai danger</strong> est le <strong>gel volontaire des casts</strong> :
+<ul>
+<li>Pour aligner le passif, une fois les 3 barres chargées, tu ne dois <strong>plus rien lancer</strong> avant l'expiration de Roar.</li>
+<li>Pendant cette fenêtre (jusqu'à 5 s selon la v1.0), <strong>lancer un satellite d'urgence consomme le passif</strong>, et Roar repart à +80 % au lieu de +110 %, <strong>verrouillé pendant 85 s</strong> (pas de relance possible).</li>
+<li>La v1.0 ne dit pas quoi prioriser. <strong>Règle manquante : la survie passe avant le passif, toujours.</strong> Un Roar à +80 % ne tue personne ; un satellite manqué, si.</li>
+</ul>
+</li>
+<li><strong>Autres frictions :</strong>
+<ul>
+<li>« Abbreviated Abilities » (Icebind, −50 % de durée) : Roar dure 42,6 s.</li>
+<li>Un Nullifier dissipe Roar. C'est en fait une <strong>opportunité</strong> de le réaligner.</li>
+</ul>
+</li>
+<li><strong>🟡 Affirmation non sourcée :</strong> « le passif s'applique aux compétences Helminth ». La page du passif dit « every 4th ability cast » sans mentionner l'Helminth. C'est <strong>à vérifier en jeu</strong> (valeur affichée dans le buff de Roar : 110 % attendu au lieu de 80 %).</li>
+</ul>
+<hr />
+<h2 id="s3">3. Loadout et armes<a class="h-anchor" href="#s3" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="s3-1">🔴 3.1 Torid Incarnon : le Viral par défaut est un choix de facilité, et les chiffres sont des chiffres de papier<a class="h-anchor" href="#s3-1" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li><strong>Précision :</strong> le build v1.0 est <strong>Viral/Crit, sans Slash</strong> (pas de Hunter Munitions).</li>
+<li><strong>Choix de facilité avoué contre les Grineer.</strong> La section 4.2 garde le Viral contre les Grineer <strong>parce que</strong> passer en High Voltage coûtait 61/60 de capacité. L'élément a été choisi par <strong>contrainte de capacité</strong>, pas par optimisation.
+<ul>
+<li>Solution simple, que la v1.0 n'a pas vue : <strong>Primed Cryo Rounds → Rifle Elementalist</strong> (slot Vazarin, 5) et <strong>Malignant Force → High Voltage</strong>. On obtient <strong>Corrosive</strong> (Electricity + Toxin innée), à <strong>57/60</strong> de capacité.</li>
+<li>Avec 93,6 % de Status à 6,4 ticks/s, la Torid applique les <strong>10 stacks de Corrosive en ~2 s</strong> sur sa cible : <strong>×5,98</strong> de dégâts contre une armure au plafond. Ça rend l'arme autonome au lieu de dépendre de l'Epitaph.</li>
+</ul>
+</li>
+<li><strong>Dépendance en chaîne.</strong> Contre une armure de 2 700, la Torid en Viral inflige <strong>×0,1</strong> tant que l'Epitaph n'a pas posé sa Corrosive (fenêtre de 15,2 s). Rate le primer, et la Torid ne fait plus rien.</li>
+<li><strong>Overguard (Eximus).</strong> Le Viral ne touche <strong>pas</strong> l'Overguard. Or les Eximus sont plus fréquents à haut niveau (Icebind : « Increased chance of Eximus » ; tactical bind « Bolstered Belligerents » = Overguard égal à 50 % de la santé max sur <strong>tous</strong> les ennemis). Au cap, le <strong>Magnetic</strong> (configuration Corpus) devrait être la configuration <strong>par défaut</strong>, et le Viral la configuration Corrupted.</li>
+<li><strong>🔴 L'effondrement des stacks.</strong> Merciless (12 stacks, −1 stack toutes les 4 s sans kill), Galvanized Aptitude (×2), Galvanized Chamber (×5) et Molt Augmented dépendent <strong>tous</strong> des kills.
+<ul>
+<li>Bucket de base : <strong>9,45</strong> à stacks pleins contre <strong>2,65</strong> à 0 stack (×3,57).</li>
+<li>Multishot : 3,3 contre 1,8 (×1,83).</li>
+<li><strong>Total : ×6,5 d'écart.</strong> Au cap, où les TTK s'allongent, l'arme se dégrade en spirale. Les chiffres de la v1.0 sont des <strong>plafonds</strong>, présentés comme des valeurs de travail.</li>
+</ul>
+</li>
+<li><strong>Arcane :</strong> Primary Merciless était imposé par la demande. Au cap, c'est l'arcane le plus sensible au rythme de kills.</li>
+</ul>
+<h3 id="s3-2">🟠 3.2 Glaive Prime : « combo ×6 garanti » est faux<a class="h-anchor" href="#s3-2" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li>110 de combo initial suppose <strong>4 stacks de Galvanized Reflex</strong>, soit 4 kills en mêlée dans les 20 s.</li>
+<li><strong>Le plancher réel est Corrupt Charge seul : 30 de combo = ×2.</strong> La v1.0 surestime donc la détonation d'un facteur <strong>×3</strong> dès que les kills ralentissent.</li>
+<li>Seule l'<strong>option B</strong> (Tandem Bond : +6 combo par coup de griffe) maintient le combo sans kills. <strong>Avec l'option A, le Glaive s'effondre au cap.</strong></li>
+<li>Les 2,4 M par explosion sont un chiffre « stacks pleins + Roar + Tenacious ».</li>
+</ul>
+<h3 id="s3-3">🟠 3.3 Verglas Prime / Tenacious Bond : le riven n'est pas le vrai problème, la mortalité de la sentinelle l'est<a class="h-anchor" href="#s3-3" aria-hidden="true" tabindex="-1">#</a></h3>
+<ul>
+<li><strong>Sans le riven</strong> (≥ +57,2 % de CC), Tenacious Bond est un <strong>slot mort</strong>. On perd ×1,29 sur le Glaive et ×1,185 sur la Torid.
+<ul>
+<li>Le build ne s'effondre <strong>pas</strong> pour autant (le fallback Contagious Bond est fourni), mais l'option A perd environ 20–30 % de dégâts critiques.</li>
+<li>Point de contexte (H44.1.3) : les dispositions de riven ont été supprimées (toutes à l'équivalent 1.2) et l'échange de rivens est rétabli. Un riven Verglas Prime avec +57 % de CC est <strong>facile à obtenir</strong>. C'est un coût en Kuva et en temps, pas un mur.</li>
+</ul>
+</li>
+<li><strong>La vraie faille :</strong> Nautilus Prime a 560 PV et 350 shields (1 225 avec Calculated Redirection). Au 9999, c'est <strong>un coup = une sentinelle à terre</strong>.
+<ul>
+<li>À terre, il n'y a <strong>plus de Cordon, d'Assault Mode</strong> (Verglas ne tire plus, Growing Power retombe sur l'Epitaph seul) <strong>ni de Sacrifice</strong> (le seul « filet » vanté par la v1.0 disparaît au moment où tu en as besoin).</li>
+<li>Le comportement de Tenacious Bond quand le compagnon est à terre n'est <strong>pas documenté</strong>.</li>
+<li>Seul Vacuum continue de fonctionner.</li>
+</ul>
+</li>
+<li><strong>Verdict : l'option A est une option d'Endurance moyenne, pas de level cap.</strong> L'option B (Panzer Devolution : jamais hors combat, Tenacious Bond gratuit) est le seul compagnon viable au 9999. La v1.0 le laissait seulement entendre dans un tableau.</li>
+</ul>
+<hr />
+<h2 id="s4">4. Verdict de robustesse<a class="h-anchor" href="#s4" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="note-de-tolerance-a-l-erreur-4-10">Note de tolérance à l'erreur : <strong>4/10</strong> (v1.0)<a class="h-anchor" href="#note-de-tolerance-a-l-erreur-4-10" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>Le build est un <strong>glass cannon technique</strong> déguisé en build de survie. Il exige en permanence, et à la main :</p>
+<ol>
+<li>le placement et le timing d'entrée des satellites, sur un timing <strong>non vérifié</strong> ;</li>
+<li>une Rolling Guard en &lt; 1 s sur chaque proc Toxin ou Magnetic ;</li>
+<li>un primer Epitaph toutes les ≤ 6 s (Growing Power + Corrosive) ;</li>
+<li>l'alignement du passif sur Roar ;</li>
+<li>la présence physique au Dispensary pour l'énergie ;</li>
+<li>un rythme de kills soutenu pour 5 mécaniques à stacks.</li>
+</ol>
+<p>Une erreur sur le point 1 ou 2 au cap = mort, <strong>sans aucun filet</strong>.</p>
+<p><strong>Après corrections (v1.1) : 6/10.</strong> Arcane Escapist apporte un filet, les satellites deviennent proactifs, le timing est sécurisé sur 2,5 s, et le compagnon B est imposé au cap. Le build reste exigeant : il ne pardonne pas le Toxin.</p>
+<h3 id="les-3-plus-gros-risques-de-mort-en-mission">Les 3 plus gros risques de mort en mission réelle<a class="h-anchor" href="#les-3-plus-gros-risques-de-mort-en-mission" aria-hidden="true" tabindex="-1">#</a></h3>
+<ol>
+<li>
+<p><strong>Les dégâts Toxin</strong> (Septic/Venomous Eximus, Toxic Ancients, nuages Infested). Ils ignorent les shields, donc le gate, les satellites et toute la couche défensive. 740 PV = one‑shot au cap. Seules réponses : tuer à distance, Rolling Guard en réflexe, et désormais Arcane Escapist.</p>
+</li>
+<li>
+<p><strong>Le trou à 0 shield entre deux gates.</strong> Le satellite réactif a une latence d'animation et de vol non mesurée. Sous le feu, les satellites dans le rayon s'accrochent et se détruisent en chaîne. Et si le doublement à 5 s est faux, le protocole v1.0 « entrer à 4 s » laisse <strong>1,5 s à découvert</strong>.</p>
+</li>
+<li>
+<p><strong>Les modificateurs de mission qui désactivent le moteur du build</strong> :</p>
+<ul>
+<li>Stunted Shields (standard en Icebind, gate à 1,25 s) ;</li>
+<li>Bruised Shields (satellites inutiles) ;</li>
+<li>Untreatable (plus d'énergie Dispensary) ;</li>
+<li>Miasmic Militia (immunité Toxin/Gas/Viral/Corrosive : tout le plan de statuts tombe) ;</li>
+<li>Archaic Armor (pas de retrait d'armure) ;</li>
+<li>Inferno (la Heat des tourelles alimente la menace).</li>
+</ul>
+<p>Le guide v1.0 n'en dit <strong>pas un mot</strong>.</p>
+</li>
+</ol>
+<hr />
+<h2 id="corrections-appliquees-dans-le-guide-v1-1">Corrections appliquées dans le guide v1.1<a class="h-anchor" href="#corrections-appliquees-dans-le-guide-v1-1" aria-hidden="true" tabindex="-1">#</a></h2>
+<div class="table-wrap stack num-first"><table>
+<thead>
+<tr>
+<th class="nw">#</th>
+<th>Défaut v1.0</th>
+<th>Correction v1.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="#" class="nw">1</td>
+<td data-label="Défaut v1.0">Gate de 5 s présenté comme acquis</td>
+<td data-label="Correction v1.1">2,5 s garantis, ×2 « non confirmé » avec protocole de test ; entrée dans le satellite suivant à <strong>~2 s</strong></td>
+</tr>
+<tr>
+<td data-label="#" class="nw">2</td>
+<td data-label="Défaut v1.0">Slash « traverse les shields »</td>
+<td data-label="Correction v1.1">Corrigé : Toxin = traverse les shields ; Slash = ignore l'armure ; les DoT ennemis mangent les satellites</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">3</td>
+<td data-label="Défaut v1.0">Aucun anti‑mort</td>
+<td data-label="Correction v1.1"><strong>Arcane Escapist</strong> remplace Molt Augmented en level cap (Molt reste pour l'Endurance hors cap)</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">4</td>
+<td data-label="Défaut v1.0">Urgence « satellites à tes pieds »</td>
+<td data-label="Correction v1.1">Remplacé par la séquence RG → satellites à 4–6 m → entrée ; « à tes pieds » seulement si la RG est en recharge</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">5</td>
+<td data-label="Défaut v1.0">Viral par défaut contre les Grineer, par contrainte de capacité</td>
+<td data-label="Correction v1.1">Ajout de la configuration Torid <strong>Corrosive</strong> (57/60) ; Magnetic recommandé par défaut au cap</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">6</td>
+<td data-label="Défaut v1.0">« Combo ×6 garanti »</td>
+<td data-label="Correction v1.1">Plancher ×2 annoncé, ×6 conditionnel ; Tandem Bond indispensable pour le Glaive au cap</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">7</td>
+<td data-label="Défaut v1.0">Infested « meilleure faction »</td>
+<td data-label="Correction v1.1">« Meilleure en dégâts, pire en survie (Toxin) »</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">8</td>
+<td data-label="Défaut v1.0">Passif sur l'Helminth affirmé</td>
+<td data-label="Correction v1.1">Marqué « à vérifier en jeu » ; règle survie &gt; passif ajoutée</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">9</td>
+<td data-label="Défaut v1.0">Pénalités de mission absentes</td>
+<td data-label="Correction v1.1">Nouvelle section avec le tableau des modificateurs et les réponses</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">10</td>
+<td data-label="Défaut v1.0">Ouverture Sculptor</td>
+<td data-label="Correction v1.1">Attendre l'atterrissage des grenades avant le cast suivant</td>
+</tr>
+<tr>
+<td data-label="#" class="nw">11</td>
+<td data-label="Défaut v1.0">Option A présentée comme équivalente au cap</td>
+<td data-label="Correction v1.1">Option A = Endurance ; <strong>option B imposée au 9999</strong></td>
+</tr>
+<tr>
+<td data-label="#" class="nw">12</td>
+<td data-label="Défaut v1.0">Amber Casting Speed jugée inutile</td>
+<td data-label="Correction v1.1">Variante level cap : 1 Tauforged Amber Casting Speed à la place d'1 Tauforged Crimson Duration</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="sources-ajoutees">Sources ajoutées<a class="h-anchor" href="#sources-ajoutees" aria-hidden="true" tabindex="-1">#</a></h2>
+<p><a href="https://wiki.warframe.com/w/Grenade_Fan" target="_blank" rel="noopener">Grenade Fan (description in‑game)</a> · <a href="https://wiki.warframe.com/w/Shield" target="_blank" rel="noopener">Shield</a> · <a href="https://wiki.warframe.com/w/Arcane_Escapist" target="_blank" rel="noopener">Arcane Escapist</a> · <a href="https://wiki.warframe.com/w/Mercy" target="_blank" rel="noopener">Mercy</a> · <a href="https://wiki.warframe.com/w/Damage/Slash_Damage" target="_blank" rel="noopener">Slash Damage</a> · <a href="https://wiki.warframe.com/w/Damage/Toxin_Damage" target="_blank" rel="noopener">Toxin Damage</a> · <a href="https://wiki.warframe.com/w/Damage/Magnetic_Damage" target="_blank" rel="noopener">Magnetic Damage</a> · <a href="https://wiki.warframe.com/w/Protea/Abilities/Passive" target="_blank" rel="noopener">Protea Passive</a> · <a href="https://wiki.warframe.com/w/Arcane_Sculptor" target="_blank" rel="noopener">Arcane Sculptor</a> · <a href="https://wiki.warframe.com/w/Deep_Archimedea" target="_blank" rel="noopener">Deep Archimedea</a> · <a href="https://wiki.warframe.com/w/Update_44" target="_blank" rel="noopener">Update 44 (The Icebind)</a> · <a href="https://wiki.warframe.com/w/Martyr_Symbiosis" target="_blank" rel="noopener">Martyr Symbiosis</a></p>
+</article></div></section>
+</main>
+<footer class="site-footer"><div class="inner"><p><strong>Audit hostile v1</strong> · Audit de la v1.0 : 12 défauts relevés, corrigés en v1.1.</p><p>Retour au <a href="index.html">guide v1.4</a> · page générée depuis <code>builds/audit-protea-prime-v1.md</code> par <code>tools/build_site.py</code>.</p></div></footer>
+<div class="toc-backdrop" hidden></div>
+<button class="to-top" type="button" aria-label="Revenir en haut de la page" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></button>
+</body>
+</html>
