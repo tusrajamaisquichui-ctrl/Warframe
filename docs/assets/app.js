@@ -64,11 +64,24 @@
     return el.closest ? el.closest(".panel") : null;
   }
 
+  // A fragment from an older version of the guide ("#bloc-3") opens the tab that replaced it.
+  function aliasOf(id) {
+    for (var i = 0; i < panels.length; i++) {
+      var names = (panels[i].getAttribute("data-aliases") || "").split(" ");
+      if (names.indexOf(id) >= 0) return panels[i];
+    }
+    return null;
+  }
+
   // Show the panel that holds the URL fragment; restore that tab's scroll position.
   function route(initial) {
     var id = "";
     try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { id = ""; }
     var target = id ? document.getElementById(id) : null;
+    if (id && !target && tabs.length) {
+      target = aliasOf(id);
+      if (target) history.replaceState(null, "", "#" + target.id);
+    }
     var panel = target ? panelFor(target) : null;
     if (target && !panel) { // e.g. the skip link: keep the current tab
       if (!current) activate(panels[0]);

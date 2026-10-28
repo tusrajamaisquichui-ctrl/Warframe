@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the GitHub Pages site (docs/) from the Markdown guide and its audits.
+"""Build the GitHub Pages site (docs/) from the Markdown guide, its analysis and its audits.
 
 The Markdown files in builds/ stay the single source of truth: never edit docs/*.html by hand.
 
@@ -28,14 +28,27 @@ ASSETS = DOCS / "assets"
 REPO_URL = "https://github.com/tusrajamaisquichui-ctrl/Warframe"
 
 GUIDE = "protea-prime-level-cap-endurance.md"
-# (source, page, title, one-line description) for each audit page
-AUDITS = (
-    ("audit-protea-prime-v2.md", "audit-v2.html", "Audit hostile v2",
-     "Contre‑expertise de la v1.3 : 79 affirmations vérifiées, 6 erreurs critiques, 16 tests en jeu."),
-    ("audit-protea-prime-v1.md", "audit-v1.html", "Audit hostile v1",
-     "Audit de la v1.0 : 12 défauts relevés, corrigés en v1.1."),
+
+
+@dataclass(frozen=True)
+class Page:
+    """A standalone page generated from one Markdown file, listed in the guide's annexes."""
+    src: str
+    page: str
+    title: str
+    chip: str    # short name for the header chip
+    desc: str
+
+
+PAGES = (
+    Page("analyse-comparative-2026.md", "analyse.html", "Analyse comparative 2026", "Analyse 2026",
+         "28 builds de la communauté confrontés au guide : choix du kit, énergie et deux configs de la v2.0."),
+    Page("audit-protea-prime-v2.md", "audit-v2.html", "Audit hostile v2", "Audit v2",
+         "Contre‑expertise de la v1.3 : 79 affirmations vérifiées, 6 erreurs critiques, 16 tests en jeu."),
+    Page("audit-protea-prime-v1.md", "audit-v1.html", "Audit hostile v1", "Audit v1",
+         "Audit de la v1.0 : 12 défauts relevés, corrigés en v1.1."),
 )
-PAGE_OF = {GUIDE: "index.html", **{src: page for src, page, _, _ in AUDITS}}
+PAGE_OF = {GUIDE: "index.html", **{p.src: p.page for p in PAGES}}
 
 
 @dataclass(frozen=True)
@@ -43,21 +56,22 @@ class Panel:
     id: str
     label: str   # tab label on desktop, panel name
     short: str   # bottom tab bar label on phones
-    mark: str    # "1" / "2" / "3", or an icon name
+    mark: str    # "1" / "2", or an icon name
     accent: str
+    aliases: tuple[str, ...] = ()  # fragments of older versions that now open this tab
 
 
 PANELS = (
     Panel("accueil", "Accueil", "Accueil", "home", "home"),
-    Panel("bloc-1", "Socle commun", "Socle", "1", "c1"),
-    Panel("bloc-2", "Endurance standard", "Endurance", "2", "c2"),
-    Panel("bloc-3", "Level Cap 9999", "Level Cap", "3", "c3"),
+    Panel("steel-path", "Steel Path", "Steel Path", "1", "sp", ("bloc-1", "bloc-2")),
+    Panel("level-cap", "Level Cap", "Level Cap", "2", "lc", ("bloc-3",)),
+    Panel("mecaniques", "Mécaniques", "Mécaniques", "gear", "mech"),
     Panel("annexes", "Annexes", "Annexes", "book", "annex"),
 )
 CARDS = {  # shortcuts on the home panel
-    "bloc-1": "Toujours : kit, mods, shards, stats, énergie, survie de base.",
-    "bloc-2": "Socle + Molt Augmented, Nautilus Prime, arsenal Viral.",
-    "bloc-3": "Socle + Arcane Escapist, Panzer Vulpaphyla, filets de survie.",
+    "steel-path": "Tout le Steel Path : tourelle suiveuse, Molt Augmented, Nautilus Prime, arsenal Viral.",
+    "level-cap": "De 1 000 à 9 999 : Temporal Erosion, règle de l'ancre, Arcane Energize, Panzer Vulpaphyla.",
+    "mecaniques": "Les règles communes : shield gate, satellites, Toxin, ancre, énergie, multiplicateurs.",
 }
 
 _SVG = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{}</svg>'
@@ -65,6 +79,12 @@ ICONS = {
     "home": _SVG.format('<path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z"/>'),
     "book": _SVG.format('<path d="M6.5 4H19v13H6.5A2.5 2.5 0 0 0 4 19.5v-13A2.5 2.5 0 0 1 6.5 4z"/>'
                         '<path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H19v-5"/>'),
+    "gear": _SVG.format('<path d="M10.6 5.14L10.73 2.38A9.7 9.7 0 0 1 13.27 2.38L13.4 5.14A7 7 0 0 1 15.86 6.16L17.9 4.3'
+                        'A9.7 9.7 0 0 1 19.7 6.1L17.84 8.14A7 7 0 0 1 18.86 10.6L21.62 10.73A9.7 9.7 0 0 1 21.62 13.27'
+                        'L18.86 13.4A7 7 0 0 1 17.84 15.86L19.7 17.9A9.7 9.7 0 0 1 17.9 19.7L15.86 17.84A7 7 0 0 1 13.4 18.86'
+                        'L13.27 21.62A9.7 9.7 0 0 1 10.73 21.62L10.6 18.86A7 7 0 0 1 8.14 17.84L6.1 19.7A9.7 9.7 0 0 1 4.3 17.9'
+                        'L6.16 15.86A7 7 0 0 1 5.14 13.4L2.38 13.27A9.7 9.7 0 0 1 2.38 10.73L5.14 10.6A7 7 0 0 1 6.16 8.14'
+                        'L4.3 6.1A9.7 9.7 0 0 1 6.1 4.3L8.14 6.16A7 7 0 0 1 10.6 5.14Z"/><circle cx="12" cy="12" r="3"/>'),
     "list": _SVG.format('<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>'),
     "close": _SVG.format('<path d="M6 6l12 12M18 6 6 18"/>'),
     "up": _SVG.format('<path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/>'),
@@ -84,10 +104,20 @@ STATUS = (("NON VÉRIFIÉ", "st-warn"), ("VÉRIFIÉ", "st-ok"), ("CALCULÉ", "st
           ("CONTESTÉ", "st-warn"), ("INCOMPLET", "st-warn"), ("PLAUSIBLE", "st-warn"), ("RÉFUTÉ", "st-bad"),
           ("PÉRIMÉ", "st-bad"), ("QUASI NUL", "st-bad"), ("FAUX", "st-bad"))
 BADGE = '<span class="tag-new" title="Ajouté ou corrigé en v{v}">v{v}</span>'
+# French typography: no line break inside "1 565", before "%", ":", ";", "!", "?" or inside « … »
+NNBSP, NBSP = "\u202f", "\u00a0"
+TYPO = ((re.compile(r"(?<=\d) (?=\d{3}(?!\d))"), NNBSP), (re.compile(r" (?=[%;!?»])"), NNBSP),
+        (re.compile(r"(?<=«) "), NNBSP), (re.compile(r" (?=:)"), NBSP))
 
 
 def esc(text: str) -> str:
     return html.escape(text, quote=True)
+
+
+def typo(text: str) -> str:
+    for pattern, space in TYPO:
+        text = pattern.sub(space, text)
+    return text
 
 
 def slugify(text: str, limit: int = 48) -> str:
@@ -190,7 +220,7 @@ def xref_tokens(text: str, doc: Doc) -> list[Token]:
 
 
 def transform_inline(tokens: list[Token], doc: Doc, xrefs: bool) -> None:
-    """Turn "(vX.Y)" markers into badges and plain section numbers ("cf. 1.11") into links."""
+    """Turn "(vX.Y)" markers into badges, plain section numbers ("cf. 1.11") into links, and apply typo()."""
     tag = f"(v{doc.version})" if doc.version else None
     for i, tok in enumerate(tokens):
         if tok.type != "inline" or not tok.children:
@@ -202,7 +232,8 @@ def transform_inline(tokens: list[Token], doc: Doc, xrefs: bool) -> None:
             if child.type != "text":
                 children.append(child)
                 continue
-            parts = child.content.split(tag) if tag else [child.content]
+            content = typo(child.content)
+            parts = content.split(tag) if tag else [content]
             for k, part in enumerate(parts):
                 if k:
                     children.append(html_token(BADGE.format(v=doc.version)))
@@ -236,7 +267,7 @@ def decorate_tables(tokens: list[Token]) -> None:
         narrow = [widest[k] <= 7 and len(head[k][1]) <= 12 for k in range(ncols)]
         classes = ["table-wrap"]
         # the more columns, the less text it takes before a phone screen is too narrow for them
-        stack = mean >= {2: 48, 3: 24, 4: 17}.get(ncols, 12 if ncols >= 5 else 999)
+        stack = mean >= {2: 48, 3: 24, 4: 17}.get(ncols, 12 if ncols >= 5 else 999) or (ncols >= 6 and narrow[0])
         if stack:
             classes.append("stack")      # cards on phones
             if narrow[0]:
@@ -332,7 +363,7 @@ def render(md: MarkdownIt, chunk: Chunk, doc: Doc, xrefs: bool) -> str:
 
 
 def badge_text(text: str, version: str) -> str:
-    out = esc(text)
+    out = esc(typo(text))
     if version:
         out = out.replace(esc(f"(v{version})"), BADGE.format(v=version))
     return out
@@ -373,12 +404,19 @@ def circled(mark: str) -> str:
     return chr(0x245F + int(mark)) if mark.isdigit() else ""
 
 
+def mark_html(mark: str, cls: str = "") -> str:
+    """An icon name becomes its SVG; a digit stays text, wrapped in a span when it needs a class."""
+    if mark in ICONS:
+        return ICONS[mark]
+    return f'<span class="{cls}">{esc(mark)}</span>' if cls else esc(mark)
+
+
 def tabs_html(page: str, active: str | None = None) -> str:
     """Tab bar: real tabs on the guide page, plain links back to the guide elsewhere."""
     on_guide = page == "index.html"
     out = []
     for p in PANELS:
-        icon = ICONS[p.mark] if p.mark in ICONS else f'<span class="tab-mark">{p.mark}</span>'
+        icon = mark_html(p.mark, "tab-mark")
         long_label = f"{circled(p.mark)} {p.label}".strip()
         href = f"#{p.id}" if on_guide else f"index.html#{p.id}"
         attrs = f' data-tab="{p.id}" id="tab-{p.id}"' if on_guide else ""
@@ -473,13 +511,14 @@ def build_guide(md: MarkdownIt) -> str:
     text = (BUILDS / GUIDE).read_text(encoding="utf-8")
     meta = guide_meta(text)
     chunks = split_guide(text)
-    docs_list = "".join(f"- [{title}]({src}) — {desc}\n" for src, _, title, desc in AUDITS)
-    docs_list += (f"- [Dépôt GitHub]({REPO_URL}) — sources Markdown du guide et des audits ; "
+    docs_list = "".join(f"- [{p.title}]({p.src}) — {p.desc}\n" for p in PAGES)
+    docs_list += (f"- [Dépôt GitHub]({REPO_URL}) — sources Markdown du guide, de l'analyse et des audits ; "
                   "ce site en est généré par `tools/build_site.py`.\n")
     chunks["annexes"] = re.sub(r"^## Annexes\n", lambda m: m.group(0) + "\n### Documents\n\n" + docs_list,
                                chunks["annexes"], count=1, flags=re.M)
 
-    doc = Doc(page="index.html", version=meta["version"], used={p.id for p in PANELS} | {"main"})
+    reserved = {p.id for p in PANELS} | {a for p in PANELS for a in p.aliases} | {"main"}
+    doc = Doc(page="index.html", version=meta["version"], used=reserved)
     parsed = {p.id: parse(md, chunks[p.id], doc) for p in PANELS}  # all ids first: cross-references span tabs
     short_title = f"Protea Prime v{meta['version']}"
     sections = []
@@ -490,7 +529,7 @@ def build_guide(md: MarkdownIt) -> str:
         top = ""
         if p.id == "accueil":
             cards = "".join(
-                f'<a class="card accent-{q.accent}" href="#{q.id}"><span class="card-num">{q.mark}</span>'
+                f'<a class="card accent-{q.accent}" href="#{q.id}"><span class="card-num">{mark_html(q.mark)}</span>'
                 f'<span class="card-title">{esc(q.label)}</span><span class="card-text">{esc(CARDS[q.id])}</span></a>'
                 for q in PANELS if q.id in CARDS)
             top = (f'<header class="hero"><p class="hero-kicker">Guide de build · Warframe</p>'
@@ -499,8 +538,9 @@ def build_guide(md: MarkdownIt) -> str:
                    f'<span class="chip">Hotfix {meta["hotfix"]}</span><span class="chip">Solo</span></p></header>'
                    f'<nav class="cards" aria-label="Configurations">{cards}</nav>')
         title = f"{meta['title']} · v{meta['version']}" if p.id == "accueil" else f"{label} · {short_title}"
+        aliases = f' data-aliases="{" ".join(p.aliases)}"' if p.aliases else ""
         sections.append(
-            f'<section class="panel accent-{p.accent}{" has-toc" if toc else ""}" id="{p.id}" '
+            f'<section class="panel accent-{p.accent}{" has-toc" if toc else ""}" id="{p.id}"{aliases} '
             f'data-label="{esc(label)}" data-title="{esc(title)}" aria-label="{esc(label)}">'
             f'<div class="panel-inner">{toc}<article class="prose">{top}{body}</article></div></section>')
 
@@ -514,8 +554,8 @@ def build_guide(md: MarkdownIt) -> str:
     ])
     return page_html(
         title=f"{meta['title']} · v{meta['version']}",
-        description=(f"Guide Protea Prime v{meta['version']} : socle commun, configuration Endurance et "
-                     f"configuration Level Cap 9999, en solo (Hotfix {meta['hotfix']})."),
+        description=(f"Guide Protea Prime v{meta['version']} : une configuration Steel Path et une configuration "
+                     f"Level Cap (niveaux 1 000 à 9 999), en solo (Hotfix {meta['hotfix']})."),
         body_class="page-guide",
         header=header_html("#accueil", meta["subtitle"], f"v{meta['version']}"),
         tabs=tabs_html("index.html"),
@@ -524,35 +564,35 @@ def build_guide(md: MarkdownIt) -> str:
     )
 
 
-def build_audit(md: MarkdownIt, src: str, page: str, title: str, desc: str, guide_version: str) -> str:
-    text = (BUILDS / src).read_text(encoding="utf-8")
+def build_page(md: MarkdownIt, p: Page, guide_version: str) -> str:
+    text = (BUILDS / p.src).read_text(encoding="utf-8")
     h1 = re.search(r"^# (.+)$", text, re.M).group(1).strip()
     body_md = re.sub(r"^# .+\n", "", text, count=1)
-    doc = Doc(page=page, used={"audit", "main"})
+    doc = Doc(page=p.page, used={"document", "main"})
     chunk = parse(md, body_md, doc)
     body = render(md, chunk, doc, xrefs=False)
-    toc = toc_html(chunk.heads, 2, title, "", "toc-audit")
+    toc = toc_html(chunk.heads, 2, p.title, "", "toc-document")
     name, _, sub = h1.partition(" — ")
-    top = (f'<header class="hero"><p class="hero-kicker"><a href="index.html#annexes">Annexes</a> › {esc(title)}</p>'
+    top = (f'<header class="hero"><p class="hero-kicker"><a href="index.html#annexes">Annexes</a> › {esc(p.title)}</p>'
            f'<h1>{esc(name)}<span class="sub">{esc(sub)}</span></h1></header>')
-    main = (f'<section class="panel accent-annex{" has-toc" if toc else ""}" id="audit" data-label="{esc(title)}">'
+    main = (f'<section class="panel accent-annex{" has-toc" if toc else ""}" id="document" data-label="{esc(p.title)}">'
             f'<div class="panel-inner">{toc}<article class="prose">{top}{body}</article></div></section>')
     footer = footer_html([
-        f"<strong>{esc(title)}</strong> · {esc(desc)}",
-        f'Retour au <a href="index.html">guide v{guide_version}</a> · page générée depuis <code>builds/{src}</code> '
+        f"<strong>{esc(p.title)}</strong> · {esc(p.desc)}",
+        f'Retour au <a href="index.html">guide v{guide_version}</a> · page générée depuis <code>builds/{p.src}</code> '
         f'par <code>tools/build_site.py</code>.',
     ])
-    return page_html(title=f"{title} · Protea Prime", description=desc, body_class="page-audit",
-                     header=header_html("index.html", title, title.replace("Audit hostile ", "Audit ")),
-                     tabs=tabs_html(page, active="annexes"), main=main, footer=footer)
+    return page_html(title=f"{p.title} · Protea Prime", description=p.desc, body_class="page-document",
+                     header=header_html("index.html", p.title, p.chip),
+                     tabs=tabs_html(p.page, active="annexes"), main=main, footer=footer)
 
 
 def build() -> dict[Path, str]:
     md = markdown()
     guide_version = guide_meta((BUILDS / GUIDE).read_text(encoding="utf-8"))["version"]
     out = {DOCS / "index.html": build_guide(md), DOCS / ".nojekyll": ""}
-    for src, page, title, desc in AUDITS:
-        out[DOCS / page] = build_audit(md, src, page, title, desc, guide_version)
+    for p in PAGES:
+        out[DOCS / p.page] = build_page(md, p, guide_version)
     return out
 
 

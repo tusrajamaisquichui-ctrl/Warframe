@@ -33,9 +33,9 @@
 }
 
 .accent-home { --accent: var(--blue); }
-.accent-c1 { --accent: var(--gold); }
-.accent-c2 { --accent: var(--teal); }
-.accent-c3 { --accent: var(--rose); }
+.accent-sp { --accent: var(--gold); }
+.accent-lc { --accent: var(--rose); }
+.accent-mech { --accent: var(--teal); }
 .accent-annex { --accent: var(--violet); }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -141,9 +141,9 @@ main:focus { outline: none; }
   font-size: .7rem; font-weight: 650; line-height: 1.1;
   -webkit-tap-highlight-color: transparent;
 }
-.tab[data-accent="c1"] { --tab-accent: var(--gold); }
-.tab[data-accent="c2"] { --tab-accent: var(--teal); }
-.tab[data-accent="c3"] { --tab-accent: var(--rose); }
+.tab[data-accent="sp"] { --tab-accent: var(--gold); }
+.tab[data-accent="lc"] { --tab-accent: var(--rose); }
+.tab[data-accent="mech"] { --tab-accent: var(--teal); }
 .tab[data-accent="annex"] { --tab-accent: var(--violet); }
 .tab:hover { color: var(--text); }
 .tab::before {
@@ -158,6 +158,9 @@ main:focus { outline: none; }
 }
 .tab-short { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tab-long { display: none; }
+@media (max-width: 359.98px) {
+  .tab { font-size: .63rem; letter-spacing: -.01em; }
+}
 
 .tab.is-active, .tab.is-current { color: var(--tab-accent); }
 .tab.is-active::before, .tab.is-current::before { background: var(--tab-accent); }
@@ -340,6 +343,8 @@ main:focus { outline: none; }
     color: var(--text); font-size: .98rem; font-weight: 650;
   }
   .stack td:first-child::before { display: none; }
+  /* short values (rank, cost…) sit side by side */
+  .stack td.nw:not(:first-child):not(.empty) { display: inline-block; width: auto; min-width: 5.5rem; margin-right: 1.2rem; vertical-align: top; }
   /* a short index column (#, slot) becomes a pill before the row title */
   .stack.num-first td:first-child {
     display: inline-block; width: auto; margin: 0 .5rem .3rem 0; padding: .05rem .55rem;
