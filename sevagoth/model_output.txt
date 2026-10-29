@@ -1,16 +1,16 @@
 ## M1. Synthese par scenario (base F1 = x1,00)
 | Scenario | Build | clear (kills/min, S1 H1/H0) | Eximus HG : temps typique | indice risque | energie nette (kills/min) |
 |---|---|---|---|---|---|
-| S1 SP175 | F1 | 151 / 133 | 2 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +3.45/s (60) |
+| S1 SP175 | F1 | 151 / 133 | 2 detonations, soit 3 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +3.45/s (60) |
 | S1 SP175 | F2 | 161 / 161 | griffes 0.17 s | x17.6 | +1.57/s (60) |
 | S1 SP175 | F3 | 151 / 151 | griffes 0.15 s | x2.7 | +4.09/s (60) |
-| S2a 500 | F1 | - | 2 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +5.18/s (90) |
+| S2a 500 | F1 | - | 2 detonations, soit 3 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +5.18/s (90) |
 | S2a 500 | F2 | - | griffes 0.39 s | x13.2 | +2.34/s (90) |
 | S2a 500 | F3 | - | griffes 0.34 s | x2.7 | +5.83/s (90) |
-| S2b 1000 | F1 | - | 2 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +5.18/s (90) |
+| S2b 1000 | F1 | - | 2 detonations, soit 3 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +5.18/s (90) |
 | S2b 1000 | F2 | - | griffes 0.67 s | x10.2 | +2.34/s (90) |
 | S2b 1000 | F3 | - | griffes 0.59 s | x2.7 | +5.83/s (90) |
-| S3 9999 | F1 | - | 2 Reap (H1) ou 6 tir(s) Epitaph (H0) | x1.0 | +2.39/s (45) |
+| S3 9999 | F1 | - | 2 detonations, soit 3 Reap (H1) ou 6 tir(s) Epitaph (H0) | x1.0 | +2.39/s (45) |
 | S3 9999 | F2 | - | griffes 3.96 s | x8.5 | +1.07/s (45) |
 | S3 9999 | F3 | - | griffes 3.46 s | x2.7 | +3.03/s (45) |
 
@@ -178,4 +178,101 @@ Taille de pack (energie F1, 60 kills/min) :
   8 kills/rotation : net -0.65 /s
   15 kills/rotation : net +1.69 /s
   25 kills/rotation : net +2.75 /s
+
+## M11. Formule du one-shot F1 (controle de l'audit externe)
+Formule de l'audit : 0,25 x (1 + 0,5 x Force) x (1 + 0,3 x Force). Script : frac(vuln = 0,5 x S, Roar = 1 + 0,3 x S).
+  S = 253 % : audit 0.9960 | script 0.9960 | ecart 0.0e+00
+  S = 258 % : audit 1.0156 | script 1.0156 | ecart 0.0e+00
+  S = 273 % : audit 1.0755 | script 1.0755 | ecart 0.0e+00
+  S = 333 % : audit 1.3318 | script 1.3318 | ecart 0.0e+00
+Seuil exact (fraction = 1,00) : 254.02 % de Force ; plafond de Gloom (95 %) : 271.4 %
+
+## M12. Etats d'eclats de F1 (debut de mission, avant Molt)
+| Etat | Force | 2e Reap | one-shot ? | marge | kills Molt -> 1,00 | Gloom slow | kills Molt -> 95 % | energie nette 60 kills/min |
+|---|---|---|---|---|---|---|---|---|
+| 0 eclat | 213 % | 0.846 | non | -0.154 | 171 | 74.5 % | 244 | +1.69/s |
+| 4 Crimson normaux + Amber | 253 % | 0.996 | non | -0.004 | 5 | 88.5 % | 77 | +3.45/s |
+| 1 tauforge + 3 normaux + Amber | 258 % | 1.016 | oui | +0.016 | 0 | 90.3 % | 56 | +3.45/s |
+| 1 tauforge + 4 normaux (5e eclat Crimson, pas d'Amber) | 268 % | 1.055 | oui | +0.055 | 0 | 93.8 % | 15 | +1.69/s |
+| 2 tauforges + 2 normaux + Amber | 263 % | 1.035 | oui | +0.035 | 0 | 92.0 % | 36 | +3.45/s |
+| 3 tauforges + 1 normal + Amber | 268 % | 1.055 | oui | +0.055 | 0 | 93.8 % | 15 | +3.45/s |
+| 4 tauforges + Amber (F1 final) | 273 % | 1.075 | oui | +0.075 | 0 | 95.0 % | 0 | +3.45/s |
+
+## M13. Crimson tauforges : esperance par semaine (5 Search Pulses = DA + TA + 1 Netracell)
+### Archimedea Elite (37 points)
+| Source | tauforge Crimson / sem | Crimson normal / sem |
+|---|---|---|
+| Deep Archimedea Elite (2 Search Pulses) | 0.421 | 0.613 |
+| Temporal Archimedea Elite (2 Search Pulses) | 0.261 | 0.456 |
+| 1 Netracell (1 Search Pulse) | 0.042 | 0.175 |
+| Archon Hunt (Amar 1 semaine sur 3) | 0.133 | 0.201 |
+| Bird 3 (Crimson 1 semaine sur 3, 30 000 Cavia) | 0.000 | 0.333 |
+| **Total** | **0.856** | **1.777** (Ascent Fusion 3 -> 1 : +0.592) |
+Equivalent tauforge par semaine : 1.45 -> 3 tauforges de plus (apres celui de Taubound) en ~2.1 semaines (esperance).
+
+### Archimedea sans Elite (27 points max)
+| Source | tauforge Crimson / sem | Crimson normal / sem |
+|---|---|---|
+| Deep Archimedea normal (2 Search Pulses) | 0.169 | 0.481 |
+| Temporal Archimedea normal (2 Search Pulses) | 0.121 | 0.381 |
+| 1 Netracell (1 Search Pulse) | 0.042 | 0.175 |
+| Archon Hunt (Amar 1 semaine sur 3) | 0.133 | 0.201 |
+| Bird 3 (Crimson 1 semaine sur 3, 30 000 Cavia) | 0.000 | 0.333 |
+| **Total** | **0.465** | **1.571** (Ascent Fusion 3 -> 1 : +0.524) |
+Equivalent tauforge par semaine : 0.99 -> 3 tauforges de plus (apres celui de Taubound) en ~3.0 semaines (esperance).
+
+Calendrier (formules des pages wiki) : Bird 3 vend le Crimson les semaines du 26/10 et du 16/11 ; Archon Amar (Crimson) les semaines du 09/11 et du 30/11 (reset lundi 00:00 UTC).
+
+## M14. Portee : couverture et cout d'un mod de portee (F1, 4 tauforges)
+Rayons CONF x Portee : Sow 16 m, Gloom 4 -> 16 m, bande de Reap 8 m (mini-Reap idem), Dark Propagation 15 m ; detection des mini-Reap 30 m fixe. Kills par rotation = min(15 x Portee^2, 30) (TEST).
+| Option | Portee | Sow / Gloom | bande Reap | aire Sow | Force debut | 2e Reap debut | kills Molt -> 1,00 | Gloom slow debut | energie 60 kpm | capacite |
+|---|---|---|---|---|---|---|---|---|---|---|
+| build actuel | 100 % | 16.0 m | 8.0 m | x1.00 | 273 % | 1.075 | 0 | 95 % | +3.45/s | 72/74 |
+| Exilus Power Drift -> Cunning Drift | 115 % | 18.4 m | 9.2 m | x1.32 | 258 % | 1.016 | 0 | 90 % | +4.10/s | 72/74 |
+| Augur Secrets -> Augur Reach | 130 % | 20.8 m | 10.4 m | x1.69 | 249 % | 0.981 | 21 | 87 % | +4.54/s | 72/74 |
+| Augur Secrets -> Stretch | 145 % | 23.2 m | 11.6 m | x2.10 | 249 % | 0.981 | 21 | 87 % | +4.78/s | 74/74 |
+| Dark Propagation -> Stretch | 145 % | 23.2 m | 11.6 m | x2.10 | 273 % | 1.075 | 0 | 95 % | +4.78/s | 72/74 |
+| Streamline -> Stretch | 145 % | 23.2 m | 11.6 m | x2.10 | 273 % | 1.075 | 0 | 95 % | +1.85/s | 72/74 |
+| Intensify -> Stretch | 145 % | 23.2 m | 11.6 m | x2.10 | 243 % | 0.957 | 46 | 85 % | +4.78/s | 70/74 |
+
+## M15. Paliers de progression F1
+| Palier | Force debut / Molt plein | 2e Reap debut / Molt | Gloom debut | Duree | energie 60 kpm (Gloom permanent / a la demande) | seuil kpm (permanent) | capacite |
+|---|---|---|---|---|---|---|---|
+| P0 Sans arcanes (reference, deconseille) | 268 % / 268 % | 1.055 / 1.055 | 94 % | 72.5 % | -11.97 / -4.73 | > 600 | 73/74 (2 Forma) |
+| P1 Depart : Molt Augmented + Arcane Energize, Shade | 268 % / 328 % | 1.055 / 1.309 | 94 % | 72.5 % | -7.39 / -0.15 | > 600 | 73/74 (2 Forma) |
+| P2 + Huras Kubrow (Stalk + Seismic Bond) | 268 % / 328 % | 1.055 / 1.309 | 94 % | 72.5 % | -1.25 / -0.15 | ~112 | 73/74 (2 Forma) |
+| P3 + 4 Crimson normaux + Amber normal, Transient -> Primed Continuity | 253 % / 313 % | 0.996 / 1.243 | 89 % | 155.0 % | +2.86 / +2.31 | ~21 | 72/74 (2 Forma) |
+| P4 + Crimson et Amber tauforges (Taubound) | 258 % / 318 % | 1.016 / 1.265 | 90 % | 155.0 % | +3.45 / +2.90 | ~20 | 72/74 (2 Forma) |
+| P5 F1 final (4 Crimson tauforges) | 273 % / 333 % | 1.075 / 1.332 | 95 % | 155.0 % | +3.45 / +2.90 | ~20 | 72/74 (2 Forma) |
+
+## M16. Huras Kubrow : survie (Module:Companions/data, rework des compagnons)
+| Mods | PV | armure (DR) | boucliers | EHP | balles HG pour le neutraliser (175 / 500 / 1000 / 9999) |
+|---|---|---|---|---|---|
+| nu | 560 | 300 (50.0 %) | 490 | 1,610 | 9.2 / 1.8 / 0.6 / 0.0 |
+| Enhanced Vitality + Metal Fiber | 1,960 | 1,050 (77.8 %) | 490 | 9,310 | 53.1 / 10.3 / 3.5 / 0.1 |
+| + Calculated Redirection | 1,960 | 1,050 (77.8 %) | 1,715 | 10,535 | 60.1 / 11.7 / 4.0 / 0.1 |
+Neutralisation (CONF) : 60 s de base, retour automatique avec 5 s d'invulnerabilite ; Medi-Pet Kit -15 s, Momentous Bond -18 s par Eximus tue, Restorative Bond -3 s par orbe de vie, Hard Reset (Parazon) -15 s par Mercy.
+  sans mod : 60 s ; avec 1 Eximus tue / 10 s (Momentous) : ~21 s (DED, approx.)
+  Medi-Pet Kit : 45 s ; avec 1 Eximus tue / 10 s (Momentous) : ~16 s (DED, approx.)
+
+## M17. Taubound (jusqu'au 17/11/2026) : Moonflesh
+  Crimson tauforge (x1) : 375 Moonflesh - +5 % Force : 253 -> 258 %, passe le seuil sans Molt
+  Secondary Fortifier x21 (rang 5) : 168 Moonflesh - plan B Overguard (Epitaph Prime x8 contre l'OG)
+  Amber tauforge (x1) : 375 Moonflesh - orbes d'energie +75 % au lieu de +50 %
+  Melee Exposure x21 (rang 5) : 168 Moonflesh - griffes du Tombstone (optionnel)
+  Legendary Core (x1) : 500 Moonflesh - monte Primed Continuity au rang max (optionnel)
+Indispensable (3 premieres lignes) : 918 Moonflesh ; avec les options : 1586.
+  Kills d'Infestes d'Eris en SP a 60 kills/min : ~216 Moonflesh/h (DED) -> 4.3 h pour l'indispensable, hors alertes (75 chacune en SP)
+  Kills d'Infestes d'Eris en SP a 90 kills/min : ~324 Moonflesh/h (DED) -> 2.8 h pour l'indispensable, hors alertes (75 chacune en SP)
+  Kills d'Infestes d'Eris en SP a 120 kills/min : ~432 Moonflesh/h (DED) -> 2.1 h pour l'indispensable, hors alertes (75 chacune en SP)
+
+## M18. Plan B Overguard : Blast des detonations voisines (DED, T1 etape 7)
+Chaque Heavy Gunner (sans OG) detone dans un rayon de 4 m : 25 % de ses PV x Roar (x vuln si elle s'applique a l'OG).
+| Niveau | PV Heavy Gunner | OG Eximus | Blast/voisin (sans vuln sur OG) | voisins pour vider l'OG | avec vuln sur OG | voisins |
+|---|---|---|---|---|---|---|
+| S1 SP175 | 321,485 | 324,090 | 146,195 | 3 | 345,752 | 1 |
+| S2a 500 | 698,991 | 836,472 | 317,866 | 3 | 751,753 | 2 |
+| S2b 1000 | 1,157,605 | 1,562,309 | 526,421 | 3 | 1,244,985 | 2 |
+| S3 9999 | 6,103,266 | 12,418,720 | 2,775,460 | 5 | 6,563,964 | 2 |
+Rotation reelle pour un Eximus sous H1 : Reap (vuln) -> Sow -> Reap (1re detonation) -> Reap (2e) ; ajouter un Sow avant le 3e Reap si T6 montre que Sow est consomme.
 

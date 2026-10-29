@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sevagoth Prime - modele de theorycraft (patch 44.1.4.1, PS5, 28/10/2026).
+Sevagoth Prime - modele de theorycraft v2 (patch 44.1.4.1, PS5, 29/10/2026).
 
 Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que recopier les sorties.
     python3 sevagoth_model.py                 # rapport complet
@@ -8,7 +8,8 @@ Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que r
     python3 sevagoth_model.py --params        # parametres + sources
 
 Etiquettes : CONF = wiki officiel / patch notes, COMM = communaute, DED = deduit (ce modele),
-TEST = hypothese a mesurer en jeu (voir tests T1..T10 du document).
+TEST = hypothese a mesurer en jeu (voir tests T1..T14 du document).
+v2 : sections M11 a M16 (formule, etats d'eclats, sources de tauforges, portee, paliers, Huras, Taubound).
 Forces exprimees en multiplicateurs (2,43 = 243 %).
 """
 import argparse
@@ -107,6 +108,8 @@ MODS = {
     "Primed Flow": (4, 10, "N", {"energy_pct": 1.85}), "Undying Will": (2, 5, "V", {}),
     "Vitality": (2, 10, "V", {"health_pct": 1.00}), "Steel Fiber": (4, 10, "V", {"armor_pct": 1.00}),
     "Fleeting Expertise": (6, 5, "N", {"eff": 0.60, "dur": -0.60}),
+    "Cunning Drift": (4, 5, "M", {"rng": 0.15}), "Augur Reach": (2, 5, "N", {"rng": 0.30}),
+    "Continuity": (2, 5, "M", {"dur": 0.30}),
     # Melee
     "Primed Pressure Point": (4, 10, "M", {}), "Condition Overload": (10, 5, "M", {}),
     "Blood Rush": (4, 10, "M", {}), "Organ Shatter": (4, 5, "M", {}), "Primed Reach": (4, 10, "M", {}),
@@ -738,7 +741,7 @@ def summary_report():
             if key == "F1":
                 og = heavy_gunner(L, True)["og"]
                 sh = math.ceil(og / epitaph_shot_vs_og(s["S"], roar_mult(s["roar_S"])))
-                ex = f"2 Reap (H1) ou {sh} tir(s) Epitaph (H0)"
+                ex = f"2 detonations, soit 3 Reap (H1) ou {sh} tir(s) Epitaph (H0)"
             else:
                 s0 = strengths(key)
                 ex = f"griffes {claws_ttk(L, s0['S4'], s0['S'], s0['S_sh'], 4, 'tennokai', full=0.5)[0]:.2f} s"
@@ -747,9 +750,264 @@ def summary_report():
     return "\n".join(o)
 
 
+# ===========================================================================
+# v2 (29/10/2026) : retours d'audit externe
+# ===========================================================================
+MOLT_PER_KILL = 0.0024   # Molt Augmented R5 : +0,24 % de Force par kill, 250 stacks (CONF)
+GLOOM_CAP_STR = 0.95 / 0.35
+
+
+def f1_frac(S):
+    """F1 : Roar en slot 4 sans Precision Intensify -> Roar et vulnerabilite utilisent la meme Force S."""
+    return frac(v("reap_vuln") * S, roar_mult(S))
+
+
+def kills_to(S, target):
+    """Kills de Molt Augmented pour que la Force atteigne `target` (None si > 250 stacks)."""
+    if S >= target:
+        return 0
+    k = math.ceil((target - S) / MOLT_PER_KILL - 1e-9)
+    return k if k <= 250 else None
+
+
+def threshold_f1():
+    lo, hi = 1.0, 4.0
+    for _ in range(80):
+        mid = (lo + hi) / 2
+        lo, hi = (lo, mid) if f1_frac(mid) >= 1 else (mid, hi)
+    return hi
+
+
+SHARD_STATES = [  # (libelle, bonus de Force des eclats Crimson, eclat Amber orbe tauforge present)
+    ("0 eclat", 0.00, False),
+    ("4 Crimson normaux + Amber", 0.40, True),
+    ("1 tauforge + 3 normaux + Amber", 0.45, True),
+    ("1 tauforge + 4 normaux (5e eclat Crimson, pas d'Amber)", 0.55, False),
+    ("2 tauforges + 2 normaux + Amber", 0.50, True),
+    ("3 tauforges + 1 normal + Amber", 0.55, True),
+    ("4 tauforges + Amber (F1 final)", 0.60, True),
+]
+
+
+def formula_report():
+    o = ["## M11. Formule du one-shot F1 (controle de l'audit externe)"]
+    o.append("Formule de l'audit : 0,25 x (1 + 0,5 x Force) x (1 + 0,3 x Force). Script : frac(vuln = 0,5 x S, Roar = 1 + 0,3 x S).")
+    for S in (2.53, 2.58, 2.73, 3.33):
+        audit = 0.25 * (1 + 0.5 * S) * (1 + 0.3 * S)
+        o.append(f"  S = {S*100:.0f} % : audit {audit:.4f} | script {f1_frac(S):.4f} | ecart {abs(audit - f1_frac(S)):.1e}")
+    o.append(f"Seuil exact (fraction = 1,00) : {threshold_f1()*100:.2f} % de Force ; plafond de Gloom (95 %) : {GLOOM_CAP_STR*100:.1f} %")
+    return "\n".join(o)
+
+
+def shards_report():
+    o = ["## M12. Etats d'eclats de F1 (debut de mission, avant Molt)"]
+    o.append("| Etat | Force | 2e Reap | one-shot ? | marge | kills Molt -> 1,00 | Gloom slow | kills Molt -> 95 % | energie nette 60 kills/min |")
+    o.append("|---|---|---|---|---|---|---|---|---|")
+    thr = threshold_f1()
+    for lab, bonus, amber in SHARD_STATES:
+        S = strengths("F1", shards=bonus)["S"]
+        f = f1_frac(S)
+        k1, k2 = kills_to(S, thr), kills_to(S, GLOOM_CAP_STR)
+        c, i = energy_flow("F1", 60, 0.75 if amber else 0.0)
+        o.append(f"| {lab} | {S*100:.0f} % | {f:.3f} | {'oui' if f >= 1 else 'non'} | {f-1:+.3f} | "
+                 f"{k1 if k1 is not None else '> 250'} | {min(0.35*S, 0.95)*100:.1f} % | "
+                 f"{k2 if k2 is not None else '> 250'} | {i-c:+.2f}/s |")
+    return "\n".join(o)
+
+
+# Sources de Crimson (tables Module:DropTables/data, pages Archon Hunt / Bird 3 / Search Pulse ; CONF)
+# Paliers de recompense Archimedea (CONF) : Elite = A, A, B, B, C ; normal (27 pts max) = A, A, B
+DA = {"A": (0.0417, 0.1750), "B": (0.0854, 0.1313), "C": (0.1667, 0.0)}   # (tau Crimson, Crimson normal)
+TA = {"A": (0.0365, 0.1533), "B": (0.0484, 0.0745), "C": (0.0911, 0.0)}
+NETRACELL = (0.0417, 0.1750)
+ARCHON_TAU_EFF = 0.3983   # Archon Hunt : taux tauforge effectif avec pitie (Archon_Shard, CONF)
+
+
+def weekly_crimson(elite=True):
+    tiers = ["A", "A", "B", "B", "C"] if elite else ["A", "A", "B"]
+    rows = [
+        ("Deep Archimedea " + ("Elite" if elite else "normal") + " (2 Search Pulses)",
+         sum(DA[t][0] for t in tiers), sum(DA[t][1] for t in tiers)),
+        ("Temporal Archimedea " + ("Elite" if elite else "normal") + " (2 Search Pulses)",
+         sum(TA[t][0] for t in tiers), sum(TA[t][1] for t in tiers)),
+        ("1 Netracell (1 Search Pulse)", NETRACELL[0], NETRACELL[1]),
+        ("Archon Hunt (Amar 1 semaine sur 3)", ARCHON_TAU_EFF / 3, (1 - ARCHON_TAU_EFF) / 3),
+        ("Bird 3 (Crimson 1 semaine sur 3, 30 000 Cavia)", 0.0, 1 / 3),
+    ]
+    tau = sum(r[1] for r in rows)
+    norm = sum(r[2] for r in rows)
+    return rows, tau, norm
+
+
+def tau_sources_report():
+    o = ["## M13. Crimson tauforges : esperance par semaine (5 Search Pulses = DA + TA + 1 Netracell)"]
+    for elite in (True, False):
+        rows, tau, norm = weekly_crimson(elite)
+        o.append(f"### {'Archimedea Elite (37 points)' if elite else 'Archimedea sans Elite (27 points max)'}")
+        o.append("| Source | tauforge Crimson / sem | Crimson normal / sem |")
+        o.append("|---|---|---|")
+        for name, t, n in rows:
+            o.append(f"| {name} | {t:.3f} | {n:.3f} |")
+        eq = tau + norm / 3
+        o.append(f"| **Total** | **{tau:.3f}** | **{norm:.3f}** (Ascent Fusion 3 -> 1 : +{norm/3:.3f}) |")
+        o.append(f"Equivalent tauforge par semaine : {eq:.2f} -> 3 tauforges de plus (apres celui de Taubound) en ~{3/eq:.1f} semaines (esperance).")
+        o.append("")
+    o.append("Calendrier (formules des pages wiki) : Bird 3 vend le Crimson les semaines du 26/10 et du 16/11 ; "
+             "Archon Amar (Crimson) les semaines du 09/11 et du 30/11 (reset lundi 00:00 UTC).")
+    return "\n".join(o)
+
+
+def range_report():
+    o = ["## M14. Portee : couverture et cout d'un mod de portee (F1, 4 tauforges)"]
+    base_cfg = BUILDS["F1"]["seva"]
+    opts = [("build actuel", None, None),
+            ("Exilus Power Drift -> Cunning Drift", "Power Drift", "Cunning Drift"),
+            ("Augur Secrets -> Augur Reach", "Augur Secrets", "Augur Reach"),
+            ("Augur Secrets -> Stretch", "Augur Secrets", "Stretch"),
+            ("Dark Propagation -> Stretch", "Dark Propagation", "Stretch"),
+            ("Streamline -> Stretch", "Streamline", "Stretch"),
+            ("Intensify -> Stretch", "Intensify", "Stretch")]
+    o.append("Rayons CONF x Portee : Sow 16 m, Gloom 4 -> 16 m, bande de Reap 8 m (mini-Reap idem), Dark Propagation 15 m ; "
+             "detection des mini-Reap 30 m fixe. Kills par rotation = min(15 x Portee^2, 30) (TEST).")
+    o.append("| Option | Portee | Sow / Gloom | bande Reap | aire Sow | Force debut | 2e Reap debut | kills Molt -> 1,00 | Gloom slow debut | energie 60 kpm | capacite |")
+    o.append("|---|---|---|---|---|---|---|---|---|---|---|")
+    old_pack = P["pack_size"]
+    for lab, out_m, in_m in opts:
+        cfg = dict(base_cfg)
+        if out_m:
+            if out_m == cfg.get("exilus"):
+                cfg["exilus"] = in_m
+            else:
+                cfg["mods"] = [in_m if m == out_m else m for m in cfg["mods"]]
+        BUILDS["F1"]["seva"] = cfg
+        st = stats(cfg, SHARDS)
+        R, S = st["rng"], st["str"]
+        P["pack_size"] = (min(15 * R * R, 30),) + old_pack[1:]
+        c, i = energy_flow("F1", 60, 0.75)
+        P["pack_size"] = old_pack
+        k = kills_to(S, threshold_f1())
+        r = fit(cfg)
+        o.append(f"| {lab} | {R*100:.0f} % | {16*R:.1f} m | {8*R:.1f} m | x{R*R:.2f} | {S*100:.0f} % | {f1_frac(S):.3f} | "
+                 f"{k if k is not None else '> 250'} | {min(0.35*S, 0.95)*100:.0f} % | {i-c:+.2f}/s | {r['total']}/{r['cap']} |")
+    BUILDS["F1"]["seva"] = base_cfg
+    return "\n".join(o)
+
+
+# Paliers de progression (DED) : chaque palier est une config jouable
+_TF = ['Shadow Haze', 'Dark Propagation', 'Umbral Intensify', 'Augur Secrets', 'Intensify', 'Transient Fortitude', 'Catalyzing Shields', 'Streamline']
+_PC = ['Shadow Haze', 'Dark Propagation', 'Umbral Intensify', 'Augur Secrets', 'Intensify', 'Primed Continuity', 'Catalyzing Shields', 'Streamline']
+TIERS = [
+    dict(name="P0 Sans arcanes (reference, deconseille)", shards=0.0, amber=False, molt=False, energize=False, seismic=False, mods=_TF),
+    dict(name="P1 Depart : Molt Augmented + Arcane Energize, Shade", shards=0.0, amber=False, molt=True, energize=True, seismic=False, mods=_TF),
+    dict(name="P2 + Huras Kubrow (Stalk + Seismic Bond)", shards=0.0, amber=False, molt=True, energize=True, seismic=True, mods=_TF),
+    dict(name="P3 + 4 Crimson normaux + Amber normal, Transient -> Primed Continuity", shards=0.40, amber=0.50, molt=True, energize=True, seismic=True, mods=_PC),
+    dict(name="P4 + Crimson et Amber tauforges (Taubound)", shards=0.45, amber=0.75, molt=True, energize=True, seismic=True, mods=_PC),
+    dict(name="P5 F1 final (4 Crimson tauforges)", shards=0.60, amber=0.75, molt=True, energize=True, seismic=True, mods=_PC),
+]
+
+
+def tier_energy(cfg, kpm, seismic, orb_eff, energize, gloom=1.0):
+    """Energie nette du corps ; gloom = part du temps ou Gloom draine (1 = permanent, 0 = a la demande / coupe)."""
+    st = stats(cfg, 0)
+    eff = st["eff"] + (0.30 if seismic and gloom > 0 else 0)   # Seismic Bond ne joue que pendant une canalisation
+    cm = max(2 - eff, 0.25)
+    packs = kpm / 60 / v("pack_size")
+    cost = packs * (v("sow_cost") + 2 * v("reap_cost")) * cm
+    cost += v("roar_cost") * cm / (v("roar_dur") * st["dur"])
+    cost += gloom * v("gloom_drain") * 10 * max(cm / st["dur"], 0.25)
+    orbs = kpm / 60 * v("orb_drop")
+    inc = orbs * v("orb_energy") * (1 + orb_eff) + (energize_rate(orbs) * v("energize") if energize else 0)
+    return inc - cost
+
+
+def tiers_report():
+    o = ["## M15. Paliers de progression F1"]
+    o.append("| Palier | Force debut / Molt plein | 2e Reap debut / Molt | Gloom debut | Duree | energie 60 kpm (Gloom permanent / a la demande) | seuil kpm (permanent) | capacite |")
+    o.append("|---|---|---|---|---|---|---|---|")
+    for t in TIERS:
+        cfg = dict(BUILDS["F1"]["seva"])
+        cfg["mods"] = t["mods"]
+        st = stats(cfg, t["shards"])
+        S0 = st["str"]
+        S1 = S0 + (MOLT if t["molt"] else 0)
+        orb = t["amber"] if t["amber"] else 0.0
+        n1 = tier_energy(cfg, 60, t["seismic"], orb, t["energize"], 1.0)
+        n0 = tier_energy(cfg, 60, t["seismic"], orb, t["energize"], 0.0)
+        thr = next((k for k in range(5, 601) if tier_energy(cfg, k, t["seismic"], orb, t["energize"]) >= 0), None)
+        r = fit(cfg)
+        o.append(f"| {t['name']} | {S0*100:.0f} % / {S1*100:.0f} % | {f1_frac(S0):.3f} / {f1_frac(S1):.3f} | "
+                 f"{min(0.35*S0, 0.95)*100:.0f} % | {st['dur']*100:.1f} % | {n1:+.2f} / {n0:+.2f} | "
+                 f"{'~%d' % thr if thr else '> 600'} | {r['total']}/{r['cap']} ({r['forma']} Forma) |")
+    return "\n".join(o)
+
+
+def blast_report():
+    o = ["## M18. Plan B Overguard : Blast des detonations voisines (DED, T1 etape 7)"]
+    o.append("Chaque Heavy Gunner (sans OG) detone dans un rayon de 4 m : 25 % de ses PV x Roar (x vuln si elle s'applique a l'OG).")
+    o.append("| Niveau | PV Heavy Gunner | OG Eximus | Blast/voisin (sans vuln sur OG) | voisins pour vider l'OG | avec vuln sur OG | voisins |")
+    o.append("|---|---|---|---|---|---|---|")
+    s = strengths("F1")
+    r = roar_mult(s["roar_S"])
+    vuln = 1 + v("reap_vuln") * s["S"]
+    for n, L in LEVELS.items():
+        h = heavy_gunner(L)["health"]
+        og = heavy_gunner(L, True)["og"]
+        b0, b1 = v("detonate_pct") * h * r, v("detonate_pct") * h * r * vuln
+        o.append(f"| {n} | {h:,.0f} | {og:,.0f} | {b0:,.0f} | {math.ceil(og/b0)} | {b1:,.0f} | {math.ceil(og/b1)} |")
+    o.append("Rotation reelle pour un Eximus sous H1 : Reap (vuln) -> Sow -> Reap (1re detonation) -> Reap (2e) ; "
+             "ajouter un Sow avant le 3e Reap si T6 montre que Sow est consomme.")
+    return "\n".join(o)
+
+
+def huras_report():
+    o = ["## M16. Huras Kubrow : survie (Module:Companions/data, rework des compagnons)"]
+    hp0, sh0, ar0 = 560, 490, 300   # CONF (module ; les patch notes du rework annoncaient 200 d'armure)
+    builds = [("nu", 0, 0, 0), ("Enhanced Vitality + Metal Fiber", 2.5, 2.5, 0),
+              ("+ Calculated Redirection", 2.5, 2.5, 2.5)]
+    o.append("| Mods | PV | armure (DR) | boucliers | EHP | balles HG pour le neutraliser (175 / 500 / 1000 / 9999) |")
+    o.append("|---|---|---|---|---|---|")
+    for lab, h, a, sh in builds:
+        hp, ar, shd = hp0 * (1 + h), ar0 * (1 + a), sh0 * (1 + sh)
+        dr = ar / (ar + 300)
+        e = hp / (1 - dr) + shd
+        b = " / ".join(f"{e/(v('hg_shot')*heavy_gunner(L)['dmg_mult']):.1f}" for L in (175, 500, 1000, 9999))
+        o.append(f"| {lab} | {hp:,.0f} | {ar:,.0f} ({dr*100:.1f} %) | {shd:,.0f} | {e:,.0f} | {b} |")
+    o.append("Neutralisation (CONF) : 60 s de base, retour automatique avec 5 s d'invulnerabilite ; Medi-Pet Kit -15 s, "
+             "Momentous Bond -18 s par Eximus tue, Restorative Bond -3 s par orbe de vie, Hard Reset (Parazon) -15 s par Mercy.")
+    for lab, base in (("sans mod", 60), ("Medi-Pet Kit", 45)):
+        o.append(f"  {lab} : {base} s ; avec 1 Eximus tue / 10 s (Momentous) : ~{max(base / (1 + 18/10), 5):.0f} s (DED, approx.)")
+    return "\n".join(o)
+
+
+TAUBOUND_ITEMS = [  # (objet, Moonflesh, utilite pour F1)
+    ("Crimson tauforge (x1)", 375, "+5 % Force : 253 -> 258 %, passe le seuil sans Molt"),
+    ("Secondary Fortifier x21 (rang 5)", 21 * 8, "plan B Overguard (Epitaph Prime x8 contre l'OG)"),
+    ("Amber tauforge (x1)", 375, "orbes d'energie +75 % au lieu de +50 %"),
+    ("Melee Exposure x21 (rang 5)", 21 * 8, "griffes du Tombstone (optionnel)"),
+    ("Legendary Core (x1)", 500, "monte Primed Continuity au rang max (optionnel)"),
+]
+
+
+def taubound_report():
+    o = ["## M17. Taubound (jusqu'au 17/11/2026) : Moonflesh"]
+    total_core = sum(x[1] for x in TAUBOUND_ITEMS[:3])
+    total_all = sum(x[1] for x in TAUBOUND_ITEMS)
+    for it in TAUBOUND_ITEMS:
+        o.append(f"  {it[0]} : {it[1]} Moonflesh - {it[2]}")
+    o.append(f"Indispensable (3 premieres lignes) : {total_core} Moonflesh ; avec les options : {total_all}.")
+    per_kill = 0.02 * 3   # ~2 % de chance, 3 Moonflesh en Steel Path (CONF, valeur approchee du wiki)
+    for kpm in (60, 90, 120):
+        rate = per_kill * kpm * 60
+        o.append(f"  Kills d'Infestes d'Eris en SP a {kpm} kills/min : ~{rate:.0f} Moonflesh/h (DED) -> "
+                 f"{total_core/rate:.1f} h pour l'indispensable, hors alertes (75 chacune en SP)")
+    return "\n".join(o)
+
+
 SECTIONS = {"summary": summary_report, "capacity": capacity_report, "nuke": nuke_report, "eximus": eximus_report,
             "claws": claws_report, "survival": survival_report, "energy": energy_report, "well": well_report,
-            "clear": clear_report, "sensitivity": sensitivity_report}
+            "clear": clear_report, "sensitivity": sensitivity_report, "formula": formula_report,
+            "shards": shards_report, "tau": tau_sources_report, "range": range_report, "tiers": tiers_report,
+            "huras": huras_report, "taubound": taubound_report, "blast": blast_report}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
