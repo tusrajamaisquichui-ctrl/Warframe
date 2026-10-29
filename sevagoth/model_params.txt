@@ -1,0 +1,54 @@
+seva_health             370  [CONF] wiki.warframe.com Sevagoth/Prime : 270 base -> 370 rang 30
+seva_shield             370  [CONF] wiki.warframe.com Sevagoth/Prime : 270/370
+seva_armor              185  [CONF] wiki.warframe.com Sevagoth/Prime
+seva_energy             225  [CONF] wiki.warframe.com Sevagoth/Prime : 175/225
+sh_health               370  [CONF] wiki.warframe.com Sevagoth Prime's Shadow : 270/370
+sh_shield               185  [CONF] wiki.warframe.com Shadow : 135/185
+sh_armor                475  [CONF] wiki.warframe.com Shadow : 475 (corrige 40.0.3)
+sh_energy               150  [CONF] wiki.warframe.com Shadow : 100/150
+reap_cost                25  [CONF] wiki.warframe.com Reap
+reap_vuln               0.5  [CONF] wiki.warframe.com Reap : vulnerabilite 50 % x Force, posee APRES le True du meme coup
+sow_cost                 50  [CONF] wiki.warframe.com Sow
+sow_dps                 250  [CONF] wiki.warframe.com Sow : 250 True/s x Force, falloff jusqu'a 25 %
+detonate_pct           0.25  [CONF] wiki.warframe.com Reap sur cible Sow : 25 % PV actuels en True puis 25 % en Blast 4 m
+gloom_cost               50  [CONF] wiki.warframe.com Gloom
+gloom_drain            0.75  [CONF] wiki.warframe.com Gloom : 0,75 energie/s par ennemi, plafond 10
+gloom_slow             0.35  [CONF] wiki.warframe.com Gloom : ralentissement 35 % x Force, plafond 95 % a 272 %
+gloom_ls               0.05  [CONF] wiki.warframe.com Gloom : vol de vie 5 % x Force
+well_drain              1.0  [CONF] wiki.warframe.com Exalted Shadow : 1 %/s, cast si >= 75 %
+well_gloom              0.1  [CONF] wiki.warframe.com Gloom : 0,1 %/s par ennemi vivant
+sh_invuln               5.0  [CONF] wiki.warframe.com Exalted Shadow : 5 s invulnerable a chaque invocation
+claws_base              250  [CONF] wiki.warframe.com Shadow Claws Prime : 250 x Force de Sevagoth (I30/P20/S50)
+claws_heavy            1000  [CONF] wiki.warframe.com Module:Weapons/data HeavyAttack 1000
+claws_cc               0.38  [CONF] wiki.warframe.com Shadow Claws
+claws_cd                2.6  [CONF] wiki.warframe.com Shadow Claws
+claws_sc               0.24  [CONF] wiki.warframe.com Shadow Claws
+dh_cost                  75  [CONF] wiki.warframe.com Death's Harvest
+dh_vuln                 0.5  [CONF] wiki.warframe.com Death's Harvest : 50 % x Force de l'Ombre
+haze_cc                 0.5  [CONF] wiki.warframe.com Shadow Haze : +50 % CC x Force de Sevagoth, additif apres mods
+roar_helminth           0.3  [CONF] wiki.warframe.com Roar Helminth : 30 % x Force, bonus de faction
+roar_dur               30.0  [CONF] wiki.warframe.com Roar : 30 s x Duree
+roar_cost                75  [CONF] wiki.warframe.com Roar
+stance_block_pct       20.0  [CONF] wiki.warframe.com Ravenous Wraith Block : 2000 % sur 12 coups
+stance_block_hits        12  [CONF] wiki.warframe.com idem
+stance_block_time       2.4  [CONF] wiki.warframe.com idem, 2,4 s a vitesse 1,0
+sp_health_mult          2.5  [CONF] wiki.warframe.com The Steel Path : PV et boucliers x2,5 ; armure inchangee
+hg_base_level             8  [CONF] wiki.warframe.com Module:Enemies/data/grineer Heavy Gunner
+hg_health               300  [CONF] wiki.warframe.com Heavy Gunner
+hg_armor                500  [CONF] wiki.warframe.com Heavy Gunner
+hg_shot                   8  [CONF] wiki.warframe.com Heavy Gunner : 8 degats/balle
+og_base                  12  [CONF] wiki.warframe.com Overguard : base 12 (tous Eximus)
+catalyzing_mult         0.2  [CONF] wiki.warframe.com Catalyzing Shields : x0,2, gate 1,33 s
+gate_time              1.33  [CONF] wiki.warframe.com Shield gating
+epi_base              315.0  [CONF] wiki.warframe.com Epitaph Prime charge : 126 I / 47,25 P / 141,75 S
+epi_cc                  0.5  [CONF] wiki.warframe.com Epitaph Prime charge
+epi_cd                  3.0  [CONF] wiki.warframe.com Epitaph Prime charge
+epi_rate                1.2  [TEST] Hypothese : tirs charges/s (charge 0,36 s + cadence 1,75)
+fortifier               8.0  [CONF] wiki.warframe.com Secondary Fortifier : x8 contre l'Overguard
+orb_energy               25  [CONF] wiki.warframe.com Pickups : petit orbe 25
+orb_drop              0.094  [COMM] wiki.warframe.com Pickups : 9,43 % sur 159 kills (echantillon cite)
+energize                150  [CONF] wiki.warframe.com Arcane Energize : 60 % -> 150, recharge 15 s
+cast_time               0.9  [TEST] NON TROUVE : animation moyenne d'un sort (s) avant vitesse de lancer
+travel_time             4.0  [TEST] Hypothese : deplacement/visee entre deux packs (s)
+pack_size                15  [TEST] Hypothese : ennemis tues par rotation Sow + 2 Reap en Steel Path dense
+hits_per_s              2.0  [TEST] Hypothese : coups recus/s par tireur actif a pleine vitesse

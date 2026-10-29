@@ -1,0 +1,181 @@
+## M1. Synthese par scenario (base F1 = x1,00)
+| Scenario | Build | clear (kills/min, S1 H1/H0) | Eximus HG : temps typique | indice risque | energie nette (kills/min) |
+|---|---|---|---|---|---|
+| S1 SP175 | F1 | 151 / 133 | 2 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +3.45/s (60) |
+| S1 SP175 | F2 | 161 / 161 | griffes 0.17 s | x17.6 | +1.57/s (60) |
+| S1 SP175 | F3 | 151 / 151 | griffes 0.15 s | x2.7 | +4.09/s (60) |
+| S2a 500 | F1 | - | 2 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +5.18/s (90) |
+| S2a 500 | F2 | - | griffes 0.39 s | x13.2 | +2.34/s (90) |
+| S2a 500 | F3 | - | griffes 0.34 s | x2.7 | +5.83/s (90) |
+| S2b 1000 | F1 | - | 2 Reap (H1) ou 1 tir(s) Epitaph (H0) | x1.0 | +5.18/s (90) |
+| S2b 1000 | F2 | - | griffes 0.67 s | x10.2 | +2.34/s (90) |
+| S2b 1000 | F3 | - | griffes 0.59 s | x2.7 | +5.83/s (90) |
+| S3 9999 | F1 | - | 2 Reap (H1) ou 6 tir(s) Epitaph (H0) | x1.0 | +2.39/s (45) |
+| S3 9999 | F2 | - | griffes 3.96 s | x8.5 | +1.07/s (45) |
+| S3 9999 | F3 | - | griffes 3.46 s | x2.7 | +3.03/s (45) |
+
+## M2. Capacite et Forma
+F1/seva : 72/74 OK, Forma mini 2 | aura Brief Respite[ANY] +14 | exilus Power Drift[-]
+   Primed Continuity[M], Catalyzing Shields[V], Streamline[N], Umbral Intensify[U], Intensify[-], Shadow Haze[-], Dark Propagation[-], Augur Secrets[-]
+   avec 4 eclats Force : Force 273 % (+0 % sur la 4e), Duree 155.0 %, Portee 100 %, Efficacite 130 %, PV +0 %, armure +0 %
+F1/shadow : 73/78 OK, Forma mini 3 | aura Steel Charge[M] +18 | exilus -
+   Steel Fiber[V], Intensify[M], Umbral Vitality[U], Umbral Fiber[U], Umbral Intensify[U], Adaptation[-], Rolling Guard[-], Vitality[-]
+   avec 4 eclats Force : Force 267 % (+0 % sur la 4e), Duree 100.0 %, Portee 100 %, Efficacite 100 %, PV +280 %, armure +280 %
+F1/claws : 66/70 OK, Forma mini 3 | aura - | exilus Discipline's Merit[-]
+   Condition Overload[M], Primed Pressure Point[M], Blood Rush[M], Primed Fever Strike[N], Primed Reach[M], North Wind[V], Organ Shatter[-], Life Strike[-]
+F2/seva : 72/74 OK, Forma mini 2 | aura Brief Respite[ANY] +14 | exilus Power Drift[-]
+   Primed Continuity[M], Catalyzing Shields[V], Streamline[N], Umbral Intensify[U], Intensify[-], Shadow Haze[-], Dark Propagation[-], Augur Secrets[-]
+   avec 4 eclats Force : Force 273 % (+0 % sur la 4e), Duree 155.0 %, Portee 100 %, Efficacite 130 %, PV +0 %, armure +0 %
+F2/shadow : 70/74 OK, Forma mini 5 | aura Brief Respite[ANY] +14 | exilus Power Drift[-]
+   Transient Fortitude[M], Catalyzing Shields[V], Intensify[M], Umbral Intensify[U], Umbral Fiber[U], Preparation[Z], Adaptation[V], Rolling Guard[-]
+   avec 4 eclats Force : Force 315 % (+0 % sur la 4e), Duree 72.5 %, Portee 100 %, Efficacite 100 %, PV +0 %, armure +130 %
+F2/claws : 68/70 OK, Forma mini 3 | aura - | exilus Discipline's Merit[-]
+   Condition Overload[M], Primed Pressure Point[M], Blood Rush[M], Primed Fever Strike[N], Primed Reach[M], North Wind[V], Organ Shatter[-], Weeping Wounds[-]
+F3/seva : 72/74 OK, Forma mini 2 | aura Brief Respite[ANY] +14 | exilus Power Drift[-]
+   Primed Continuity[M], Catalyzing Shields[V], Streamline[N], Umbral Intensify[U], Precision Intensify[-], Shadow Haze[-], Dark Propagation[-], Augur Secrets[-]
+   avec 4 eclats Force : Force 243 % (+90 % sur la 4e), Duree 155.0 %, Portee 100 %, Efficacite 130 %, PV +0 %, armure +0 %
+
+## M3. Nuke Reap+Sow (fraction des PV actuels retiree ; >= 1,00 = mort, hors Overguard)
+Controle des seuils CONF du wiki : S=2,00 + 1 Viral -> 1.000 ; S=2,55 + Roar -> 1.004
+DED : Roar en slot 4 + Precision Intensify -> seuil ramene a 216.7 % de Force
+
+| Build | etat | Force | Roar | vuln Reap | 1er Reap (sans vuln) | 2e Reap | Gloom slow |
+|---|---|---|---|---|---|---|---|
+| F1 | debut | 273 % | x1.82 | +136 % | 0.45 | 1.08 | 95 % |
+| F1 | +Molt | 333 % | x2.00 | +166 % | 0.50 | 1.33 | 95 % |
+| F1 | +Molt+Sling | 373 % | x2.12 | +186 % | 0.53 | 1.52 | 95 % |
+| F2 | debut | 273 % | x1.82 | +136 % | 0.45 | 1.08 | 0 % |
+| F2 | +Molt | 333 % | x2.00 | +166 % | 0.50 | 1.33 | 0 % |
+| F2 | +Molt+Sling | 373 % | x2.12 | +186 % | 0.53 | 1.52 | 0 % |
+| F3 | debut | 243 % | x1.00 | +121 % | 0.50 | 1.11 | 85 % |
+| F3 | +Molt | 303 % | x1.00 | +152 % | 0.50 | 1.26 | 95 % |
+| F3 | +Molt+Sling | 343 % | x1.00 | +172 % | 0.50 | 1.36 | 95 % |
+(F3 suppose 1 stack Viral pose avant : sans amorce, 2e Reap = 0.55)
+
+Ombre F2 : Force Ombre 315 % -> DH +158 %, Roar x1.82 -> detonation par mini-Reap sur cible deja sous DH = 1.17
+Ombre F3 : Force Ombre 315 % -> DH +158 %, Roar x1.00 -> detonation par mini-Reap sur cible deja sous DH = 1.29
+
+## M4. Heavy Gunner Eximus (Steel Path) : PV, armure, Overguard
+| Niveau | PV Heavy Gunner | PV Eximus | Armure | Overguard | OG/PV |
+|---|---|---|---|---|---|
+| S1 SP175 | 321,485 | 1,928,910 | 2700 | 324,090 | 0.17 |
+| S2a 500 | 698,991 | 4,193,946 | 2700 | 836,472 | 0.20 |
+| S2b 1000 | 1,157,605 | 6,945,629 | 2700 | 1,562,309 | 0.22 |
+| S3 9999 | 6,103,266 | 36,619,597 | 2700 | 12,418,720 | 0.34 |
+
+Detonations Reap+Sow pour tuer l'Eximus (T1) : H1a = le True traverse l'OG avec vuln+Roar, H1b = OG ne prend que Roar, H0 = OG bloque (il faut l'enlever autrement)
+| Build | Niveau | H1a | H1b | H0 : tirs Epitaph+Fortifier pour l'OG |
+|---|---|---|---|---|
+| F1 | S1 SP175 | 2 | 2 | 1 |
+| F1 | S2a 500 | 2 | 2 | 1 |
+| F1 | S2b 1000 | 2 | 2 | 1 |
+| F1 | S3 9999 | 2 | 2 | 7 |
+| F2 | S1 SP175 | 2 | 2 | 1 |
+| F2 | S2a 500 | 2 | 2 | 1 |
+| F2 | S2b 1000 | 2 | 2 | 1 |
+| F2 | S3 9999 | 2 | 2 | 7 |
+
+## M5. Shadow Claws Prime : TTK Heavy Gunner Eximus (OG + sante), cible seule
+F2 debut : base griffes 682 (Force 4e 273 %), CC Shadow Haze +136 %, vuln DH +158 %
+F3 debut : base griffes 832 (Force 4e 333 %), CC Shadow Haze +121 %, vuln DH +158 %
+| Build | Niveau | 4x leger | 4x Tennokai | 12x Tennokai | typique (statuts a moitie, 4x Tennokai) | plancher (cible fraiche, 4x, pas de vuln sur OG) |
+|---|---|---|---|---|---|---|
+| F2 | S1 SP175 | 0.12 s | 0.08 s | 0.02 s | 0.17 s | 1.9 s |
+| F2 | S2a 500 | 0.29 s | 0.18 s | 0.05 s | 0.39 s | 4.1 s |
+| F2 | S2b 1000 | 0.50 s | 0.31 s | 0.08 s | 0.67 s | 6.9 s |
+| F2 | S3 9999 | 3.19 s | 1.99 s | 0.54 s | 3.96 s | 38.0 s |
+| F3 | S1 SP175 | 0.11 s | 0.07 s | 0.02 s | 0.15 s | 1.6 s |
+| F3 | S2a 500 | 0.25 s | 0.16 s | 0.04 s | 0.34 s | 3.6 s |
+| F3 | S2b 1000 | 0.44 s | 0.27 s | 0.07 s | 0.59 s | 6.0 s |
+| F3 | S3 9999 | 2.78 s | 1.74 s | 0.46 s | 3.46 s | 33.1 s |
+CC a 12x avec Shadow Haze : 342 % -> tiers rouges ; Melee Duplicate (crits jaunes) est inutile ici.
+
+## M6. Survie
+EHP corps Sevagoth : 672 (DR armure 38.1 %) ; Ombre F2 : 1,754 (DR 78.5 %) ; Ombre Tombstone F1 : 9,902 (DR 85.7 %)
+| Niveau | degats/balle Heavy Gunner | balles -> corps | balles -> Ombre F2 | balles -> Ombre Tombstone |
+|---|---|---|---|---|
+| S1 SP175 | 175 | 3.84 | 10.01 | 56.51 |
+| S2a 500 | 901 | 0.75 | 1.95 | 10.99 |
+| S2b 1000 | 2,655 | 0.25 | 0.66 | 3.73 |
+| S3 9999 | 94,969 | 0.01 | 0.02 | 0.10 |
+
+Indice de risque tir direct (DED) = (tireurs trash x (1-slow) + Eximus) x coups/s x part touchable x 60
+| Build | Niveau | slow trash | part touchable | indice (coups/min) | relatif F1 |
+|---|---|---|---|---|---|
+| F1 | S1 SP175 | 95 % | 0.05 | 4.2 | x1.0 |
+| F2 | S1 SP175 | 0 % | 0.14 | 74.1 | x17.6 |
+| F3 | S1 SP175 | 95 % | 0.14 | 11.5 | x2.7 |
+| F1 | S2a 500 | 95 % | 0.05 | 7.5 | x1.0 |
+| F2 | S2a 500 | 0 % | 0.14 | 98.7 | x13.2 |
+| F3 | S2a 500 | 95 % | 0.14 | 20.6 | x2.7 |
+| F1 | S2b 1000 | 95 % | 0.05 | 10.5 | x1.0 |
+| F2 | S2b 1000 | 0 % | 0.14 | 107.0 | x10.2 |
+| F3 | S2b 1000 | 95 % | 0.14 | 28.8 | x2.7 |
+| F1 | S3 9999 | 95 % | 0.05 | 13.5 | x1.0 |
+| F2 | S3 9999 | 0 % | 0.14 | 115.2 | x8.5 |
+| F3 | S3 9999 | 95 % | 0.14 | 37.0 | x2.7 |
+
+## M7. Energie nette du corps (energie/s)
+Couts : Sow + 2 Reap par pack de 15 kills, Roar recast a expiration, Gloom au plafond (10 ennemis).
+Revenus : orbes 9,4 %/kill x 25 (option eclat Amber tauforge +75 %), Arcane Energize. F2 : 50 % des kills en Ombre.
+| Build | kills/min | cout | revenu | net | net avec Amber orbe |
+|---|---|---|---|---|---|
+| F1 | 30 | 3.91 | 4.15 | +0.23 | +1.11 |
+| F1 | 60 | 5.25 | 6.93 | +1.69 | +3.45 |
+| F1 | 90 | 6.58 | 9.12 | +2.54 | +5.18 |
+| F1 | 120 | 7.91 | 10.99 | +3.07 | +6.60 |
+| F2 | 30 | 2.30 | 2.33 | +0.04 | +0.48 |
+| F2 | 60 | 3.46 | 4.15 | +0.69 | +1.57 |
+| F2 | 90 | 4.63 | 5.64 | +1.02 | +2.34 |
+| F2 | 120 | 5.80 | 6.93 | +1.14 | +2.90 |
+| F3 | 30 | 3.27 | 4.15 | +0.88 | +1.76 |
+| F3 | 60 | 4.60 | 6.93 | +2.33 | +4.09 |
+| F3 | 90 | 5.94 | 9.12 | +3.18 | +5.83 |
+| F3 | 120 | 7.27 | 10.99 | +3.72 | +7.24 |
+
+Seuil F1 (sans Amber orbe, eff 130 %, duree 155 %) : ~27 kills/min
+Seuil F1 (avec Amber orbe, eff 130 %, duree 155 %) : ~20 kills/min
+Seuil F2 (sans Amber orbe, eff 130 %, duree 155 %) : ~29 kills/min
+Seuil F2 (avec Amber orbe, eff 130 %, duree 155 %) : ~20 kills/min
+Seuil F3 (sans Amber orbe, eff 130 %, duree 155 %) : ~19 kills/min
+Seuil F3 (avec Amber orbe, eff 130 %, duree 155 %) : ~14 kills/min
+
+## M8. Death Well (F2/F3)
+| kills/s en Seva | 0 -> 75 % | uptime Ombre (cycles de 25 %) |
+|---|---|---|
+| 0.2 | 41.7 s | 61 % |
+| 0.5 | 16.7 s | 77 % |
+| 1.0 | 8.3 s | 84 % |
+| 2.0 | 4.2 s | 84 % |
+Puits a 100 % = 6 invocations d'affilee (100 -> 75) en ne restant que 5 s (invulnerables) a chaque fois.
+
+## M9. Vitesse de clear S1 (kills/min, modele DED)
+| Build | H1 (nuke traverse l'OG) | H0 (OG a retirer) | relatif F1 (H1) |
+|---|---|---|---|
+| F1 | 151 | 133 | x1.00 |
+| F2 | 161 | 161 | x1.07 |
+| F3 | 151 | 151 | x1.00 |
+
+## M10. Sensibilite
+Marge du nuke (2e Reap, debut de mission, F3 avec 1 Viral) :
+  F1 : 4 eclats 1.08 ; 2 eclats 0.96 ; 0 eclat 0.85
+  F2 : 4 eclats 1.08 ; 2 eclats 0.96 ; 0 eclat 0.85
+  F3 : 4 eclats 1.11 ; 2 eclats 1.03 ; 0 eclat 0.96
+  F1 Intensify (build) : debut [Force 273 %, Roar x1.82, 2e Reap 1.08, slow 95 %] | Molt [Force 333 %, Roar x2.00, 2e Reap 1.33, slow 95 %]
+  F1 Precision Intensify : debut [Force 243 %, Roar x2.00, 2e Reap 1.11, slow 85 %] | Molt [Force 303 %, Roar x2.18, 2e Reap 1.37, slow 95 %]
+  F1 ni l'un ni l'autre : debut [Force 243 %, Roar x1.73, 2e Reap 0.96, slow 85 %] | Molt [Force 303 %, Roar x1.91, 2e Reap 1.20, slow 95 %]
+Griffes F2, lvl 1000, 4x Tennokai :
+  +1 eclat Force : 0.28 s (reference 0.31 s, x1.12)
+  sans Shadow Haze : 0.70 s (reference 0.31 s, x0.44)
+  Precision Intensify au lieu d'Intensify : 0.27 s (reference 0.31 s, x1.15)
+  vuln DH ne s'applique pas a l'OG : 0.52 s (reference 0.31 s, x0.60)
+  Melee Exposure a 0 stack : 0.53 s (reference 0.31 s, x0.58)
+Energie F1 a 60 kills/min :
+  build : net +1.69 /s
+  Streamline -> Stretch : net -2.25 /s
+  Primed Continuity -> Rolling Guard : net +0.27 /s
+Taille de pack (energie F1, 60 kills/min) :
+  8 kills/rotation : net -0.65 /s
+  15 kills/rotation : net +1.69 /s
+  25 kills/rotation : net +2.75 /s
+
