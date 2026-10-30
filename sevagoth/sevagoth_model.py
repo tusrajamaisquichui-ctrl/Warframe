@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sevagoth Prime - modele de theorycraft v2 (patch 44.1.4.1, PS5, 29/10/2026).
+Sevagoth Prime - modele de theorycraft v3 (patch 44.1.4.1, PS5, 29/10/2026).
 
 Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que recopier les sorties.
     python3 sevagoth_model.py                 # rapport complet
@@ -9,7 +9,7 @@ Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que r
 
 Etiquettes : CONF = wiki officiel / patch notes, COMM = communaute, DED = deduit (ce modele),
 TEST = hypothese a mesurer en jeu (voir tests T1..T14 du document).
-v2 : sections M11 a M16 (formule, etats d'eclats, sources de tauforges, portee, paliers, Huras, Taubound).
+v2 : sections M11 a M18 ; v3 : M19 a M23 (portee 100/190/max, Eximus Entropiques, Gloom et Archon Stretch, seuil, Arcane Circumvent).
 Forces exprimees en multiplicateurs (2,43 = 243 %).
 """
 import argparse
@@ -110,6 +110,9 @@ MODS = {
     "Fleeting Expertise": (6, 5, "N", {"eff": 0.60, "dur": -0.60}),
     "Cunning Drift": (4, 5, "M", {"rng": 0.15}), "Augur Reach": (2, 5, "N", {"rng": 0.30}),
     "Continuity": (2, 5, "M", {"dur": 0.30}),
+    "Overextended": (6, 5, "V", {"rng": 0.90, "str": -0.60}),
+    "Overextended R4": (6, 4, "V", {"rng": 0.75, "str": -0.50}),
+    "Archon Stretch": (6, 10, "N", {"rng": 0.45}),
     # Melee
     "Primed Pressure Point": (4, 10, "M", {}), "Condition Overload": (10, 5, "M", {}),
     "Blood Rush": (4, 10, "M", {}), "Organ Shatter": (4, 5, "M", {}), "Primed Reach": (4, 10, "M", {}),
@@ -1003,11 +1006,139 @@ def taubound_report():
     return "\n".join(o)
 
 
+# ===========================================================================
+# v3 (29/10/2026) : guides YouTube (COMM) a recouper
+# ===========================================================================
+RANGE_V3 = [  # (libelle, remplacements {ancien: nouveau}, exilus)
+    ("100 % : F1 actuel", {}, None),
+    ("145 % : Augur Secrets -> Stretch (v2, S2)", {"Augur Secrets": "Stretch"}, None),
+    ("190 % a : + Cunning Drift (exilus) + Augur Reach a la place de Catalyzing", {"Augur Secrets": "Stretch", "Catalyzing Shields": "Augur Reach"}, "Cunning Drift"),
+    ("190 % b : + Cunning Drift + Augur Reach a la place d'Intensify (204 %, comme V1)", {"Augur Secrets": "Stretch", "Intensify": "Augur Reach"}, "Cunning Drift"),
+    ("190 % c : + Cunning Drift + Augur Reach a la place de Streamline", {"Augur Secrets": "Stretch", "Streamline": "Augur Reach"}, "Cunning Drift"),
+    ("190 % d : variante a + Transient Fortitude a la place de Primed Continuity", {"Augur Secrets": "Stretch", "Catalyzing Shields": "Augur Reach", "Primed Continuity": "Transient Fortitude"}, "Cunning Drift"),
+    ("max 280 % : Stretch, Augur Reach, Overextended, Cunning Drift", {"Augur Secrets": "Stretch", "Intensify": "Augur Reach", "Catalyzing Shields": "Overextended"}, "Cunning Drift"),
+    ("max 280 % + Transient Fortitude", {"Augur Secrets": "Stretch", "Intensify": "Augur Reach", "Catalyzing Shields": "Overextended", "Primed Continuity": "Transient Fortitude"}, "Cunning Drift"),
+    ("250 % facon V3 : Stretch, Augur Reach, Overextended R4, Transient Fortitude, Power Drift garde", {"Augur Secrets": "Stretch", "Intensify": "Augur Reach", "Catalyzing Shields": "Overextended R4", "Primed Continuity": "Transient Fortitude"}, None),
+]
+
+
+def range_v3_report():
+    o = ["## M19. Portee 100 % / 190 % / max (F1, 4 Crimson tauforges)"]
+    o.append("Dependant de la Portee (CONF, wiki) : bande de Reap 8 m, mini-Reap de Shadow Haze (rayon), Sow 16 m, "
+             "Dark Propagation 15 m (Portee de Sevagoth), Gloom 4 -> 16 m. Fixe : explosion de Sow/Reap 4 m (pas d'icone de "
+             "Portee sur le wiki), detection des mini-Reap 30 m, Shadow Haze (crit independant de la Portee depuis 33.6.3).")
+    o.append("| Option | Portee | Sow / Gloom / DP | bande Reap | Force debut / Molt | 2e Reap debut / Molt | kills Molt -> 1,00 | Gloom debut | Duree | energie 60 kpm (aire / sans aire) | capacite |")
+    o.append("|---|---|---|---|---|---|---|---|---|---|---|")
+    base = BUILDS["F1"]["seva"]
+    old_pack = P["pack_size"]
+    for lab, rep, ex in RANGE_V3:
+        cfg = dict(base)
+        cfg["mods"] = [rep.get(m, m) for m in base["mods"]]
+        if ex:
+            cfg["exilus"] = ex
+        BUILDS["F1"]["seva"] = cfg
+        st = stats(cfg, SHARDS)
+        R, S = st["rng"], st["str"]
+        e_flat = tier_energy(cfg, 60, True, 0.75, True, 1.0)
+        P["pack_size"] = (min(15 * R * R, 30),) + old_pack[1:]
+        e_area = tier_energy(cfg, 60, True, 0.75, True, 1.0)
+        P["pack_size"] = old_pack
+        k = kills_to(S, threshold_f1())
+        r = fit(cfg)
+        o.append(f"| {lab} | {R*100:.0f} % | {16*R:.1f} / {16*R:.1f} / {15*R:.1f} m | {8*R:.1f} m | {S*100:.0f} / {(S+MOLT)*100:.0f} % | "
+                 f"{f1_frac(S):.3f} / {f1_frac(S+MOLT):.3f} | {k if k is not None else '> 250'} | {min(0.35*S, 0.95)*100:.0f} % | "
+                 f"{st['dur']*100:.1f} % | {e_area:+.2f} / {e_flat:+.2f} | {r['total']}/{r['cap']} ({r['forma']} F) |")
+    BUILDS["F1"]["seva"] = base
+    o.append("Lecture : les 28 m de V3 correspondent a Sow a 175 % (16 x 1,75 : Stretch + Augur Reach) ou a Dark Propagation a ~187 % "
+             "(15 x 1,87), jamais a l'explosion de 4 m, qui ne depend pas de la Portee (DED). Le 190 % b reproduit exactement V1 (204 % / 190 %).")
+    return "\n".join(o)
+
+
+def entropic(level):
+    """Proxy Eximus Entropique : PV et OG du Heavy Gunner Eximus, armure de base 50 (CONF wiki Eximus)."""
+    t = heavy_gunner(level, eximus=True)
+    q = level - v("hg_base_level")
+    t["armor"] = min(max(50 * two_curve(q, 0.005, 1.75, 0.4, 0.75, 70, 80), 200), 2700)
+    return t
+
+
+def entropic_report():
+    o = ["## M20. Eximus Entropiques (Zariman, U44) : que peut faire Sevagoth ?"]
+    o.append("Regles CONF (wiki Eximus#Entropic + patch notes U44) : orbe qui bloque projectiles d'armes et d'Amps ; "
+             "immunite aux competences tant que l'orbe tient ; armes primaires/secondaires -90 %, Amp -75 %, glaives/gunblades -90 % ; "
+             "les degats de zone et les ondes de slam ne traversent pas l'orbe ; les compagnons ne les ciblent pas ; "
+             "armure de base 50. Orbe casse par une attaque de melee sous benediction de l'Iceblade de Narin, ou par un Tauron Strike.")
+    o.append("Griffes (config Ombre de F3) contre un Eximus Entropique : ni vulnerabilite DH ni Shadow Haze (competences sans effet).")
+    o.append("| Niveau | armure | OG | PV | griffes 4x Tennokai, statuts a moitie | idem 12x | griffes F3 si DH et Haze passaient (v1) |")
+    o.append("|---|---|---|---|---|---|---|")
+    s = strengths("F3")
+    for n, L in LEVELS.items():
+        t = entropic(L)
+
+        def tt(combo, sh, sv):
+            # remplace la cible par le proxy entropique
+            per_s = v("stance_block_pct") / v("stance_block_time")
+            hits_s = v("stance_block_hits") / v("stance_block_time")
+            og_l, hp_l = claws_hit(s["S4"], sv, sh, combo, t, full=0.5, fury=FURY)
+            og_h, hp_h = claws_hit(s["S4"], sv, sh, combo, t, full=0.5, heavy=True, fury=FURY)
+            cyc = 4 / hits_s + 0.9
+            lf = (4 / hits_s) / cyc
+            dog = og_l * per_s * lf + og_h / cyc
+            dhp = hp_l * per_s * lf + hp_h / cyc
+            return t["og"] / dog + t["health"] / dhp
+        o.append(f"| {n} | {t['armor']:.0f} | {t['og']:,.0f} | {t['health']:,.0f} | {tt(4, 0.0, 0.0):.2f} s | {tt(12, 0.0, 0.0):.2f} s | {tt(4, s['S_sh'], s['S']):.2f} s |")
+    return "\n".join(o)
+
+
+def gloom_report():
+    o = ["## M21. Gloom : garder ou couper ? (F1 final, 60 kills/min)"]
+    cfg = BUILDS["F1"]["seva"]
+    on = tier_energy(cfg, 60, True, 0.75, True, 1.0)
+    off = tier_energy(cfg, 60, True, 0.75, True, 0.0)
+    o.append(f"Energie : Gloom permanent (Seismic Bond actif) {on:+.2f}/s ; Gloom coupe (Seismic inactif) {off:+.2f}/s -> Gloom rapporte {on-off:+.2f}/s.")
+    # Archon Stretch : 2 energie/s pendant 5 s, sans cumul ni rafraichissement ; bloque par un drain canalise ; 1 s de pause par lancement
+    casts_per_s = 60 / 60 / v("pack_size") * 3 + 1 / (v("roar_dur") * stats(cfg, SHARDS)["dur"])
+    a_s = 2.0 * max(1 - casts_per_s * 1.0, 0)
+    o.append(f"Archon Stretch (si un compagnon le declenche, CONF : competences Electricite seulement ; bloque tant que Gloom draine) : "
+             f"au mieux ~{a_s:.2f}/s Gloom coupe (2/s moins 1 s de pause par lancement, {casts_per_s:.2f} lancement/s).")
+    o.append(f"  -> Gloom coupe + Archon Stretch : {off + a_s:+.2f}/s contre Gloom + Seismic : {on:+.2f}/s.")
+    s = strengths("F1")
+    o.append(f"Vol de vie Gloom : {v('gloom_ls')*s['S']*100:.1f} % des degats ; PV du corps 370 -> utile contre les degats d'usure, nul contre un one-shot.")
+    o.append(f"Ralentissement : {min(0.35*s['S'], 0.95)*100:.0f} % dans {16*stats(cfg, SHARDS)['rng']:.0f} m, soit le meme rayon que Sow : "
+             "les ennemis ralentis sont deja dans la zone du nuke (DED).")
+    return "\n".join(o)
+
+
+def threshold_v3_report():
+    o = ["## M22. Seuil (V1/V2/V3 : 255 %)"]
+    o.append(f"Seuil exact {threshold_f1()*100:.2f} % ; a 255 % la fraction vaut {f1_frac(2.55):.4f} (>= 1) : coherent, la communaute arrondit.")
+    return "\n".join(o)
+
+
+def circumvent_report():
+    o = ["## M23. Retrait de l'Overguard : Arcane Circumvent contre Epitaph + Secondary Fortifier (Heavy Gunner Eximus, F1)"]
+    o.append("Circumvent (CONF, wiki) : une roulade a travers un ennemi a 4 m vole 25 % (rang 0) a 50 % (rang 5) de son armure, "
+             "ses boucliers et son OG ; repetable ; 'deux roulades retirent tout au rang max' ; OG gagne par le joueur plafonne a 10 000. "
+             "Lecture lineaire (% de l'OG max, celle du wiki) contre lecture geometrique (% de l'OG restant) : T20 tranche.")
+    o.append("| Niveau | OG de l'Eximus | roulades R5 (lin. / OG restant apres 2 en geom.) | roulades R0 (lin.) | OG gagne par roulade | tirs Epitaph+Fortifier |")
+    o.append("|---|---|---|---|---|---|")
+    s = strengths("F1")
+    r = roar_mult(s["roar_S"])
+    for n, L in LEVELS.items():
+        og = heavy_gunner(L, eximus=True)["og"]
+        shots = math.ceil(og / epitaph_shot_vs_og(s["S"], r))
+        o.append(f"| {n} | {og:,.0f} | {math.ceil(1/0.50)} / {0.5**2*100:.0f} % | {math.ceil(1/0.25)} | {min(0.5*og, 10000):,.0f} | {shots} |")
+    o.append("Roulade : pas une attaque d'arme -> ne devrait pas casser Stalk/Ghost (DED depuis la page Ghost, T20). Epitaph : casse l'invisibilite, 7 s.")
+    return "\n".join(o)
+
+
 SECTIONS = {"summary": summary_report, "capacity": capacity_report, "nuke": nuke_report, "eximus": eximus_report,
             "claws": claws_report, "survival": survival_report, "energy": energy_report, "well": well_report,
             "clear": clear_report, "sensitivity": sensitivity_report, "formula": formula_report,
             "shards": shards_report, "tau": tau_sources_report, "range": range_report, "tiers": tiers_report,
-            "huras": huras_report, "taubound": taubound_report, "blast": blast_report}
+            "huras": huras_report, "taubound": taubound_report, "blast": blast_report,
+            "range3": range_v3_report, "entropic": entropic_report, "gloom": gloom_report, "seuil": threshold_v3_report,
+            "circumvent": circumvent_report}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()

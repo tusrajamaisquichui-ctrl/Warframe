@@ -1,9 +1,30 @@
 # Sevagoth Prime : theorycraft complet et auditable
 
-**Version 2.0 du 29/10/2026.** Patch **Hotfix 44.1.4.1** (« Iceblade of Narin : The Icebind »), en ligne sur PSN depuis le 28/10/2026.
-Build acté : **F1 « Faucheuse invisible »**. Modèle de calcul : [`sevagoth_model.py`](sevagoth_model.py) (sections M1 à M18). Sortie brute : [`model_output.txt`](model_output.txt). Paramètres et sources : [`model_params.txt`](model_params.txt).
+**Version 3.0 du 30/10/2026.** Patch **Hotfix 44.1.4.1** (« Iceblade of Narin : The Icebind »), en ligne sur PSN depuis le 28/10/2026.
+Build acté : **F1 « Faucheuse invisible »**, en deux fiches : **A** pour le Steel Path et l'endurance, **B** pour Void Cascade et le level cap. Modèle de calcul : [`sevagoth_model.py`](sevagoth_model.py) (sections M1 à M23). Sortie brute : [`model_output.txt`](model_output.txt). Paramètres et sources : [`model_params.txt`](model_params.txt).
 
 Étiquettes : **CONF** = wiki officiel ou patch notes · **COMM** = communauté · **DÉD** = déduit par le modèle · **TEST** = à mesurer en jeu · **NON TROUVÉ** = aucune source.
+
+---
+
+## Changelog v2 → v3
+
+**Sources de la v3 :** trois guides YouTube (V1, V2, et V3 de Gaz, mi-octobre 2026) et le résumé d'un quatrième (V4). Tout cela est **COMM**. La demande contenait des **résumés** de ces vidéos, pas les transcriptions intégrales : chaque affirmation est donc prise telle que résumée, puis recoupée avec le wiki et les patch notes.
+
+| # | Changement | Pourquoi | Étiquette |
+|---|---|---|---|
+| 1 | **F1 reste, avec la même infusion (Roar en slot 4)**, mais se décline en **deux fiches** : A « SP et endurance » (quasi inchangée) et B « Void Cascade et level cap » (Circumvent à la place de Molt, une mêlée, la bénédiction Iceblade) | Points 2 et 3 | DÉD |
+| 2 | **Portée :** ce qui en dépend (bande de Reap, mini-Reap, Sow, Dark Propagation, Gloom) et ce qui est fixe (explosion de 4 m, détection des mini-Reap à 30 m). Nouveau tableau 100 / 145 / 190 / 250 / 280 % avec le coût en Force (M19) | Point 1 | CONF + DÉD |
+| 3 | **190 % (V1, V2)** : le one-shot de départ tombe (0,923 au lieu de 1,075, il faut 84 kills de Molt), sauf avec Transient Fortitude (1,141, mais Durée 72,5 %). En endurance, **145 % reste le réglage par défaut** ; la variante 190 % « d » est gardée pour le cas où T15/T16 la justifient | Point 1 | DÉD |
+| 4 | « Au-delà de 190 %, les ombres buguent » : **aucune source ne relie ce bug à la Portée**. Le bug existe : une mini-Reap tourne en rond si sa cible meurt avant d'être marquée (wiki Shadow Haze ; forum, 07/2025). Hypothèse : à ~188 %, le rayon de Sow atteint les 30 m de détection des ombres. → T16 | Point 1 | CONF (bug) ; NON TROUVÉ (lien avec la Portée) → TEST |
+| 5 | **Explosion de Sow : 4 m, fixe** (wiki), contre 5 m pour V2 et 28 m pour V3. Les 28 m de V3 correspondent au **rayon de lancement de Sow à 175 %** (Stretch + Augur Reach) ou à Dark Propagation à ~187 %, pas à l'explosion | Point 1 | CONF + DÉD |
+| 6 | **Eximus Entropiques :** règles exactes (wiki, U44). Tant que l'orbe tient, F1 ne peut ni les cibler ni les atteindre par la zone. Il faut **un coup de mêlée sous bénédiction Iceblade**, ou un **Tauron Strike**. **F2 n'est meilleur ni en Void Cascade ni au level cap** | Point 2 | CONF + DÉD |
+| 7 | **Arcane Circumvent devient le plan B n°1 contre l'Overguard** : 2 roulades à tout niveau, sans tirer. Il remplace Molt dans la fiche B | Point 3 (V3 a raison) | CONF ; invisibilité DÉD → T20 |
+| 8 | **Secondary Fortifier « hérité » par les griffes (V1)** : contredit par le wiki, l'Ombre n'utilise pas les effets passifs de l'arsenal de Sevagoth. Classé « non soutenu » → T18 | Point 3 (V1 probablement faux) | CONF → TEST |
+| 9 | **Gloom gardé.** Avec Seismic Bond, il rapporte **+0,55 énergie/s net**, et son ralentissement couvre exactement le rayon de Sow. L'argument « le ralentissement baisse les kills/min » est plausible mais n'a jamais été mesuré → T17 | Point 4 | DÉD → TEST |
+| 10 | **Archon Stretch :** seules les **compétences** qui infligent de l'Électricité le déclenchent, et une compétence canalisée comme Gloom le bloque (CONF). Le wiki liste les Shadow Claws modées Électricité (Exalted Shadow), **pas le Huras**. Inaccessible à F1 ; si le Huras le déclenchait quand même, couper Gloom rapporterait +1,0/s → T19 | Point 5 | CONF + DÉD |
+| 11 | **Seuil : 254,02 % exact** ; à 255 %, le 2e Reap fait 1,0038 des PV actuels. Les vidéos arrondissent, il n'y a pas de désaccord | Point 6 | DÉD (M22) |
+| 12 | Tests **T16 à T21** ajoutés. Script : sections M19 à M23 ; Overextended (R4 et R5) et Archon Stretch ajoutés aux mods | – | – |
 
 ---
 
@@ -29,17 +50,21 @@ Conflit de sources relevé : la page wiki « Effects Scaling With Enemy Stats »
 
 ---
 
-## 1. Verdict
+## 1. Verdict (v3)
 
-1. **Build : F1 « Faucheuse invisible »** = Reap / Sow / Gloom / **Roar à la place d'Exalted Shadow**, avec un Huras Kubrow (invisibilité et Seismic Bond).
-2. **Cible :** 4 Crimson tauforgés, 273 % de Force, 2e Reap à **1,075** des PV actuels. **Le one-shot existe dès « 1 tauforgé + 3 normaux »** (258 %, 1,016), et même sans éclat avec Transient Fortitude (palier P1).
-3. **Pièces vraiment bloquantes : l'énergie, pas la Force.** Arcane Energize, puis Seismic Bond (Huras), puis Primed Continuity ; elles passent avant les éclats tauforgés.
-4. **S1 et S3 :** portée 100 %. **S2 endurance :** Augur Secrets → Stretch.
-5. **Overguard :** comportement inconnu (T1). Le plan B sans casser l'invisibilité repose sur le Blast des détonations voisines et l'Assassin Posture du Huras. Epitaph Prime + Secondary Fortifier en dernier recours (casse l'invisibilité 7 s).
+1. **F1 reste le build**, avec la même infusion (Roar en slot 4) et deux fiches sur la même frame : **A** pour le Steel Path et l'endurance, **B** pour Void Cascade et le level cap. Aucun conflit Helminth.
+2. **Portée :** 100 % en S1, S3 et Zariman ; 145 % (Stretch) en endurance. 190 % seulement en variante Transient Fortitude, si T15/T16 le justifient. La portée max de V3 est refusée : le one-shot disparaît pendant 126 kills ou plus.
+3. **Eximus Entropiques :** F1 ne les touche pas tant que l'orbe tient (CONF). Un coup de mêlée sous bénédiction Iceblade (ou un Tauron Strike) casse l'orbe, puis le nuke fait le reste. **F2 n'est pas meilleur** : contre l'orbe, ses griffes perdent DH et Shadow Haze, risquent d'être bloquées comme compétence, et dépendent du niveau.
+4. **Overguard :** Arcane Circumvent passe en plan B n°1 (2 roulades à tout niveau ; invisibilité à confirmer par T20). Secondary Fortifier sur les griffes : contredit par le wiki (T18).
+5. **Gloom reste** (+0,55/s avec Seismic Bond, ralentissement dans le rayon même du nuke ; T17 tranchera les kills/min). Archon Stretch est inaccessible à F1. Seuil de 254,02 % confirmé.
 
 ---
 
-## 2. Fiche finale F1 (à recopier en jeu)
+## 2. Fiches finales F1 (v3 : une par contenu, à recopier en jeu)
+
+Les deux fiches sont **deux configs de la même Sevagoth Prime**. L'infusion est la même (Roar en slot 4), donc il n'y a aucun conflit Helminth (CONF : une infusion occupe le même slot dans toutes les configs). L'Ombre, les griffes, le Huras et l'Epitaph sont communs.
+
+### Fiche A : Steel Path et endurance (S1, S2)
 
 **Sevagoth Prime**
 - **Helminth :** Roar infusé en **slot 4** (remplace Exalted Shadow ; le passif Tombstone reste actif, CONF).
@@ -47,14 +72,49 @@ Conflit de sources relevé : la page wiki « Effects Scaling With Enemy Stats »
 - **Mods :** Shadow Haze · Dark Propagation · Umbral Intensify [U] · Augur Secrets · Intensify · Catalyzing Shields [V] · Primed Continuity [M] · Streamline [N].
   - Capacité 72/74, 2 Forma (Aura + Umbra).
 - **Swaps selon le contenu :**
-  - S2 endurance : Augur Secrets → **Stretch** (Forma Naramon sur ce slot : 70/74).
-  - S3 level cap : Molt Augmented → **Arcane Escapist** ; garder Augur Secrets.
-- **Arcanes :** Molt Augmented + Arcane Energize.
+  - S2 endurance : Augur Secrets → **Stretch**, soit 145 % de Portée (Forma Naramon sur ce slot : 70/74). Réglage par défaut, inchangé depuis la v2.
+  - **Variante 190 % « d » (v3)**, à n'adopter que si T15 et T16 la justifient : Augur Secrets → Stretch, Catalyzing Shields → Augur Reach, Primed Continuity → Transient Fortitude, exilus Power Drift → Cunning Drift.
+    - Force 289 %, soit 1,141 dès le départ. Mais Durée 72,5 % (Roar ~21,8 s), énergie +1,84/s (contre +4,78), et le gating de Catalyzing disparaît. 70/74, 3 Forma (M19).
+- **Arcanes :** Molt Augmented + Arcane Energize. **Si T1 donne H0** (le nuke ne traverse pas l'OG) : Arcane Circumvent à la place de Molt, et **Augur Secrets gardé**. Sans Molt, la config à 145 % reste bloquée à 0,981.
 - **Éclats :** 4 × Crimson tauforgé (Force) + 1 × Amber tauforgé (orbes d'énergie +75 %).
 - **Focus :** Vazarin. **Parazon :** Hard Reset (−15 s de neutralisation du compagnon par Mercy, CONF).
 - **Stats :**
   - Force 273 % → 333 % (Molt plein), Durée 155 %, Portée 100 %, Efficacité 130 % (160 % sous Gloom avec Seismic Bond).
   - 2e Reap **1,075 → 1,332**. Roar ×1,82 → ×2,00 (46,5 s). Gloom **95 % dès le départ**. Énergie +3,45/s à 60 kills/min ; tient dès ~20 kills/min.
+
+**Rotation A**
+1. Roar → Gloom (permanent ; « à la demande » si T17 montre que le ralentissement coûte plus de 10 % de kills/min).
+2. Par pack : **Reap → Sow → Reap**. Eximus : **+1 Reap** (et Sow avant si T6 dit « consommé »).
+3. Roar toutes les 46,5 s. Ramasser les orbes.
+4. **Aucun tir en S2/S3** (l'invisibilité casse, puis 7 s de recharge).
+
+### Fiche B : Void Cascade (Zariman) et level cap (S3)
+
+Mêmes mods, mêmes éclats et même focus que la fiche A, avec ces différences :
+- **Portée : 100 %, Augur Secrets obligatoire.** Sans Molt, c'est lui qui garde le one-shot (273 %, 1,075). En Void Cascade, les kills comptent pour l'Exolizer purgé dès que **toi** tu es dans son anneau, même si l'ennemi est dehors (CONF) : la portée n'y est pas un besoin.
+- **Arcanes :** Arcane Energize + **Arcane Circumvent** (rang 5) à la place de Molt.
+  - Au level cap hors Zariman, **si T1 donne H1** (le nuke traverse l'OG) : Arcane Escapist à la place de Circumvent. À 9 999, les 10 000 d'OG volés n'arrêtent plus un coup ; Escapist, lui, évite une mort.
+  - Jouable dès **P4** (258 % sans Molt, soit 1,016). À P3 (253 %, 0,996), garder Molt.
+- **Mêlée (nouveau) :** une arme de mêlée dans le slot de Sevagoth.
+  - Son rôle : casser l'orbe d'un Entropique en un coup sous bénédiction Iceblade.
+  - Sans bénédiction, elle doit tuer l'Entropique elle-même (armure de base 50, mêlée non réduite, CONF). Prendre ta mêlée la mieux modée ; ce choix n'est pas modélisé ici.
+- **Bénédiction Iceblade of Narin** (Yuvan Peak, CONF) :
+  - un joueur MR30+ la donne à toute l'instance du hub, comme au True Master's Font ;
+  - elle dure **3 h** et s'écoule même hors ligne ; le donneur a **23 h** de recharge.
+  - Enchaîner les sessions Void Cascade juste après l'avoir reçue.
+- **Tauron Strike :** n'importe lequel casse l'orbe au contact, et une attaque d'Opérateur ne casse pas l'invisibilité (CONF). La charge est lente (v2 : quelques fois par heure, DÉD) : c'est la roue de secours.
+- **Huras :** il **ne cible pas** les Entropiques (CONF). L'Assassin Posture ne sert que contre les autres Eximus.
+- **Stats :** Force 273 % fixe, 2e Reap 1,075, Gloom 95 %, Roar ×1,82 (46,5 s), énergie identique à la fiche A.
+
+**Rotation B, contre un Eximus Entropique** (sous H1, sauter l'étape 3)
+1. Nettoyer le pack autour (**Reap → Sow → Reap**). L'Entropique est immunisé tant que son orbe tient (CONF).
+2. **Un coup de mêlée** sur l'orbe ou sur l'Eximus, sous bénédiction : l'orbe casse (CONF). L'invisibilité tombe, puis 7 s de recharge (CONF).
+3. **Deux roulades à travers lui** (Circumvent) : OG retiré à tout niveau (M23, T20). Tu gagnes jusqu'à 10 000 d'OG.
+4. **Reap → Sow → Reap → Reap.**
+- Sans bénédiction : Tauron Strike si la jauge est pleine ; sinon le tuer à la mêlée, ou le contourner.
+- **Level cap hors Zariman :** même fiche, sans les étapes 1 et 2. Circumvent y remplace l'Epitaph : **2 roulades au lieu de 7 tirs chargés visibles** au niveau 9 999 (M23).
+
+### Commun aux deux fiches
 
 **Ombre (config Tombstone, sert seulement à la mort)**
 - **Aura :** Steel Charge (M, +18).
@@ -70,13 +130,7 @@ Conflit de sources relevé : la page wiki « Effects Scaling With Enemy Stats »
 - **Mods :** Seismic Bond · Enhanced Vitality · Metal Fiber · Medi-Pet Kit · Momentous Bond (+ Calculated Redirection avec 2 Forma Vazarin).
 - **Arme du Kubrow :** Assassin Posture en posture.
 
-**Arme :** Epitaph Prime + Secondary Fortifier (urgence anti-Overguard, amorce).
-
-**Rotation**
-1. Roar → Gloom.
-2. Par pack : **Reap → Sow → Reap**. Eximus : **+1 Reap** (et Sow avant si T6 dit « consommé »).
-3. Roar toutes les 46,5 s. Ramasser les orbes.
-4. **Aucun tir en S2/S3** (l'invisibilité casse, puis 7 s de recharge).
+**Arme :** Epitaph Prime + Secondary Fortifier. En v3, c'est le dernier recours anti-Overguard (après Circumvent) et l'amorce. Contre un Entropique, ses dégâts sont réduits de 90 % (CONF).
 
 ---
 
@@ -109,7 +163,8 @@ Chaque palier est une config complète qui rentre en capacité (M15, DÉD). « G
 - **P4 — Taubound.**
   - Manque : 3 Crimson tauforgés.
   - **Gain des 3 suivants :** 1,016 → 1,075, et Gloom au plafond dès le départ (90 % → 95 %, au lieu d'attendre 56 kills de Molt).
-- **P5 — Final.** Plus rien à farmer pour Sevagoth : la suite concerne l'Ombre et les griffes Tombstone, plus des Forma de confort.
+- **P5 — Final.** Plus rien à farmer pour la fiche A : la suite concerne l'Ombre et les griffes Tombstone, plus des Forma de confort.
+- **Fiche B (v3)** : jouable dès **P4** (258 % sans Molt, soit 1,016). Elle demande en plus Arcane Circumvent (rang 5) et une mêlée modée.
 
 ### Ordre des Forma (aucune à regretter)
 1. **Aura Forma** sur l'aura (Brief Respite) : +7 de capacité. Elle sert à tous les paliers.
@@ -127,7 +182,7 @@ Chaque palier est une config complète qui rentre en capacité (M15, DÉD). « G
 | Achat | Moonflesh | Pour F1 |
 |---|---|---|
 | 1. **Crimson tauforgé** (limite 1) | 375 | Passe le seuil sans Molt (0,996 → 1,016) |
-| 2. **Secondary Fortifier ×21** (rang 5) | 168 | Plan B Overguard, quel que soit le résultat de T1 |
+| 2. **Secondary Fortifier ×21** (rang 5) | 168 | Plan B Overguard. **v3 :** passe derrière Circumvent dans le plan B ; il s'achète aussi chez Nightcap et Ordis (CONF), mais reste ici le moins cher des trois achats |
 | 3. **Amber tauforgé** (limite 1) | 375 | Orbes +75 % au lieu de +50 % (+0,58/s) |
 | **Total indispensable** | **918** | |
 | Options : Melee Exposure ×21 (griffes Tombstone) 168 ; Legendary Core (monte Primed Continuity au max) 500 | +668 | |
@@ -190,46 +245,178 @@ Chaque palier est une config complète qui rentre en capacité (M15, DÉD). « G
 
 L'astuce du wiki selon laquelle « Sow + Reap descend les Eximus jusqu'au seuil de Mercy » ne précise pas si l'OG était déjà retiré. → **T1** (section 8).
 
-**Plan B si le nuke ne traverse pas l'OG**, classé du moins au plus coûteux en invisibilité :
+**Plan B si le nuke ne traverse pas l'OG** (v3 : Circumvent ajouté en tête), classé du moins au plus coûteux en invisibilité :
 
 | Rang | Moyen | Casse l'invisibilité ? | Efficacité | Coût pour le build |
 |---|---|---|---|---|
-| 1 | **Blast des détonations voisines** : 25 % des PV du voisin × Roar (× vuln si elle touche l'OG) dans 4 m | Non | Il faut **3 Heavy Gunners** à 4 m de l'Eximus de SP175 à 1000, 5 au 9999 ; seulement 1 à 2 si la vulnérabilité touche l'OG (DÉD, M18) | Aucun ; dépend de la densité (F1 ne regroupe pas) |
-| 2 | **Assassin Posture du Huras** : cible les Eximus, +300 % contre l'OG | Non (le Huras attaque sans casser Stalk, CONF) | NON TROUVÉ : dégâts du compagnon au niveau visé (T4) | Aucun |
-| 3 | **Amp de l'Opérateur** : l'OG prend +50 % de dégâts Void | Non (attaquer en Opérateur ne casse pas le camouflage, CONF) | Faible à haut niveau (DÉD) | Aucun |
-| 4 | **Nidri Tauron Strike + Rift Waters** (Vazarin) : vortex de 20 m pendant 20 s, OG −25 %/s (CONF) ; nœud marqué Opérateur, invulnérable pendant le lancement | À TESTER | Retire tout l'OG en 4 s, quel que soit le niveau. Mais la charge ne vient que de 0,02 % par kill (+10 % par lentille) et de 20 % par orbe de Convergence : quelques fois par heure (DÉD) | The Old Peace + Tektolyst Artifact Vazarin (150 Lyroic Bridge, Ren Hypercore et Ascaris Prime) + nœuds |
-| 5 | **Epitaph Prime + Secondary Fortifier** (×8 contre l'OG) | **Oui**, 7 s de recharge (CONF) | 1 tir chargé jusqu'au niveau 1000, 6 à 7 au 9999 (DÉD) | Aucun (déjà dans le build) ; risque des 7 s visibles |
+| **1 (v3)** | **Arcane Circumvent** : une roulade à travers un ennemi à 4 m lui vole 50 % (rang 5) de son armure, de ses boucliers et de son OG ; répétable (CONF) | Non, en principe : une roulade n'est pas une attaque d'arme, et seules les attaques d'arme, certaines compétences et l'inactivité cassent Ghost (CONF page Ghost ; DÉD pour Stalk → **T20**) | Le wiki écrit que « deux roulades retirent tout au rang max » : **2 roulades à tout niveau**, contre 7 tirs d'Epitaph au 9 999 (M23). Si le % porte sur l'OG restant, il en reste 25 % après 2 roulades (T20). Bonus : tu gagnes l'OG volé, plafonné à 10 000 (CONF) | Un slot d'arcane : Molt (fiche B, ou fiche A sous H0). ~50 à 55 p au rang 5, ou 21 × ~3 p au rang 0 (warframe.market, 30/10/2026) ; sinon Roathe, 5 Maphica pièce, ou Descendia SP |
+| 2 | **Blast des détonations voisines** : 25 % des PV du voisin × Roar (× vuln si elle touche l'OG) dans 4 m | Non | Il faut **3 Heavy Gunners** à 4 m de l'Eximus de SP175 à 1000, 5 au 9999 ; seulement 1 à 2 si la vulnérabilité touche l'OG (DÉD, M18). Sans effet sur un Entropique dont l'orbe tient (les dégâts de zone ne le traversent pas, CONF) | Aucun ; dépend de la densité (F1 ne regroupe pas) |
+| 3 | **Assassin Posture du Huras** : cible les Eximus, +300 % contre l'OG | Non (le Huras attaque sans casser Stalk, CONF) | NON TROUVÉ : dégâts du compagnon au niveau visé (T4). Ne cible pas les Entropiques (CONF) | Aucun |
+| 4 | **Amp de l'Opérateur** : l'OG prend +50 % de dégâts Void | Non (attaquer en Opérateur ne casse pas le camouflage, CONF) | Faible à haut niveau (DÉD) ; −75 % contre un Entropique (CONF) | Aucun |
+| 5 | **Nidri Tauron Strike + Rift Waters** (Vazarin) : vortex de 20 m pendant 20 s, OG −25 %/s (CONF) ; nœud marqué Opérateur, invulnérable pendant le lancement. Tout Tauron Strike casse aussi l'orbe d'un Entropique (CONF) | À TESTER | Retire tout l'OG en 4 s, quel que soit le niveau. Mais la charge ne vient que de 0,02 % par kill (+10 % par lentille) et de 20 % par orbe de Convergence : quelques fois par heure (DÉD) | The Old Peace + Tektolyst Artifact Vazarin (150 Lyroic Bridge, Ren Hypercore et Ascaris Prime) + nœuds |
+| 6 | **Epitaph Prime + Secondary Fortifier** (×8 contre l'OG) | **Oui**, 7 s de recharge (CONF) | 1 tir chargé jusqu'au niveau 1000, 7 au 9999 (M23, DÉD) | Aucun (déjà dans le build) ; risque des 7 s visibles |
 
-**Lecture :**
-- **H0 en S1/S2 :** le rang 5 suffit (le corps encaisse 7 s avec gating et ralentissement).
-- **H0 en S3 :** rangs 1, 2 et 4 d'abord, le rang 5 seulement dans une fenêtre sûre.
-- Dans ce cas S3 devient nettement plus dur pour F1 (cf. « ce qui renverserait » v1).
+**Lecture (v3) :**
+- **H0, quel que soit le niveau :** Circumvent d'abord, si T20 confirme qu'il retire l'OG sans casser l'invisibilité. Il rend le plan B indépendant du niveau, ce qu'aucune autre ligne ne faisait.
+- **Si T20 l'infirme :** on retombe sur le plan v2.
+  - S1/S2 : l'Epitaph suffit (le corps encaisse 7 s avec gating et ralentissement).
+  - S3 : rangs 2, 3 et 5 d'abord, l'Epitaph seulement dans une fenêtre sûre ; S3 devient alors nettement plus dur pour F1.
+
+**Secondary Fortifier sur les griffes de l'Ombre (affirmation de V1) : non soutenu.**
+- Le wiki dit que l'Ombre « ne peut pas utiliser l'équipement ni les effets passifs de l'arsenal de Sevagoth », avec l'exemple de Primary Dexterity, un autre arcane d'arme (CONF).
+- Secondary Fortifier se déclenche sur les dégâts d'une arme secondaire ; les griffes sont une arme de mêlée exaltée.
+- Seule exception documentée : certains effets de « Unattributed Damage » profitent à Sevagoth et à l'Ombre pendant Exalted Shadow (CONF). Rien n'indique que Fortifier en fasse partie (DÉD).
+- Sans conséquence pour F1 (pas d'Exalted Shadow, sauf au Tombstone). → **T18** si tu veux trancher.
 
 ---
 
-## 6. Portée
+## 6. Portée (réécrite en v3)
 
-Rayons CONF multipliés par la Portée : Sow 16 m, Gloom de 4 à 16 m, bande de Reap 8 m (mini-Reap pareil), Dark Propagation 15 m. La détection des mini-Reap est fixe à 30 m. Le vol de Reap couvre 93 m en tap (10 m/s × 9,3 s) et 186 m en maintien.
+**Ce qui dépend de la Portée** (CONF ; rayon de base × Portée) :
+- **Reap :** bande de 8 m autour du vol ; c'est elle qui choisit les cibles. La longueur du vol (93 m en tap, 186 m en maintien) dépend de la Durée, pas de la Portée (DÉD : 10 m/s × 6 s × 155 %).
+- **Mini-Reap de Shadow Haze :** leur rayon d'effet (et leur durée de vol, liée à la Durée).
+- **Sow :** 16 m, le rayon de lancement qui sème les ennemis.
+- **Dark Propagation :** 15 m, la propagation de Sow quand un ennemi semé meurt. Elle utilise la Portée de Sevagoth.
+- **Gloom :** de 4 à 16 m.
 
-| Option (4 tauforgés) | Portée | Sow / Gloom | Bande de Reap | Aire de Sow | 2e Reap début | Kills de Molt pour 1,00 | Gloom début | Énergie 60 kpm* |
-|---|---|---|---|---|---|---|---|---|
-| Build actuel | 100 % | 16,0 m | 8,0 m | ×1,00 | 1,075 | 0 | 95 % | +3,45 |
-| Exilus Power Drift → Cunning Drift | 115 % | 18,4 m | 9,2 m | ×1,32 | 1,016 | 0 | 90 % | +4,10 |
-| **Augur Secrets → Stretch** | 145 % | 23,2 m | 11,6 m | **×2,10** | 0,981 | **21** | 87 % (95 % après 94 kills) | +4,78 |
-| Dark Propagation → Stretch | 145 % | 23,2 m | 11,6 m | ×2,10 | 1,075 | 0 | 95 % | +4,78 |
-| Streamline → Stretch | 145 % | 23,2 m | 11,6 m | ×2,10 | 1,075 | 0 | 95 % | **+1,85** |
-| Intensify → Stretch | 145 % | 23,2 m | 11,6 m | ×2,10 | 0,957 | 46 | 85 % | +4,78 |
+**Ce qui est fixe** (CONF ; valeurs sans icône de Portée sur le wiki) :
+- **L'explosion de Sow/Reap : 4 m.** Chaque ennemi qui détone inflige 25 % de ses PV actuels en Blast aux *autres* ennemis dans 4 m. V2 dit 5 m, V3 dit 28 m (COMM).
+- La détection des mini-Reap : **30 m** autour de chaque ombre.
+- La chance critique de Shadow Haze (indépendante de la Portée depuis 33.6.3).
 
-\* Énergie : on suppose que les kills par rotation suivent l'aire (15 × Portée², plafonné à 30). C'est une hypothèse TEST, d'où T15.
+**D'où viennent les 28 m de V3 (DÉD) ?** 16 m × 1,75 = 28 m, soit le rayon de Sow avec Stretch + Augur Reach. Ou bien Dark Propagation à ~187 %. Aucune lecture ne donne une explosion de 28 m. → T16 a.
 
-- **L'invisibilité change la donne (DÉD) :** les ennemis ne convergent pas vers un Sevagoth invisible. La portée compte donc plus qu'en jeu visible. Distance d'engagement typique : NON TROUVÉE (T15).
-- **S1 :** 100 % suffit. Les packs sont denses et le vol de Reap couvre la distance.
-- **S2 endurance : Augur Secrets → Stretch.**
-  - Le 0,981 de départ ne coûte rien : une endurance commence à bas niveau, et Molt rattrape le seuil en **21 kills** et le plafond de Gloom en **94**.
-  - Capacité 74/74 (70/74 avec une Naramon).
-  - **Seulement à partir de P5.** À P3 (Crimson normaux), le même swap tombe à 0,905 et demande 105 kills de Molt.
-- **S3 level cap :** garder Augur Secrets, car le niveau est maximal dès la 1re seconde.
-- **Dark Propagation → Stretch :** ne coûte ni Force ni énergie, mais on perd la propagation de Sow (non chiffrée). À trancher par T15.
+**« Au-delà de 190 %, les ombres buguent » (V1, V2) :**
+- **Aucune source ne lie ce bug à la Portée** (NON TROUVÉ dans le wiki ni dans les patch notes U36 à U44).
+- Le bug lui-même est documenté (CONF, wiki Shadow Haze, section Bugs ; forum, 07/2025) : une mini-Reap tourne en rond autour d'une cible morte si cette cible meurt **avant** d'avoir reçu la vulnérabilité.
+- Plus la Portée est grande, plus le nuke tue loin et vite pendant que les ombres sont en route ; le bug devrait donc devenir plus fréquent (DÉD, plausible).
+- **Coïncidence notable (DÉD, hypothèse) :** à ~188 %, le rayon de Sow atteint 30 m, la portée de détection fixe des mini-Reap. Au-delà, Sow sème des ennemis que les ombres ne peuvent plus détecter. Cela pourrait expliquer la règle empirique des 190 %. → T16 b.
+
+**Tableau (M19, 4 Crimson tauforgés, DÉD)** :
+
+| Option | Portée | Sow / Dark Propagation | Force (début / Molt) | 2e Reap (début / Molt) | Kills de Molt pour 1,00 | Gloom début | Durée | Énergie à 60 kpm (aire\* / pack constant) | Capacité |
+|---|---|---|---|---|---|---|---|---|---|
+| **100 %** (fiches A et B) | 100 % | 16 / 15 m | 273 / 333 % | **1,075** / 1,332 | 0 | 95 % | 155 % | +3,45 / +3,45 | 72/74 |
+| **145 %** : Augur Secrets → Stretch (S2, défaut) | 145 % | 23,2 / 21,8 m | 249 / 309 % | 0,981 / 1,226 | 21 | 87 % | 155 % | +4,78 / +3,45 | 74/74 |
+| 190 % a : + Cunning Drift, Catalyzing → Augur Reach | 190 % | 30,4 / 28,5 m | 234 / 294 % | 0,923 / 1,162 | 84 | 82 % | 155 % | +4,78 / +3,45 | 74/74 |
+| 190 % b : + Cunning Drift, Intensify → Augur Reach (**= V1** : 204 % / 190 %) | 190 % | 30,4 / 28,5 m | 204 / 264 % | 0,814 / 1,039 | 209 | 71 % | 155 % | +4,78 / +3,45 | 70/74 |
+| 190 % c : + Cunning Drift, Streamline → Augur Reach | 190 % | 30,4 / 28,5 m | 234 / 294 % | 0,923 / 1,162 | 84 | 82 % | 155 % | +1,85 / −0,49 | 72/74 |
+| **190 % d** : a + Primed Continuity → Transient Fortitude | 190 % | 30,4 / 28,5 m | 289 / 349 % | **1,141** / 1,405 | 0 | 95 % | 72,5 % | +1,84 / +0,51 | 70/74 (3 F) |
+| 250 % façon V3 : Stretch, Augur Reach (pour Intensify), Overextended R4 (pour Catalyzing), Transient Fortitude, Power Drift gardé | 250 % | 40,0 / 37,5 m | 224 / 284 % | 0,886 / 1,120 | 126 | 78 % | 72,5 % | +1,84 / +0,51 | 69/74 |
+| Max 280 % : Stretch, Augur Reach, Overextended, Cunning Drift | 280 % | 44,8 / 42,0 m | 144 / 204 % | 0,616 / 0,814 | jamais | 50 % | 155 % | +4,78 / +3,45 | 69/74 |
+| Max 280 % + Transient Fortitude | 280 % | 44,8 / 42,0 m | 199 / 259 % | 0,797 / 1,020 | 230 | 70 % | 72,5 % | +1,84 / +0,51 | 70/74 |
+
+La bande de Reap vaut 8 m × Portée : 8 / 11,6 / 15,2 / 20 / 22,4 m.
+\* Aire : on suppose que les kills par rotation suivent l'aire (15 × Portée², plafonné à 30). C'est une hypothèse TEST (T15). Avec ce plafond, rien ne bouge au-delà de 145 %.
+
+**Lecture :**
+- **Chaque palier de Portée se paie en Force ou en énergie.** Les seuls slots libérables sont Augur Secrets, Intensify, Catalyzing, Primed Continuity et Streamline.
+- **190 % a :** perd le gating de Catalyzing, et il faut 84 kills de Molt pour retrouver le one-shot.
+- **190 % b reproduit exactement V1** (204 % et 190 %) : sous le seuil jusqu'à 209 kills de Molt. C'est cohérent avec V1 seulement si ses éclats ou son Molt diffèrent (DÉD).
+- **190 % c :** l'énergie s'effondre (−0,49/s à pack constant).
+- **190 % d :** la seule à 190 % qui garde le one-shot dès le départ (1,141), et la seule qui remplit les deux critères de V2 (≥ 255 % et ≤ 190 %). En échange : Durée 72,5 % (Roar 21,8 s, vulnérabilité de Reap plus courte), énergie +1,84/s, plus de gating de Catalyzing.
+- **250 % façon V3 :** 0,886 au départ, 126 kills pour passer le seuil. Les « 255 % » de V3 ne sont atteints qu'avec Molt en partie chargé (284 % plein). C'est cohérent si V3 compte Molt (DÉD).
+- **280 % :** sans Transient Fortitude, le one-shot n'arrive jamais.
+
+**Décision :**
+- **S1, S3 et Zariman (fiche B) : 100 %.** En S1, les packs sont denses et le vol de Reap couvre la distance. En S3, le niveau est maximal dès la 1re seconde. En Void Cascade, tes kills comptent dès que tu es dans l'anneau.
+- **S2 endurance : 145 % par défaut** (Augur Secrets → Stretch, seulement à partir de P5 ; à P3, le même swap tombe à 0,905 et demande 105 kills de Molt).
+- **190 % « d » seulement si les deux conditions sont réunies :** T15 montre plus de 10 % de kills/min en passant de 100 à 145 % (la Portée paie), et T16 b ne montre pas plus de mini-Reap bloquées à 190 % qu'à 145 %.
+- **Au-delà de 190 % : refusé pour F1.** On rejoint la limite de V1/V2, mais pour une raison chiffrée (le coût en Force), pas à cause d'un bug non démontré.
+- Les autres échanges à 145 % de la v2 restent valables, à départager par T15 :
+  - Dark Propagation → Stretch : 1,075, sans coût en Force, mais on perd la propagation de Sow ;
+  - Streamline → Stretch : 1,075, énergie +1,85/s ;
+  - Intensify → Stretch : 0,957, 46 kills de Molt.
+- **L'invisibilité change la donne (DÉD) :** les ennemis ne convergent pas vers un Sevagoth invisible, donc la Portée compte plus qu'en jeu visible. La distance d'engagement typique n'est pas documentée (NON TROUVÉ, T15).
+
+---
+
+## 6 bis. Eximus Entropiques et Void Cascade (v3)
+
+**Règles** (CONF : wiki Eximus#Entropic et Yuvan Peak, patch notes U44) :
+- **Où :** Zariman uniquement, où ils apparaissent **plus souvent que les autres Eximus**. Kuva Grineer et Corpus de Juno au sol ; ni Nullifier ni unité volante. Introduits en 44.0.
+- **L'orbe rouge** bloque tous les projectiles d'armes et d'Amps. Il protège aussi les alliés proches des attaques à distance (Codex).
+- **Tant que l'orbe tient, l'Eximus est immunisé à toutes les compétences**, que tu sois dedans ou dehors. Cela vaut aussi pour les zones (exemple du wiki : Brimstone) et la réduction d'armure.
+- **Réductions passives :** armes primaires et secondaires −90 %, Amp −75 %, attaques à distance des glaives et gunblades −90 %.
+- **Les attaques radiales et les ondes de slam ne traversent pas l'orbe**, dans un sens comme dans l'autre.
+- **Les compagnons ne les ciblent pas.**
+- **Armure de base 50**, quel que soit l'ennemi.
+- Le wiki conclut : « la mêlée classique est le seul moyen fiable ».
+- **Casser l'orbe :**
+  - frapper l'orbe ou l'Eximus en mêlée sous **bénédiction Iceblade of Narin** ;
+  - ou le toucher avec un **Tauron Strike**.
+  - Ensuite, les compétences peuvent le cibler.
+- **La bénédiction :**
+  - donnée à Yuvan Peak par un joueur MR30+, à toute l'instance du hub, sans avoir réussi à retirer l'épée ;
+  - 3 h, comme au True Master's Font (le donneur a 23 h de recharge) ;
+  - elle ajoute 3 statuts Cold par coup de mêlée et s'applique aussi à la mêlée des compagnons.
+
+**Ce que F1 peut faire :**
+
+| Situation | F1 | Étiquette |
+|---|---|---|
+| Entropique, orbe actif | **Rien.** Reap, Sow, Gloom et Roar sont sans effet ; l'Epitaph fait −90 % et l'orbe bloque ses projectiles ; le Huras ne le cible pas ; le Blast des voisins ne traverse pas l'orbe | CONF |
+| Ennemis ordinaires à l'intérieur de l'orbe | Inconnu. Le Codex dit que l'orbe protège les alliés des attaques à distance, sans rien dire des compétences ; les explosions venues de dehors ne traversent pas (radial) | NON TROUVÉ → T21 a |
+| Orbe cassé (mêlée bénie ou Tauron Strike) | Nuke normal : Reap → Sow → Reap → Reap ; pour l'OG, T1 et Circumvent | CONF + DÉD |
+| Ni bénédiction ni Tauron | Le tuer à la mêlée (armure de base 50, mêlée non réduite), ou le contourner | CONF |
+
+**Ordre de grandeur à la mêlée (M20, DÉD).** Le proxy prend les PV et l'OG du Heavy Gunner Eximus, avec une armure de base 50 mise à l'échelle. L'arme mesurée est celle des griffes de l'Ombre (config F3) ; ce n'est qu'un ordre de grandeur pour une mêlée endgame.
+
+| Niveau | Armure | OG | PV | Griffes 4x, sans DH ni Haze | Griffes 12x, sans DH ni Haze | Mêmes griffes 4x **avec** DH et Haze (Eximus ordinaire) |
+|---|---|---|---|---|---|---|
+| S1 SP175 | 979 | 324 090 | 1,93 M | 0,56 s | 0,11 s | 0,10 s |
+| S2a 500 | 2 139 | 836 472 | 4,19 M | 1,65 s | 0,31 s | 0,30 s |
+| S2b 1000 | 2 700 | 1,56 M | 6,95 M | 3,19 s | 0,59 s | 0,59 s |
+| S3 9999 | 2 700 | 12,4 M | 36,6 M | 18,85 s | 3,52 s | 3,46 s |
+
+**F2 (Ombre et griffes, Roar en slot 3) devient-il le meilleur pour Void Cascade et le level cap ? Non (DÉD) :**
+1. **Contre l'orbe, les atouts de F2 sont des compétences.** La vulnérabilité de Death's Harvest et le critique de Shadow Haze ne passent pas (CONF). Au combo 4x, les griffes deviennent 5 à 6 fois plus lentes (M20). Et l'effet de Shadow Haze sur les griffes est contesté sur le forum depuis 2024 (COMM).
+2. **Pire, elles pourraient ne pas toucher du tout.** Le wiki d'Archon Stretch range les coups des Shadow Claws parmi les dégâts de **compétence** (Exalted Shadow y figure, CONF). Si le moteur fait pareil pour l'immunité des Entropiques, les griffes ne les touchent pas tant que l'orbe tient. La page Entropic ne parle pas des armes exaltées (NON TROUVÉ → T21 e).
+3. **Les procs Slash forcés** des lourdes contournent l'armure. Mais un Entropique n'a que 50 d'armure de base : l'avantage disparaît justement contre lui.
+4. **Au level cap, les griffes dépendent du niveau** (temps ×34 de 175 à 9 999, M20), le nuke non (% des PV actuels). Seul l'OG résiste au nuke, et Circumvent le retire à tout niveau (M23, T20).
+5. **F2 met Roar en slot 3**, ce qui est impossible sur la même frame que F1 (CONF). Seul un Sevagoth non-Prime pourrait le porter en parallèle.
+- **Repli :** F3 (sans infusion, annexe A) reste possible sur la même frame, si T21 montre que les griffes frappent un Entropique et que la mêlée de Sevagoth l'expose trop. Mais sans Roar, il faut une amorce Viral (0,55 sans).
+- **Mêlée du Huras sous bénédiction :** elle casserait aussi l'orbe (CONF), mais le Huras ne cible pas les Entropiques. Un coup accidentel n'est pas une stratégie (DÉD).
+
+---
+
+## 6 ter. Gloom, Seismic Bond, Archon Stretch et seuil (v3)
+
+**Gloom (M21, F1 à P5, 60 kills/min, DÉD) :**
+
+| | Gloom permanent | Gloom coupé |
+|---|---|---|
+| Énergie | **+3,45/s** | +2,90/s |
+| Seismic Bond | actif : +30 % d'efficacité tant que Gloom canalise (CONF) | inutile |
+| Ralentissement | 95 % jusqu'à 16 m, **le même rayon que Sow** à toute Portée | – |
+| Vol de vie | 13,7 % des dégâts, sur 370 PV | – |
+
+- **Avec Seismic Bond, Gloom se paie lui-même et rapporte +0,55/s :** l'efficacité gagnée sur tous les sorts dépasse son drain.
+- **V1 à V3 ont raison sur le vol de vie :** sur 370 PV et contre des coups qui tuent d'un seul, il ne sert presque à rien.
+- **« Le ralentissement baisse les kills/min » :** plausible si c'est le débit d'ennemis entrant dans la zone qui limite les kills.
+  - Mais le ralentissement agit dans le rayon même de Sow : les ennemis ralentis sont déjà dans la zone du prochain nuke.
+  - Et un Sevagoth invisible n'attire pas les ennemis de toute façon (DÉD).
+  - Aucune mesure ni d'un côté ni de l'autre → **T17**.
+- **Ninjase garde Gloom** (COMM), comme F1.
+- **Le choix de F1 n'en dépend pas.** Gloom occupe le slot 3 et Roar le slot 4 : couper Gloom ne libère rien. Pour récupérer quelque chose, il faudrait mettre Roar en slot 3 et garder l'Ombre (V1/V2, soit F2), ce qui est exclu.
+- **Règle :** Gloom permanent par défaut. Si T17 montre plus de 10 % de kills/min avec Gloom coupé, passer « à la demande » (l'énergie reste positive à +2,90/s) et remplacer Seismic Bond par un mod de survie sur le Huras.
+
+**Archon Stretch :**
+- **Règles (CONF, wiki) :**
+  - seules les **compétences** de Warframe ou de compagnon qui infligent de l'Électricité déclenchent le bonus ;
+  - il donne 2 énergie/s pendant 5 s (10 au total), sans cumul ni rafraîchissement ;
+  - chaque lancement de sort coupe la régénération 1 s ;
+  - une compétence canalisée qui draine l'énergie, comme Gloom, la bloque tant qu'elle est active.
+- **Côté Sevagoth, le wiki liste Exalted Shadow quand les Shadow Claws sont modées Électricité.** C'est sans doute le mécanisme de V1, qui garde l'Ombre.
+- **Côté compagnons, le Huras n'est pas listé.** La liste contient Adarza, Dethcube, Diriga, Helminth Charger, Hound, Panzer, Pharaoh et Vizier (souvent avec Shocking Claws). Aucun Kubrow (CONF ; pour le Huras, NON TROUVÉ → T19).
+- **Pour F1, il est inaccessible :** aucune compétence d'Électricité (Exalted Shadow est remplacé par Roar), Huras non listé, et Gloom le bloquerait de toute façon.
+- **Si T19 donnait raison à V1 (M21, DÉD) :**
+  - Archon Stretch rapporterait au mieux ~1,56/s : 2/s, moins 1 s de pause par lancement, à 0,22 lancement/s.
+  - Gloom coupé + Archon Stretch : **+4,46/s**, contre +3,45/s pour Gloom + Seismic Bond, soit **+1,0/s**.
+  - Il faudrait mettre Archon Stretch dans le slot de Stretch (fiche A à 145 %) et couper Gloom.
+  - À comparer avec ce que T17 dira des kills/min.
+
+**Seuil :** **254,02 %** exact (M22) ; à 255 %, le 2e Reap fait 1,0038 des PV actuels. Les vidéos arrondissent. Les « 6 Reap sans Molt, 2 avec » de V2 collent avec un franchissement du seuil (DÉD).
 
 ---
 
@@ -262,7 +449,7 @@ Temps de neutralisation (DÉD, approximation continue) : 45 s avec Medi-Pet Kit 
 
 ---
 
-## 8. Tests en jeu (T1 et T4 réécrits ; T15 nouveau)
+## 8. Tests en jeu (T1 et T4 réécrits en v2 ; T16 à T21 nouveaux en v3)
 
 ### T1 : le % de PV actuels de Sow+Reap traverse-t-il l'Overguard ? (protocole PS5)
 **Préparation**
@@ -325,7 +512,7 @@ Temps de neutralisation (DÉD, approximation continue) : 45 s avec Medi-Pet Kit 
 ### Autres tests (repris de la v1 ; ceux propres à F2/F3 sont abandonnés)
 | # | Question | Mise en place | Mesure | Confirme / infirme |
 |---|---|---|---|---|
-| T2 | La vulnérabilité de Reap s'applique-t-elle à l'OG ? | Simulacrum, Eximus, Pause AI ; tir chargé d'Epitaph avant et après un Reap | Chiffre de dégâts sur l'OG | ≈×2,36 : oui (plan B rang 1 à 1–2 voisins). ×1 : non (3 voisins) |
+| T2 | La vulnérabilité de Reap s'applique-t-elle à l'OG ? | Simulacrum, Eximus, Pause AI ; tir chargé d'Epitaph avant et après un Reap | Chiffre de dégâts sur l'OG | ≈×2,36 : oui (plan B rang 2 à 1–2 voisins). ×1 : non (3 voisins) |
 | T3 | (variante) Precision Intensify booste-t-il Roar en slot 4 ? | Arsenal, puis mission | Buff Roar dans le HUD | Optionnel : Intensify reste le choix par défaut |
 | T5 | Gloom à 95 % ralentit-il la cadence de tir ? | Simulacrum, Heavy Gunner, Gloom on/off | Balles par 5 s | Division par ≈20 : oui |
 | T6 | Sow survit-il à une détonation ? | Sow → Reap → Reap sans relancer Sow | Une ou deux détonations | Une : ajouter un Sow avant le 3e Reap sur les Eximus |
@@ -334,7 +521,68 @@ Temps de neutralisation (DÉD, approximation continue) : 45 s avec Medi-Pet Kit 
 | T13 | Un Mercy casse-t-il Stalk ? (Escapist, Hard Reset) | Mercy sur un Eximus affaibli | État du camouflage | Oui : en S3, Escapist seulement dans une fenêtre sûre |
 | T14 | Blood Rush se pose-t-il sur Shadow Claws Prime ? (griffes Tombstone) | Arsenal | Le mod s'équipe-t-il ? | Non : True Steel à la place |
 | T7, T9, T11, T12 | Abandonnés (F2/F3 non retenues) | – | – | – |
-| **T15** | Portée en endurance | Même nœud SP survival, 15 min × 3 configs : build, Augur Secrets → Stretch, Dark Propagation → Stretch | Kills/min de fin de mission, courbe d'énergie | Plus de 10 % de kills/min pour une config Stretch : l'adopter en S2 |
+| **T15** | Portée en endurance | Même nœud SP survival, 15 min × 4 configs : 100 %, Augur Secrets → Stretch, Dark Propagation → Stretch, **190 % « d »** (v3) | Kills/min de fin de mission, courbe d'énergie | Plus de 10 % de kills/min pour une config Stretch : l'adopter en S2. 190 % « d » seulement s'il bat 145 % de plus de 10 % et que T16 b est négatif |
+
+### Tests v3 (T16 à T21)
+
+Pour chaque test : capture vidéo PS5 (bouton Créer), relecture image par image. Le marqueur de waypoint affiche la distance en mètres : c'est lui qui sert à mesurer les écarts.
+
+**T16 : Portée, explosion et mini-Reap bloquées**
+- **a. Rayon de l'explosion.**
+  - Simulacrum, Steel Path ON, Pause AI ON.
+  - 1 cible et 4 Lancers placés à ~3, 4, 5 et 6 m d'elle (distances lues au waypoint).
+  - Reap → Sow → Reap. Relever les chiffres de **Blast** (pas de True) sur chaque voisin.
+  - Deux configs : 100 % et 190 % « d ».
+  - **Lecture :** Blast jusqu'à 4 m dans les deux configs → wiki confirmé. Jusqu'à 5 m → V2 a raison. Rayon qui grandit avec la Portée → refaire M18 et M19.
+- **b. Mini-Reap bloquées.**
+  - Nœud SP survival.
+  - 20 rotations Reap → Sow → Reap par config : 100 %, 145 %, 190 % « d », 250 %.
+  - Compter les ombres qui tournent sur place : points bleus figés sur la minimap, animation en boucle.
+  - **Lecture :** au moins deux fois plus d'ombres bloquées à 190 % qu'à 145 % → plafond à 145 %, même en S2. Pas de différence → la règle des 190 % n'a pas de base mécanique, et seul le coût en Force compte.
+
+**T17 : Gloom permanent ou coupé (kills/min)**
+- **Mise en place :** même nœud SP survival (Infestés d'Eris : ça farme aussi le Moonflesh), fiche A à 145 %.
+- **Déroulé :** 4 sessions de 15 min, en alternance Gloom permanent / coupé / permanent / coupé.
+- **Mesures :** kills à 15 min, énergie toutes les 2 min, neutralisations du Huras.
+- **Lecture :**
+  - Gloom coupé à +10 % de kills/min ou plus → Gloom « à la demande », et Seismic Bond remplacé par un mod de survie ;
+  - +5 % ou moins → Gloom permanent ;
+  - entre les deux → Gloom permanent (pour l'énergie).
+
+**T18 : les griffes héritent-elles de Secondary Fortifier ? (V1)**
+- **Mise en place :** config F3 sans infusion (il faut Exalted Shadow). Simulacrum, Heavy Gunner Eximus, Steel Path ON, Pause AI ON.
+- **Déroulé :** en Ombre, 5 coups légers puis une lourde sur l'Overguard. Une fois avec Secondary Fortifier R5 sur l'Epitaph, une fois sans arcane.
+- **Lecture :** dégâts sur l'OG environ ×8 avec Fortifier → V1 a raison, et la lourde du Tombstone retire l'OG plus vite. ×1 → le wiki a raison.
+
+**T19 : le Huras déclenche-t-il Archon Stretch ?**
+- **Mise en place :** Archon Stretch à la place de Stretch ; Huras avec l'élément Électricité utilisé par V1. Gloom **coupé**. Simulacrum, Pause AI OFF, 5 min.
+- **Contrôle :** config F3, Shadow Claws modées Électricité. D'après le wiki, l'icône doit apparaître.
+- **Lecture :** icône Archon Stretch au HUD quand le Huras attaque → V1 confirmé. Il faut alors rejouer M21 (Gloom coupé + Archon Stretch : +1,0/s) et laisser T17 trancher. Pas d'icône → question close.
+
+**T20 : Arcane Circumvent contre l'Overguard**
+- **Mise en place :** Simulacrum, Heavy Gunner Eximus, Steel Path ON, niveau max, Pause AI ON, invincibilité ON. Huras avec Stalk, arcane Circumvent R5.
+- **Déroulé :**
+  1. Roulade à travers l'Eximus. Noter sa barre d'OG, ta barre d'OG et l'icône d'invisibilité.
+  2. Deuxième roulade, mêmes relevés.
+  3. Reap → Sow → Reap → Reap.
+  4. Refaire le tout à bas niveau.
+- **Lecture :**
+  - OG à 50 % puis 0 % (lecture linéaire) et invisibilité intacte → plan B n°1 validé, fiche B confirmée ;
+  - 50 % puis 25 % (lecture géométrique) → 3 à 4 roulades, toujours à tout niveau ;
+  - invisibilité cassée → Circumvent vaut l'Epitaph côté exposition, mais reste indépendant du niveau.
+
+**T21 : Eximus Entropiques (Zariman, Void Cascade SP)**
+- **a. Sans bénédiction, orbe actif :** Reap → Sow → Reap sur un pack qui contient un Entropique. Les ennemis ordinaires **dans** l'orbe meurent-ils ? L'Entropique affiche-t-il un chiffre de dégâts ?
+- **b. Avec bénédiction :** un coup de mêlée sur l'orbe. Casse-t-il au premier coup ? Que devient l'invisibilité ?
+- **c. Après b :** 2 roulades Circumvent, puis Reap → Sow → Reap → Reap. L'Entropique meurt-il ?
+- **d. Tauron Strike** sur un autre Entropique, si la jauge le permet : l'orbe casse-t-il ?
+- **e. Facultatif (config F3) :** une lourde des Shadow Claws sur un Entropique dont l'orbe tient. Y a-t-il des dégâts ? Autrement dit, l'arme exaltée compte-t-elle comme une compétence ?
+- **f. Roulade Circumvent orbe actif :** l'OG est-il volé ?
+- **Lecture :**
+  - b et c réussis → fiche B validée ;
+  - a négatif (les ennemis dans l'orbe survivent) → casser l'orbe avant de nuker le pack ;
+  - e négatif → plus aucun repli par les griffes ;
+  - f positif → retirer l'OG avant de casser l'orbe, pour enchaîner sur le nuke dès que l'orbe tombe.
 
 ---
 
@@ -345,17 +593,24 @@ Temps de neutralisation (DÉD, approximation continue) : 45 s avec Medi-Pet Kit 
 - **Énergie** (M15) : P5 tient dès ~20 kills/min. Sans Energize (P0), −4,73/s même Gloom coupé.
 - **Crimson tauforgés** (M13) : 1,45 équivalent par semaine en Elite, 0,99 sans.
 - **Taubound** (M17) : 918 Moonflesh, ~2 à 4,5 h de farm.
+- **Portée (M19, v3)** : 145 % → 0,981 (21 kills de Molt) ; 190 % → 0,923 (84 kills), sauf variante « d » (1,141, Durée 72,5 %) ; 250 % façon V3 → 0,886 (126 kills) ; 280 % → 0,616 (jamais sans Transient Fortitude).
+- **Entropiques (M20, v3)** : sans DH ni Haze, les griffes passent de 0,10 à 0,56 s (SP175) et de 3,5 à 18,9 s (9 999) ; F1 a besoin d'un coup de mêlée bénie ou d'un Tauron Strike.
+- **Gloom (M21, v3)** : +3,45/s avec, +2,90/s sans ; Archon Stretch, s'il était déclenchable, ferait +4,46/s Gloom coupé.
+- **Circumvent (M23, v3)** : 2 roulades à tout niveau, contre 1 tir d'Epitaph jusqu'au 1000 et 7 au 9 999.
 
 **Ce qui renverserait le verdict :**
 - **Le Huras est neutralisé plus de 2 fois par 10 min dès le niveau 500 (T4)** et le Shade ne fait pas mieux : F1 perd sa couche principale en S2/S3.
 - **H0 au T1 et Blast voisin insuffisant (étape 7)** : en S3, les Eximus imposent l'Epitaph, donc des fenêtres visibles. F1 reste le meilleur build, mais S3 passe de « viable » à « difficile ».
 - **Packs de moins de 8 kills par rotation (T8)** : l'énergie de P5 passe à −0,65/s. Couper Gloom hors des pics, ou passer à la portée (section 6).
+- **v3 : T20 négatif** (Circumvent casse l'invisibilité, ou ne retire que 25 % par roulade) : le plan B redevient celui de la v2, et S3 reste « difficile » sous H0.
+- **v3 : T21 b/c négatif** (la mêlée bénie ne casse pas l'orbe, ou le nuke échoue ensuite) : en Void Cascade, F1 doit tuer les Entropiques à la mêlée. La fiche B demande alors une vraie mêlée endgame, et F3 (griffes) redevient une option si T21 e est positif.
+- **v3 : T17 positif** (Gloom coupé à +10 % de kills/min) : Gloom à la demande. Ce n'est pas un renversement, F1 ne change pas.
 
 ---
 
-## 10. Liste de farm priorisée (v2)
+## 10. Liste de farm priorisée (v3)
 
-Prix : warframe.market, vendeurs en jeu, crossplay, 29/10/2026. Les sources et substituts de la v1 restent valables ; seul l'ordre change.
+Prix : warframe.market, vendeurs en jeu, crossplay, 29/10/2026 (Circumvent : 30/10/2026). Les sources et substituts de la v1 restent valables. La v3 ajoute la ligne 6 et décale les suivantes.
 
 | Priorité | Pièce | Palier | Impact (DÉD) | Où | Coût |
 |---|---|---|---|---|---|
@@ -365,14 +620,17 @@ Prix : warframe.market, vendeurs en jeu, crossplay, 29/10/2026. Les sources et s
 | 3 | **Huras Kubrow + Seismic Bond** (+ mods de survie, Assassin Posture) | P2 | +6,14/s sous Gloom permanent | Œuf de Kubrow, incubation aléatoire (taux NON TROUVÉ) ; Son (Entrati rang 3) ; The Business | ~29 p (Seismic) |
 | 4 | **Taubound** : Crimson tau, Secondary Fortifier, Amber tau | P4 | 0,996 → 1,016 ; plan B OG ; +0,58/s | Praghasa, Eris, **avant le 17/11** | 918 Moonflesh |
 | 5 | **4 Crimson normaux + 1 Amber normal**, **Primed Continuity** | P3 | Permet Transient → Primed Continuity : +2,94/s (+1,18 avec l'Amber) | Bird 3 cette semaine, Archon Hunt, Netracells, Archimedea, Icebind ; Primed Continuity chez Baro | ~155 p (Primed Continuity R10) |
-| 6 | **3 Crimson tauforgés de plus** | P5 | 1,016 → 1,075, Gloom 95 % dès le départ | Section 4 (2 à 3 semaines) | – |
-| 7 | Forma de confort ; Ombre et griffes Tombstone | – | Filet de secours à la mort | v1 | – |
+| **6 (v3)** | **Arcane Circumvent** (rang 5) + une **mêlée** modée + la **bénédiction Iceblade** | Fiche B (dès P4) ; plus tôt si T1 = H0 | Plan B n°1 contre l'OG, à tout niveau ; casser l'orbe des Entropiques | Circumvent : marché, Roathe (5 Maphica pièce), Descendia SP ; bénédiction : un joueur MR30+ à Yuvan Peak (gratuit) | ~50 à 55 p (R5) ou 21 × ~3 p (R0) |
+| 7 | **3 Crimson tauforgés de plus** | P5 | 1,016 → 1,075, Gloom 95 % dès le départ | Section 4 (2 à 3 semaines) | – |
+| 8 | Forma de confort ; Ombre et griffes Tombstone | – | Filet de secours à la mort | v1 | – |
 
 ---
 
 ## Annexes (v1, inchangées sauf mention)
 
 ## A. Fiches détaillées v1 (F1 détaillée ; F2 et F3 archivées en v2)
+
+*v3 : les fiches à jour sont en section 2 (A et B). Ici, la mention « En S3, remplacer Molt par Arcane Escapist » est remplacée par la fiche B (Circumvent, ou Escapist si T1 = H1).*
 
 Conventions : polarités V = Vazarin, N = Naramon, M = Madurai, Z = Zenurik, U = Umbra, « - » = slot sans polarité. Coûts au rang max. Capacités vérifiées par `fit()` dans le script (section M2).
 
@@ -640,6 +898,7 @@ Prix : warframe.market, vendeurs « en jeu », crossplay, relevés le 29/10/2026
 ---
 
 ## Sources (consultées le 29/10/2026 sauf mention)
+- **Ajouts v3 (30/10/2026) :** wiki [Eximus, section Entropic](https://wiki.warframe.com/w/Eximus#Entropic), [Yuvan Peak](https://wiki.warframe.com/w/Yuvan_Peak) (bénédiction Iceblade of Narin), [True Master's Font](https://wiki.warframe.com/w/True_Master%27s_Font) (3 h, 23 h de recharge), [Void Cascade](https://wiki.warframe.com/w/Void_Cascade), [Arcane Circumvent](https://wiki.warframe.com/w/Arcane_Circumvent), [Secondary Fortifier](https://wiki.warframe.com/w/Secondary_Fortifier), [Archon Stretch](https://wiki.warframe.com/w/Archon_Stretch), [Stretch](https://wiki.warframe.com/w/Stretch), [Augur Reach](https://wiki.warframe.com/w/Augur_Reach), [Overextended](https://wiki.warframe.com/w/Overextended), [Cunning Drift](https://wiki.warframe.com/w/Cunning_Drift), [Shadow Haze](https://wiki.warframe.com/w/Shadow_Haze) (section Bugs : ombres qui tournent), [Sevagoth/Abilities, passif](https://wiki.warframe.com/w/Sevagoth/Abilities) (l'Ombre n'utilise pas l'équipement de Sevagoth) ; patch notes [Update 44](https://forums.warframe.com/topic/1523956-update-44-iceblade-of-narin/) ; forum : [Shadows Haze augment spinning shadows, cause of issue found](https://forums.warframe.com/topic/1461820-shadows-haze-augment-spinning-shadows-cause-of-issue-found/) (07/2025), [The fix for Shadow Haze augment still don't work with Sevagoth's Shadow](https://forums.warframe.com/topic/1400398-the-fix-for-shadow-haze-augment-mod-still-dont-work-with-sevagoths-shadow/) (2024) ; prix [warframe.market, Arcane Circumvent](https://warframe.market/items/arcane_circumvent). Guides vidéo V1 à V4 : connus seulement par les résumés fournis avec la demande (COMM), non visionnés.
 - **Ajouts v2 :** wiki [Archon Hunt](https://wiki.warframe.com/w/Archon_Hunt), [Netracells](https://wiki.warframe.com/w/Netracells), [Deep Archimedea](https://wiki.warframe.com/w/Deep_Archimedea), [Temporal Archimedea](https://wiki.warframe.com/w/Temporal_Archimedea), [Search Pulse](https://wiki.warframe.com/w/Search_Pulse), [Bird 3](https://wiki.warframe.com/w/Bird_3), [The Icebind](https://wiki.warframe.com/w/The_Icebind), [The Descendia](https://wiki.warframe.com/w/The_Descendia), [Simulacrum](https://wiki.warframe.com/w/Simulacrum), [Companion](https://wiki.warframe.com/w/Companion), [Huras Kubrow](https://wiki.warframe.com/w/Huras_Kubrow), [Tauron Strike](https://wiki.warframe.com/w/Tauron_Strike), [Focus/Vazarin](https://wiki.warframe.com/w/Focus/Vazarin), [Effects Scaling With Enemy Stats](https://wiki.warframe.com/w/Effects_Scaling_With_Enemy_Stats), [Update 31](https://wiki.warframe.com/w/Update_31) (introduction de l'Overguard), modules `Companions/data` et `DropTables/data`. Recherches sans résultat sur l'interaction % PV / Overguard : [vortexgaming.io](https://vortexgaming.io/en/postdetail/696494), [Steam](https://steamcommunity.com/app/230410/discussions/0/3826414483635039170), [forums Warframe](https://forums.warframe.com/topic/1450429-bad-game-design-overguard/).
 - Wiki officiel : [Sevagoth/Prime](https://wiki.warframe.com/w/Sevagoth/Prime), [Sevagoth/Abilities](https://wiki.warframe.com/w/Sevagoth/Abilities), [Sevagoth/Patch History](https://wiki.warframe.com/w/Sevagoth/Patch_History), [Reap](https://wiki.warframe.com/w/Reap), [Sow](https://wiki.warframe.com/w/Sow), [Gloom](https://wiki.warframe.com/w/Gloom), [Exalted Shadow](https://wiki.warframe.com/w/Exalted_Shadow), [Death's Harvest](https://wiki.warframe.com/w/Death%27s_Harvest), [Shadow Haze](https://wiki.warframe.com/w/Shadow_Haze), [Dark Propagation](https://wiki.warframe.com/w/Dark_Propagation), [Shadow Claws](https://wiki.warframe.com/w/Shadow_Claws), [Exalted Weapon](https://wiki.warframe.com/w/Exalted_Weapon), [Enemy Level Scaling](https://wiki.warframe.com/w/Enemy_Level_Scaling), [The Steel Path](https://wiki.warframe.com/w/The_Steel_Path), [Overguard](https://wiki.warframe.com/w/Overguard), [Armor](https://wiki.warframe.com/w/Armor), [Archon Shard](https://wiki.warframe.com/w/Archon_Shard), [Helminth](https://wiki.warframe.com/w/Helminth), [Roar](https://wiki.warframe.com/w/Roar), [Ghost](https://wiki.warframe.com/w/Ghost), [Stalk](https://wiki.warframe.com/w/Stalk), [Blood Rush](https://wiki.warframe.com/w/Blood_Rush), [Melee Combo](https://wiki.warframe.com/w/Melee_Combo), [Damage Reduction](https://wiki.warframe.com/w/Damage_Reduction), [Update 38](https://wiki.warframe.com/w/Update_38) à [Update 44](https://wiki.warframe.com/w/Update_44), [Epoch Operation : Taubound](https://wiki.warframe.com/w/Epoch_Operation:_Taubound), modules Lua `Warframes/data`, `Weapons/data`, `Mods/data`, `Arcane/data`, `Stances/data`, `Enemies/data`, `DropTables/data`, `Version/data`.
 - Patch notes officielles : [warframe.com, PSN](https://www.warframe.com/patch-notes/psn) (Hotfix 44.1.4 + 4.1, 28/10/2026) ; [RPG Site, sortie d'Iceblade of Narin sur toutes les plateformes](https://www.rpgsite.net/news/21459-warframe-iceblade-of-narin-update-download-free-login-bonus) ; [DE, How to Play Sevagoth](https://www.warframe.com/en/news/how-to-play-sevagoth) (24/11/2023).

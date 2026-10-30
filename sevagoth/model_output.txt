@@ -276,3 +276,48 @@ Chaque Heavy Gunner (sans OG) detone dans un rayon de 4 m : 25 % de ses PV x Roa
 | S3 9999 | 6,103,266 | 12,418,720 | 2,775,460 | 5 | 6,563,964 | 2 |
 Rotation reelle pour un Eximus sous H1 : Reap (vuln) -> Sow -> Reap (1re detonation) -> Reap (2e) ; ajouter un Sow avant le 3e Reap si T6 montre que Sow est consomme.
 
+## M19. Portee 100 % / 190 % / max (F1, 4 Crimson tauforges)
+Dependant de la Portee (CONF, wiki) : bande de Reap 8 m, mini-Reap de Shadow Haze (rayon), Sow 16 m, Dark Propagation 15 m (Portee de Sevagoth), Gloom 4 -> 16 m. Fixe : explosion de Sow/Reap 4 m (pas d'icone de Portee sur le wiki), detection des mini-Reap 30 m, Shadow Haze (crit independant de la Portee depuis 33.6.3).
+| Option | Portee | Sow / Gloom / DP | bande Reap | Force debut / Molt | 2e Reap debut / Molt | kills Molt -> 1,00 | Gloom debut | Duree | energie 60 kpm (aire / sans aire) | capacite |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 100 % : F1 actuel | 100 % | 16.0 / 16.0 / 15.0 m | 8.0 m | 273 / 333 % | 1.075 / 1.332 | 0 | 95 % | 155.0 % | +3.45 / +3.45 | 72/74 (2 F) |
+| 145 % : Augur Secrets -> Stretch (v2, S2) | 145 % | 23.2 / 23.2 / 21.8 m | 11.6 m | 249 / 309 % | 0.981 / 1.226 | 21 | 87 % | 155.0 % | +4.78 / +3.45 | 74/74 (2 F) |
+| 190 % a : + Cunning Drift (exilus) + Augur Reach a la place de Catalyzing | 190 % | 30.4 / 30.4 / 28.5 m | 15.2 m | 234 / 294 % | 0.923 / 1.162 | 84 | 82 % | 155.0 % | +4.78 / +3.45 | 74/74 (2 F) |
+| 190 % b : + Cunning Drift + Augur Reach a la place d'Intensify (204 %, comme V1) | 190 % | 30.4 / 30.4 / 28.5 m | 15.2 m | 204 / 264 % | 0.814 / 1.039 | 209 | 71 % | 155.0 % | +4.78 / +3.45 | 70/74 (2 F) |
+| 190 % c : + Cunning Drift + Augur Reach a la place de Streamline | 190 % | 30.4 / 30.4 / 28.5 m | 15.2 m | 234 / 294 % | 0.923 / 1.162 | 84 | 82 % | 155.0 % | +1.85 / -0.49 | 72/74 (2 F) |
+| 190 % d : variante a + Transient Fortitude a la place de Primed Continuity | 190 % | 30.4 / 30.4 / 28.5 m | 15.2 m | 289 / 349 % | 1.141 / 1.405 | 0 | 95 % | 72.5 % | +1.84 / +0.51 | 70/74 (3 F) |
+| max 280 % : Stretch, Augur Reach, Overextended, Cunning Drift | 280 % | 44.8 / 44.8 / 42.0 m | 22.4 m | 144 / 204 % | 0.616 / 0.814 | > 250 | 50 % | 155.0 % | +4.78 / +3.45 | 69/74 (2 F) |
+| max 280 % + Transient Fortitude | 280 % | 44.8 / 44.8 / 42.0 m | 22.4 m | 199 / 259 % | 0.797 / 1.020 | 230 | 70 % | 72.5 % | +1.84 / +0.51 | 70/74 (2 F) |
+| 250 % facon V3 : Stretch, Augur Reach, Overextended R4, Transient Fortitude, Power Drift garde | 250 % | 40.0 / 40.0 / 37.5 m | 20.0 m | 224 / 284 % | 0.886 / 1.120 | 126 | 78 % | 72.5 % | +1.84 / +0.51 | 69/74 (2 F) |
+Lecture : les 28 m de V3 correspondent a Sow a 175 % (16 x 1,75 : Stretch + Augur Reach) ou a Dark Propagation a ~187 % (15 x 1,87), jamais a l'explosion de 4 m, qui ne depend pas de la Portee (DED). Le 190 % b reproduit exactement V1 (204 % / 190 %).
+
+## M20. Eximus Entropiques (Zariman, U44) : que peut faire Sevagoth ?
+Regles CONF (wiki Eximus#Entropic + patch notes U44) : orbe qui bloque projectiles d'armes et d'Amps ; immunite aux competences tant que l'orbe tient ; armes primaires/secondaires -90 %, Amp -75 %, glaives/gunblades -90 % ; les degats de zone et les ondes de slam ne traversent pas l'orbe ; les compagnons ne les ciblent pas ; armure de base 50. Orbe casse par une attaque de melee sous benediction de l'Iceblade de Narin, ou par un Tauron Strike.
+Griffes (config Ombre de F3) contre un Eximus Entropique : ni vulnerabilite DH ni Shadow Haze (competences sans effet).
+| Niveau | armure | OG | PV | griffes 4x Tennokai, statuts a moitie | idem 12x | griffes F3 si DH et Haze passaient (v1) |
+|---|---|---|---|---|---|---|
+| S1 SP175 | 979 | 324,090 | 1,928,910 | 0.56 s | 0.11 s | 0.10 s |
+| S2a 500 | 2139 | 836,472 | 4,193,946 | 1.65 s | 0.31 s | 0.30 s |
+| S2b 1000 | 2700 | 1,562,309 | 6,945,629 | 3.19 s | 0.59 s | 0.59 s |
+| S3 9999 | 2700 | 12,418,720 | 36,619,597 | 18.85 s | 3.52 s | 3.46 s |
+
+## M21. Gloom : garder ou couper ? (F1 final, 60 kills/min)
+Energie : Gloom permanent (Seismic Bond actif) +3.45/s ; Gloom coupe (Seismic inactif) +2.90/s -> Gloom rapporte +0.55/s.
+Archon Stretch (si un compagnon le declenche, CONF : competences Electricite seulement ; bloque tant que Gloom draine) : au mieux ~1.56/s Gloom coupe (2/s moins 1 s de pause par lancement, 0.22 lancement/s).
+  -> Gloom coupe + Archon Stretch : +4.46/s contre Gloom + Seismic : +3.45/s.
+Vol de vie Gloom : 13.7 % des degats ; PV du corps 370 -> utile contre les degats d'usure, nul contre un one-shot.
+Ralentissement : 95 % dans 16 m, soit le meme rayon que Sow : les ennemis ralentis sont deja dans la zone du nuke (DED).
+
+## M22. Seuil (V1/V2/V3 : 255 %)
+Seuil exact 254.02 % ; a 255 % la fraction vaut 1.0038 (>= 1) : coherent, la communaute arrondit.
+
+## M23. Retrait de l'Overguard : Arcane Circumvent contre Epitaph + Secondary Fortifier (Heavy Gunner Eximus, F1)
+Circumvent (CONF, wiki) : une roulade a travers un ennemi a 4 m vole 25 % (rang 0) a 50 % (rang 5) de son armure, ses boucliers et son OG ; repetable ; 'deux roulades retirent tout au rang max' ; OG gagne par le joueur plafonne a 10 000. Lecture lineaire (% de l'OG max, celle du wiki) contre lecture geometrique (% de l'OG restant) : T20 tranche.
+| Niveau | OG de l'Eximus | roulades R5 (lin. / OG restant apres 2 en geom.) | roulades R0 (lin.) | OG gagne par roulade | tirs Epitaph+Fortifier |
+|---|---|---|---|---|---|
+| S1 SP175 | 324,090 | 2 / 25 % | 4 | 10,000 | 1 |
+| S2a 500 | 836,472 | 2 / 25 % | 4 | 10,000 | 1 |
+| S2b 1000 | 1,562,309 | 2 / 25 % | 4 | 10,000 | 1 |
+| S3 9999 | 12,418,720 | 2 / 25 % | 4 | 10,000 | 7 |
+Roulade : pas une attaque d'arme -> ne devrait pas casser Stalk/Ghost (DED depuis la page Ghost, T20). Epitaph : casse l'invisibilite, 7 s.
+
