@@ -391,3 +391,50 @@ Energie : Tempest 25 par 15.5 s, Roar 75 par 46.5 s -> meme cout par seconde a z
 CONF (U44, precisions) : degats non-melee -90 % (Operateur -75 %), bulle cassee ou non ; la bulle empeche les competences de blesser l'Eximus, de l'interieur comme de l'exterieur.
 Nuke F1 sur un Entropique dont la bulle est cassee (DED, si -90 % s'applique au True) : 0.1075 des PV actuels par detonation -> reste 89 % apres 1, 71 % apres 3, 32 % apres 10 detonations.
 
+## M29. Calculateur de RubyBlossom5 contre ce script
+| Force | Ruby (2e Reap, Roar) | Script f1_frac | Ecart |
+|---|---|---|---|
+| 253 % | 99.60 % | 99.60 % | +0.003 pt |
+| 254 % | 99.99 % | 99.99 % | +0.004 pt |
+| 258 % | 101.56 % | 101.56 % | +0.001 pt |
+| 273 % | 107.55 % | 107.55 % | -0.002 pt |
+Force de base (100 %), Reap + Roar : 48.75 % (Ruby : 48,75 %).
+Drain de Gloom (Duree 155 %, Efficacite 130 % ; Ruby p. 3 : 0,339 par ennemi, 3,387 a 10) :
+  1 ennemi(s) : 0.339/s sans Seismic Bond, 0.194/s a 10 stacks ; 641 d'energie durent 31.5 min sans regeneration
+  5 ennemi(s) : 1.694/s sans Seismic Bond, 0.968/s a 10 stacks ; 641 d'energie durent 6.3 min sans regeneration
+  10 ennemi(s) : 3.387/s sans Seismic Bond, 1.935/s a 10 stacks ; 641 d'energie durent 3.2 min sans regeneration
+Rayon de Gloom : 4 -> 16 m x Portee, vague a 2 m/s x Duree (CONF) -> temps de croissance 6 x Portee / Duree :
+  F1 100 % : 16.0 m atteints en 3.9 s
+  175 % b : 28.0 m atteints en 8.2 s
+  Ruby 145 % : 23.2 m atteints en 8.7 s
+  Ruby 175 % : 28.0 m atteints en 10.5 s
+Ralentissement effectif 1 / (1 - ralentissement) (metrique de Ruby) : 174 % -> 60.9 % (x2.56), 234 % -> 81.9 % (x5.52), 249 % -> 87.2 % (x7.78), 258 % -> 90.3 % (x10.31), 274 % -> 95.0 % (x20.00)
+Colonne 'Vs Orokin / Anarchs' = bloc Smite (Helminth d'Oberon) : min(35 % x Force, 50 %) x (1 + 0,5 x Force) x 0,5 (Radiation x0,5 contre Orokin et Anarch, CONF). Egale au True sans Roar seulement quand Smite est plafonne (Force >= 142,9 %) :
+  63 % : Smite + vuln 29.00 %, vs Orokin/Anarchs 14.50 %, True sans Roar 32.88 %
+  100 % : Smite + vuln 52.50 %, vs Orokin/Anarchs 26.25 %, True sans Roar 37.50 %
+  143 % : Smite + vuln 85.75 %, vs Orokin/Anarchs 42.88 %, True sans Roar 42.88 %
+  273 % : Smite + vuln 118.25 %, vs Orokin/Anarchs 59.13 %, True sans Roar 59.13 %
+
+## M30. Build principale de Ruby (sans Helminth, Gloom + Ombre, Viral a l'arme) contre F1
+COMM (source C) : Force 174 % au depart, 234 % Molt plein ; Portee 145 ou 175 % ; Viral pose a l'arme (Kompressa, Epitaph). CONF : le Viral ne prend pas sous Overguard ; tirer casse Stalk.
+| Build | Force | Roar | Viral | 2e Reap | Ralentissement de Gloom (fige au lancer) |
+|---|---|---|---|---|---|
+| Ruby, debut | 174 % | non | 1 | 0.935 | 60.9 % |
+| Ruby, debut | 174 % | non | 2 | 1.052 | 60.9 % |
+| Ruby, Molt plein | 234 % | non | 1 | 1.085 | 81.9 % |
+| F1 100 % | 273 % | oui | 0 | 1.075 | 95.0 % |
+| F1 175 % b | 274 % | oui | 0 | 1.080 | 95.0 % |
+Ruby atteint 200 % (one-shot a 1 stack) apres 109 kills de Molt ; avant, il faut 2 stacks Viral par cible.
+Death Well (COMM C, coherent avec le wiki 5 % par ennemi et par competence) : 10 % par kill marque par Sow et Reap -> 75 % apres 8 kills, donc une sortie d'Ombre possible a chaque pack.
+
+## M31. Config C (Tempest + Viral Tempest) : eclats Crimson contre Emeraude (source C, DED)
+CONF : Tempest Barrage pose Corrosif a 100 % ; Emeraude tauforge = +15 % de degats de competence sur les ennemis deja sous Corrosion, multiplicatif avec la Force, cumul additif entre eclats.
+| Eclats (4 slots + Amber) | Force | 1 stack Viral, 2e Reap | 9 stacks, 1re detonation | Ralentissement de Gloom | stacks Viral par missile |
+|---|---|---|---|---|---|
+| 4 Crimson tau + 0 Emeraude tau | 273 % | 1.183 | 1.000 | 95.0 % | 2.73 |
+| 3 Crimson tau + 1 Emeraude tau | 258 % | 1.317 | 1.150 | 90.3 % | 2.58 |
+| 2 Crimson tau + 2 Emeraude tau | 243 % | 1.440 | 1.300 | 85.0 % | 2.43 |
+| 1 Crimson tau + 3 Emeraude tau | 228 % | 1.551 | 1.450 | 79.8 % | 2.28 |
+| 0 Crimson tau + 4 Emeraude tau | 213 % | 1.652 | 1.600 | 74.5 % | 2.13 |
+A comparer : F1 (Roar, 4 Crimson tau) 1,075 sans aucun Viral, sur tout le rayon de Sow.
+

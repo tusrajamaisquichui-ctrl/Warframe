@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sevagoth Prime - modele de theorycraft v4 (patch 44.1.4.1, PS5, 30/10/2026).
+Sevagoth Prime - modele de theorycraft v5 (patch 44.1.4.1, PS5, 30/10/2026).
 
 Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que recopier les sorties.
     python3 sevagoth_model.py                 # rapport complet
@@ -10,7 +10,8 @@ Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que r
 Etiquettes : CONF = wiki officiel / patch notes, COMM = communaute, DED = deduit (ce modele),
 TEST = hypothese a mesurer en jeu (voir tests T1..T14 du document).
 v2 : sections M11 a M18 ; v3 : M19 a M23 (portee 100/190/max, Eximus Entropiques, Gloom et Archon Stretch, seuil, Arcane Circumvent) ;
-v4 : M24 a M28 (portee 175/190 optimisee, Seismic Bond reel, boucle de RubyBlossom5, Viral, Entropiques apres U44).
+v4 : M24 a M28 (portee 175/190 optimisee, Seismic Bond reel, boucle de RubyBlossom5, Viral, Entropiques apres U44) ;
+v5 : M29 a M31 (calculateur de RubyBlossom5, sa build principale, eclats Emeraude en config Tempest).
 Forces exprimees en multiplicateurs (2,43 = 243 %).
 """
 import argparse
@@ -1326,6 +1327,76 @@ def entropic_v4_report():
     return "\n".join(o)
 
 
+# ===========================================================================
+# v5 (30/10/2026) : page Overframe et calculateur de RubyBlossom5 (source C, COMM)
+# ===========================================================================
+RUBY_CALC = {2.53: 0.9960, 2.54: 0.9999, 2.58: 1.0156, 2.73: 1.0755}   # valeurs lues dans son PDF (p. 1)
+
+
+def gloom_drain(n, eff, dur):
+    """CONF (wiki Channeled Abilities / Gloom) : 0,75 x (2 - E) / D par ennemi, 10 ennemis max."""
+    return v("gloom_drain") * min(n, 10) * max(2 - eff, 0.25) / dur
+
+
+def calc_compare_report():
+    o = ["## M29. Calculateur de RubyBlossom5 contre ce script"]
+    o.append("| Force | Ruby (2e Reap, Roar) | Script f1_frac | Ecart |")
+    o.append("|---|---|---|---|")
+    for S, r in RUBY_CALC.items():
+        o.append(f"| {S*100:.0f} % | {r*100:.2f} % | {f1_frac(S)*100:.2f} % | {(f1_frac(S)-r)*100:+.3f} pt |")
+    o.append(f"Force de base (100 %), Reap + Roar : {frac(v('reap_vuln')*1.0, roar_mult(1.0))*100:.2f} % (Ruby : 48,75 %).")
+    o.append("Drain de Gloom (Duree 155 %, Efficacite 130 % ; Ruby p. 3 : 0,339 par ennemi, 3,387 a 10) :")
+    for n in (1, 5, 10):
+        o.append(f"  {n} ennemi(s) : {gloom_drain(n, 1.30, 1.55):.3f}/s sans Seismic Bond, {gloom_drain(n, 1.60, 1.55):.3f}/s a 10 stacks ; "
+                 f"641 d'energie durent {641/gloom_drain(n, 1.30, 1.55)/60:.1f} min sans regeneration")
+    o.append("Rayon de Gloom : 4 -> 16 m x Portee, vague a 2 m/s x Duree (CONF) -> temps de croissance 6 x Portee / Duree :")
+    for lab, R, D in (("F1 100 %", 1.0, 1.55), ("175 % b", 1.75, 1.275), ("Ruby 145 %", 1.45, 1.0), ("Ruby 175 %", 1.75, 1.0)):
+        o.append(f"  {lab} : {16*R:.1f} m atteints en {6*R/D:.1f} s")
+    o.append("Ralentissement effectif 1 / (1 - ralentissement) (metrique de Ruby) : "
+             + ", ".join(f"{S*100:.0f} % -> {min(0.35*S,0.95)*100:.1f} % (x{1/(1-min(0.35*S,0.95)):.2f})" for S in (1.74, 2.34, 2.49, 2.58, 2.74)))
+    o.append("Colonne 'Vs Orokin / Anarchs' = bloc Smite (Helminth d'Oberon) : min(35 % x Force, 50 %) x (1 + 0,5 x Force) x 0,5 "
+             "(Radiation x0,5 contre Orokin et Anarch, CONF). Egale au True sans Roar seulement quand Smite est plafonne (Force >= 142,9 %) :")
+    for S in (0.63, 1.0, 1.43, 2.73):
+        smite = min(0.35 * S, 0.50) * (1 + 0.5 * S)
+        o.append(f"  {S*100:.0f} % : Smite + vuln {smite*100:.2f} %, vs Orokin/Anarchs {smite*50:.2f} %, True sans Roar {0.25*(1+0.5*S)*100:.2f} %")
+    return "\n".join(o)
+
+
+def ruby_main_report():
+    o = ["## M30. Build principale de Ruby (sans Helminth, Gloom + Ombre, Viral a l'arme) contre F1"]
+    o.append("COMM (source C) : Force 174 % au depart, 234 % Molt plein ; Portee 145 ou 175 % ; Viral pose a l'arme (Kompressa, Epitaph). "
+             "CONF : le Viral ne prend pas sous Overguard ; tirer casse Stalk.")
+    o.append("| Build | Force | Roar | Viral | 2e Reap | Ralentissement de Gloom (fige au lancer) |")
+    o.append("|---|---|---|---|---|---|")
+    rows = [("Ruby, debut", 1.74, False, 1), ("Ruby, debut", 1.74, False, 2), ("Ruby, Molt plein", 2.34, False, 1),
+            ("F1 100 %", 2.73, True, 0), ("F1 175 % b", 2.74, True, 0)]
+    for lab, S, roar, n in rows:
+        f = frac(v("reap_vuln") * S, roar_mult(S) if roar else 1.0, n)
+        o.append(f"| {lab} | {S*100:.0f} % | {'oui' if roar else 'non'} | {n} | {f:.3f} | {min(0.35*S,0.95)*100:.1f} % |")
+    k = math.ceil((2.00 - 1.74) / MOLT_PER_KILL)
+    o.append(f"Ruby atteint 200 % (one-shot a 1 stack) apres {k} kills de Molt ; avant, il faut 2 stacks Viral par cible.")
+    o.append("Death Well (COMM C, coherent avec le wiki 5 % par ennemi et par competence) : 10 % par kill marque par Sow et Reap -> "
+             "75 % apres 8 kills, donc une sortie d'Ombre possible a chaque pack.")
+    return "\n".join(o)
+
+
+def emerald_report():
+    o = ["## M31. Config C (Tempest + Viral Tempest) : eclats Crimson contre Emeraude (source C, DED)"]
+    o.append("CONF : Tempest Barrage pose Corrosif a 100 % ; Emeraude tauforge = +15 % de degats de competence sur les ennemis "
+             "deja sous Corrosion, multiplicatif avec la Force, cumul additif entre eclats.")
+    o.append("| Eclats (4 slots + Amber) | Force | 1 stack Viral, 2e Reap | 9 stacks, 1re detonation | Ralentissement de Gloom | stacks Viral par missile |")
+    o.append("|---|---|---|---|---|---|")
+    base = stats(BUILDS["F1"]["seva"])["str"]
+    for n_em in range(0, 5):
+        S = base + 0.15 * (4 - n_em)
+        mult = 1 + 0.15 * n_em
+        f1 = frac(v("reap_vuln") * S, 1.0, 1) * mult
+        f9 = v("detonate_pct") * viral_mult(9) * mult
+        o.append(f"| {4-n_em} Crimson tau + {n_em} Emeraude tau | {S*100:.0f} % | {f1:.3f} | {f9:.3f} | {min(0.35*S,0.95)*100:.1f} % | {S:.2f} |")
+    o.append("A comparer : F1 (Roar, 4 Crimson tau) 1,075 sans aucun Viral, sur tout le rayon de Sow.")
+    return "\n".join(o)
+
+
 SECTIONS = {"summary": summary_report, "capacity": capacity_report, "nuke": nuke_report, "eximus": eximus_report,
             "claws": claws_report, "survival": survival_report, "energy": energy_report, "well": well_report,
             "clear": clear_report, "sensitivity": sensitivity_report, "formula": formula_report,
@@ -1333,7 +1404,8 @@ SECTIONS = {"summary": summary_report, "capacity": capacity_report, "nuke": nuke
             "huras": huras_report, "taubound": taubound_report, "blast": blast_report,
             "range3": range_v3_report, "entropic": entropic_report, "gloom": gloom_report, "seuil": threshold_v3_report,
             "circumvent": circumvent_report, "range4": range_v4_report, "seismic": seismic_report,
-            "ruby": ruby_loop_report, "viral": viral_report, "entropic4": entropic_v4_report}
+            "ruby": ruby_loop_report, "viral": viral_report, "entropic4": entropic_v4_report,
+            "calc": calc_compare_report, "ruby_main": ruby_main_report, "emerald": emerald_report}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()

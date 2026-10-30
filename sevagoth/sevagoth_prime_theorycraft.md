@@ -1,9 +1,26 @@
 # Sevagoth Prime : theorycraft complet et auditable
 
-**Version 4.0 du 30/10/2026.** Patch **Hotfix 44.1.4.1** (« Iceblade of Narin : The Icebind »), en ligne sur PSN depuis le 28/10/2026.
-Build acté : **F1 « Faucheuse invisible »**, en deux fiches : **A** pour le Steel Path et l'endurance, **B** pour Void Cascade et le level cap. Modèle de calcul : [`sevagoth_model.py`](sevagoth_model.py) (sections M1 à M28). Sortie brute : [`model_output.txt`](model_output.txt). Paramètres et sources : [`model_params.txt`](model_params.txt).
+**Version 5.0 du 30/10/2026.** Patch **Hotfix 44.1.4.1** (« Iceblade of Narin : The Icebind »), en ligne sur PSN depuis le 28/10/2026.
+Build acté : **F1 « Faucheuse invisible »**, en deux fiches : **A** pour le Steel Path et l'endurance, **B** pour Void Cascade et le level cap. Modèle de calcul : [`sevagoth_model.py`](sevagoth_model.py) (sections M1 à M31). Sortie brute : [`model_output.txt`](model_output.txt). Paramètres et sources : [`model_params.txt`](model_params.txt).
 
 Étiquettes : **CONF** = wiki officiel ou patch notes · **COMM** = communauté · **DÉD** = déduit par le modèle · **TEST** = à mesurer en jeu · **NON TROUVÉ** = aucune source.
+
+---
+
+## Changelog v4 → v5
+
+**Source de la v5 :** (C) la page Overframe de RubyBlossom5 (« The Reaper's Bible », 22/10/2026), sous forme de résumé (COMM), et son calculateur « Sevagoth's Breakpoints » (PDF de 9 pages, lu en entier). Le verdict v4 et les deux fiches ne changent pas.
+
+| # | Changement | Pourquoi | Étiquette |
+|---|---|---|---|
+| 1 | **Son calculateur donne les mêmes chiffres que le script :** nuke au centième près (253 % → 99,60 % ; 254 % → 99,99 % ; 258 % → 101,56 % ; 273 % → 107,55 %), même drain de Gloom (0,339/s par ennemi), même ralentissement, mêmes tables Viral | Contrôle | CONF + DÉD (M29) |
+| 2 | **« Vs Orokin / Anarchs » appartient au bloc Smite**, pas à Roar : c'est la Radiation de Smite à ×0,5. L'égalité avec le True sans Roar est une coïncidence au-dessus de 142,9 %. Roar compte contre toutes les factions : F1 ne change pas | Question posée | CONF |
+| 3 | **Point 1 :** détection des mini-ombres à 30 m confirmée. Nouveau : à 175 %, Gloom met 8,2 s à atteindre 28 m, contre 3,9 s pour 16 m à 100 % | Source C | CONF + DÉD |
+| 4 | **Point 2 :** drain de Gloom vérifié dans le modèle (0,75/s par ennemi, 10 ennemis au plus). Ralentissement figé au lancer. Death Well à 10 % par kill marqué par Sow et Reap, donc la boucle de Ruby rend visible à chaque pack. Test de figeage gardé | Source C | CONF + COMM |
+| 5 | **Point 3 :** ses tables Viral se lisent sans Roar. Le Viral ne prend pas sous Overguard, ce qui limite son conseil sur les Eximus. **Éclats Émeraude en config Tempest :** 1,183 → 1,440 avec 2 tauforgés → 1,652 avec 4. T23 complété | Source C | CONF + DÉD (M31) |
+| 6 | **Sa build principale (sans Roar, Viral à l'arme) ne bat pas F1 sur S1 à S3.** Elle gagne si T4 échoue, si l'Helminth est réservé à autre chose, et peut-être contre les Entropiques (T21 e) | Question posée | DÉD (M30) |
+| 7 | Mods de « Shadowless Nuke » non reçus (Overframe en 403) : comparaison ligne par ligne en attente | – | – |
+| 8 | Script : sections M29 à M31 | – | – |
 
 ---
 
@@ -69,13 +86,13 @@ Conflit de sources relevé : la page wiki « Effects Scaling With Enemy Stats »
 
 ---
 
-## 1. Verdict (v4)
+## 1. Verdict (v4, inchangé en v5)
 
 1. **Steel Path et endurance : F1, fiche A, à 175 % de Portée « b »** (274 %, one-shot dès le départ). C'est le nouveau réglage par défaut ; T16 (protocole de Ruby) le confirme ou ramène à 100 %.
 2. **Level cap (S3) : F1 à 100 %**, Catalyzing gardé (la moindre fenêtre visible tue). Circumvent à la place de Molt si T1 montre que le nuke ne traverse pas l'Overguard.
 3. **Void Cascade / Zariman (fiche B, MR9, sans bénédiction) : F1 + une vraie mêlée + Circumvent.** Aucune compétence ne peut tuer un Entropique : bloquée par la bulle, −90 % même bulle cassée (CONF, U44). Il faut entrer dans la bulle et le tuer à la mêlée.
 4. **Gloom reste**, mais il ne rapporte de l'énergie qu'à partir de 9 stacks de Seismic Bond (T22). La boucle « Ombre » de Ruby n'est pas retenue (16 à 47 % du temps visible, même énergie que Gloom coupé).
-5. **Viral :** Tempest Barrage + Viral Tempest à la place de Roar est le seul concurrent sérieux (1 stack ×2 bat Roar ×1,82 ; 9 stacks tuent dès le 1er Reap). Variante à tester (T23), pas adoptée. Secondary Fortifier via l'Ombre est probable, sans effet sur F1 hors Tombstone.
+5. **Viral :** Tempest Barrage + Viral Tempest à la place de Roar est le seul concurrent sérieux (1 stack ×2 bat Roar ×1,82 ; 9 stacks tuent dès le 1er Reap ; v5 : encore plus fort avec des éclats Émeraude). Variante à tester (T23), pas adoptée. Secondary Fortifier via l'Ombre est probable, sans effet sur F1 hors Tombstone.
 
 ---
 
@@ -658,6 +675,7 @@ Pour chaque test : capture vidéo PS5 (bouton Créer), relecture image par image
   2. À 1, 3 et 5 s, compter les stacks Viral (icônes de statut) sur la vidéo.
   3. Sow → **un seul** Reap : compter les morts à la 1re détonation.
   4. Comparer à la fiche A (Roar, puis Reap → Sow → Reap).
+  5. **v5 :** refaire 1 à 3 avec 2 Émeraude tauforgés à la place de 2 Crimson. M31 prévoit 1,440 à 1 stack, avec Gloom à 85 %.
 - **Lecture :**
   - au moins 90 % du pack tué par Sow → Reap après 4 s de barrage, y compris à 9 m → la config C nettoie en 2 sorts au lieu de 3 et libère la Force. Elle devient candidate : comparer ensuite les kills/min en mission (15 min chacune).
   - seul le centre meurt → Roar reste.
@@ -743,6 +761,13 @@ Prix : warframe.market, vendeurs en jeu, crossplay, 29/10/2026 (Circumvent : 30/
 - **S3 et fiche B : 100 %.** Les fenêtres visibles (S3, mêlée contre les Entropiques) rendent Catalyzing précieux.
 - **T16 (protocole de Ruby) tranche.** Si 175 % ne bat pas 100 %, on revient à 100 %.
 
+**Apport de la source C (v5) :**
+- **Détection des mini-ombres à 30 m :** sa page Overframe donne aussi 30 m (COMM). Avec le wiki (CONF), cela règle la contradiction de la source A.
+- **Son calculateur à 190 % donne nos chiffres** (p. 4, COMM ; égal à M19 et M24) : rayon de débuff des mini-ombres 15,2 m, durée de vol 6 s × Durée, propagation de Dark Propagation 28,5 m.
+- **Portée idéale de Gloom :** 145 à 175 % selon elle (COMM). 175 % « b » est dans la plage, et sa Force (274 %) atteint le plafond de ralentissement de 95 % (272 %, CONF).
+- **Coût nouveau (DÉD, M29) :** le rayon de Gloom grandit de 4 à 16 m × Portée, à 2 m/s × Durée (CONF). Il atteint 16 m en 3,9 s à 100 %, mais 28 m en 8,2 s à 175 % « b » : les ennemis entre 16 et 28 m attendent leur ralentissement.
+- Décision v4 inchangée.
+
 ### 11.2 Gloom contre l'Ombre : Seismic Bond réel et boucle de Ruby (point 2)
 
 **Seismic Bond** (CONF) :
@@ -782,6 +807,21 @@ Prix : warframe.market, vendeurs en jeu, crossplay, 29/10/2026 (Circumvent : 30/
 - Que 4 créateurs sur 5 retirent Gloom est un consensus (COMM), pas un mécanisme. Leur conclusion sur l'énergie colle avec M25 pour peu de stacks.
 - **F1 ne change pas.** La règle pour Gloom dépend de T22, puis de T17.
 
+**Apport de la source C (v5) :**
+- **Drain de Gloom vérifié.** Le modèle utilise bien 0,75 énergie/s par ennemi, 10 ennemis au plus, × (2 − Efficacité) / Durée (CONF).
+  - Le calculateur de Ruby (p. 3) donne les mêmes valeurs : 0,339/s par ennemi et 3,387/s à 10 ennemis, à 155 % de Durée et 130 % d'Efficacité (M29).
+  - Avec 10 stacks de Seismic Bond, le drain tombe à 1,935/s.
+- **Ralentissement figé au lancer, plafond de 95 % à 272 %** (CONF, wiki Gloom ; COMM C). Une config qui compte sur Molt pour atteindre le plafond doit relancer Gloom. F1 (273 %) et 175 % « b » (274 %) y sont dès le départ.
+- **Ce que vaut le plafond**, avec sa métrique du « ralentissement effectif », 1 / (1 − ralentissement) (M29, DÉD) :
+  - ×20 à 95 % ;
+  - ×7,8 à 87 % (config v3 à 145 %) ;
+  - ×2,6 à 61 % (sa build à 174 %).
+- **Seismic Bond :** elle le cite comme aide contre le drain, sans dire s'il est figé ; son calculateur prévoit un champ Seismic Bond, laissé à 0 %. Le wiki dit « dynamique » (CONF) : **le test de figeage (T22, étape 1) reste en tête de liste.**
+- **Death Well :** 5 % par kill de Reap ou de Sow, 10 % par kill marqué par les deux (COMM C). C'est cohérent avec le wiki : 5 % par ennemi et par compétence (CONF).
+  - Il atteint donc 75 % après 8 kills : sa boucle peut sortir l'Ombre à chaque pack, avec un Reunite et 7 s de visibilité à chaque fois.
+  - Elle se place donc en haut du tableau M26 : ~47 % du temps visible pour des boucles de 15 s (DÉD).
+- **Invocation de l'Ombre :** 5 s d'invincibilité (CONF ; COMM C).
+
 ### 11.3 Viral (point 3)
 
 **Seuils** (CONF : Viral ×(2 + 0,25 × (n − 1)), 10 stacks au plus, 6 s chacun ; M27) :
@@ -819,6 +859,22 @@ Prix : warframe.market, vendeurs en jeu, crossplay, 29/10/2026 (Circumvent : 30/
   - on perd le buff de Roar sur la mêlée, ce qui compte en fiche B ;
   - il faut absorber Hydroid. Viral Tempest coûte ~14 p au rang 0 (warframe.market, 30/10/2026), ou 25 000 de réputation chez Suda ou New Loka (CONF).
 - **Verdict :** non adopté avant T23. Si T23 est positif, la config C (Tempest) devient candidate pour la fiche A. La fiche B garde Roar, pour la mêlée.
+
+**Apport de la source C (v5) :**
+- **Ses tables Viral se lisent sans Roar** (calculateur p. 1 et p. 7). Stacks nécessaires pour le one-shot au 2e Reap : 4 à 100 % de Force, 1 dès 200 %. Sans vulnérabilité de Reap, il en faut 9. C'est identique à M27 (colonne « sans Roar »).
+- **Le Viral à l'arme (sa build) est incompatible avec F1** : tirer casse l'invisibilité (CONF), et F1 ne tire pas.
+- **Son conseil sur les Eximus** (« préparer au Viral, puis 2+1 ») bute sur une règle CONF : le Viral ne prend pas sous Overguard. Il faut d'abord retirer l'OG (lourde de l'Ombre, Fortifier ou Circumvent).
+- **Éclats Émeraude en config C (M31, DÉD à partir de règles CONF).** Tempest pose du Corrosif à 100 %, et l'Émeraude tauforgé donne +15 % de dégâts de compétence aux ennemis déjà sous Corrosion, cumulable entre éclats. Chaque Crimson tauforgé échangé contre un Émeraude tauforgé fait plus que compenser :
+
+| Éclats (+ Amber) | Force | 1 stack Viral, 2e Reap | 9 stacks, 1re détonation | Ralentissement de Gloom |
+|---|---|---|---|---|
+| 4 Crimson tau | 273 % | 1,183 | 1,000 | 95,0 % |
+| 2 Crimson + 2 Émeraude tau | 243 % | 1,440 | 1,300 | 85,0 % |
+| 4 Émeraude tau | 213 % | 1,652 | 1,600 | 74,5 % |
+
+- Le prix : le ralentissement de Gloom retombe, et Viral Tempest pose moins de stacks par missile (2,13 au lieu de 2,73).
+- Les Émeraude demandent le segment Helminth Coalescent et une fusion Amber + Azure (CONF).
+- **T23 compare désormais aussi 2 Crimson + 2 Émeraude tauforgés.**
 
 ### 11.4 Secondary Fortifier et l'Ombre (point 4)
 
@@ -881,7 +937,7 @@ Seuls les tests qui peuvent changer le build sont gardés. Les quatre premiers s
 | 2 | **T1 : le nuke traverse-t-il l'OG ?** | Simulacrum, niveau max, SP, Pause AI, 1 Heavy Gunner Eximus ; Roar, Reap → Sow → Reap → Reap | Barres d'OG et de PV après chaque détonation | **H0** (l'OG tient) → Circumvent à la place de Molt (fiche A), plan B indispensable en S3. **H1** → Molt garde sa place ; en S3, Escapist plutôt que Circumvent |
 | 3 | **T20 : Circumvent** | Même session, Circumvent R5, Huras avec Stalk ; 2 roulades à travers l'Eximus, au niveau max puis bas | OG de l'Eximus après chaque roulade, ton OG, icône d'invisibilité | 50 % puis 0 % sans perte d'invisibilité → plan B n°1 validé, fiche B confirmée. Invisibilité cassée ou 50 % puis 25 % → plan B v2 (Epitaph) |
 | 4 | **T16 : Portée, protocole de Ruby** | Même session, Pause AI ON, appât collé à toi, 8 Lancers à 10–15 m dans ton dos ; 100 %, 175 % « b », 235 % ; 20 essais chacun | Ennemis différents marqués par les mini-Reap, ombres perdues | 175 % ≥ 100 % + 0,5 ennemi → **175 % « b » gardé**. Sinon → retour à 100 % |
-| 5 | **T23 : Tempest + Viral Tempest** (si tu acceptes d'absorber Hydroid) | Simulacrum, config C (Tempest en slot 4, Viral Tempest à la place de Catalyzing) ; pack groupé, puis étalé à 0, 5 et 9 m | Stacks Viral à 1, 3 et 5 s ; morts à la 1re détonation de Sow → Reap | ≥ 90 % du pack tué, y compris à 9 m → config C candidate en fiche A, à confirmer en kills/min. Sinon → Roar reste |
+| 5 | **T23 : Tempest + Viral Tempest** (si tu acceptes d'absorber Hydroid) | Simulacrum, config C (Tempest en slot 4, Viral Tempest à la place de Catalyzing) ; pack groupé, puis étalé à 0, 5 et 9 m ; **v5 :** puis avec 2 Émeraude tauforgés à la place de 2 Crimson | Stacks Viral à 1, 3 et 5 s ; morts à la 1re détonation de Sow → Reap | ≥ 90 % du pack tué, y compris à 9 m → config C candidate en fiche A, à confirmer en kills/min. Sinon → Roar reste |
 | 6 | **T22, étape 2 : stacks en combat** | Mission SP survival, 3 min de rotation normale | Stacks toutes les 15 s | ≥ 9 → Gloom permanent. 1 à 8 → passer au test 7. 0 → Gloom à la demande, Seismic Bond retiré du Huras |
 | 7 | **T17 : Gloom permanent ou coupé** (seulement si le test 6 donne 1 à 8 stacks) | Même nœud, 4 × 15 min en alternance | Kills/min, énergie | +10 % de kills/min Gloom coupé → Gloom à la demande. Sinon → permanent |
 | 8 | **T21 : Entropiques** | Void Cascade SP, ~20 min, fiche B ; cas a, g, f, c (b et e facultatifs) | Dégâts du nuke de l'extérieur et de l'intérieur ; OG volé bulle intacte ; temps de mêlée pour tuer | g positif → nuke de l'intérieur. g négatif → mêlée ; si elle dépasse ~5 s, ignorer les Entropiques ou les laisser à l'escouade. f → Circumvent avant ou après la mêlée |
@@ -896,6 +952,69 @@ Seuls les tests qui peuvent changer le build sont gardés. Les quatre premiers s
 - T15 (fondu dans T16) ;
 - T18 (Tombstone seulement) ;
 - T19 (le Huras n'est pas dans la liste d'Archon Stretch).
+
+---
+
+## 13. Source C : page Overframe et calculateur de RubyBlossom5 (v5)
+
+### 13.1 Calculateur « Sevagoth's Breakpoints » contre le script
+
+**Ce qui est identique** (M29, écart < 0,005 point) :
+- **Nuke (2e Reap avec Roar) :** 253 % → 99,60 % ; 254 % → 99,99 % ; 258 % → 101,56 % ; 273 % → 107,55 % ; Force de base → 48,75 %. Même formule : 0,25 × (1 + 0,5 × Force) × (1 + 0,3 × Force).
+- **Drain de Gloom :** 0,339/s par ennemi et 3,387/s à 10 ennemis (Durée 155 %, Efficacité 130 %). 641 d'énergie durent 31 min 33 s pour 1 ennemi et 3 min 10 s pour 10.
+- **Ralentissement de Gloom :** 35 % × Force, plafonné à 95 %.
+- **Viral :** même multiplicateur (×2 au 1er stack, +0,25 par stack, ×4,25 à 10) et mêmes stacks nécessaires, tables lues sans Roar.
+
+**Ce que son outil n'a pas et le script a :** les stacks de Seismic Bond (son champ existe, laissé à 0 %), l'énergie gagnée (orbes, Energize), l'Overguard des Eximus et les configs de mods complètes.
+
+**Ce que son outil a et le script n'avait pas :** les éclats Émeraude avec Tempest (intégrés en M31), Smite, et d'autres Helminths (13.4).
+
+**Ses autres colonnes, reconstituées à partir de ses valeurs :**
+- **Soin de Consume :** 625 × Force², hors sujet pour F1.
+- **Précision Intensify :** Roar à 1 + 0,3 × (Force + 0,9). Elle le classe « Trap Mod » ; la v1 le jugeait quasi équivalent à Intensify, et le script retient Intensify. Pas de désaccord pratique.
+
+### 13.2 La colonne « Vs Orokin / Anarchs »
+
+- **Elle appartient au bloc Smite, pas au bloc Roar.** Smite est l'Helminth d'Oberon (CONF, wiki Smite) :
+  - il retire 100 % de l'Overguard et de l'armure de sa cible, et vise les Eximus en priorité ;
+  - il inflige 35 % × Force des PV actuels en **Radiation**, plafonné à 50 % en version Helminth (atteint à 143 %).
+- **Valeur de la colonne :** Smite × vulnérabilité de Reap × **0,5**. La Radiation fait ×0,5 contre Orokin et Anarch, et ×1,5 contre Sentient et Murmur (CONF, wiki Radiation) ; la colonne « Vs Murmur » vaut ×1,5.
+- **L'égalité avec le True sans Roar est une coïncidence** (M29) :
+  - au-dessus de 142,9 % de Force, Smite est plafonné à 50 %, et 50 % × 0,5 = 25 %, le pourcentage de base de Sow et Reap ;
+  - en dessous, les deux colonnes diffèrent : à 63 %, 14,50 % contre 32,88 % ; à 100 %, 26,25 % contre 37,50 %.
+- **Roar compte bien contre ces ennemis :**
+  - c'est un bonus de dégâts de faction qui s'applique « à toutes les factions » (CONF, wiki Roar et Faction Damage Bonus) ;
+  - le True de Sow et Reap n'a aucun modificateur de faction (CONF, wiki True Damage).
+  - **F1 ne change pas** contre les Orokin (fissures du Néant) ni contre les Anarchs (Perita Rebellion).
+- **Si Roar ne comptait pas** (hypothèse contredite par le wiki) : le 2e Reap tomberait à 0,591 à 273 %. Il faudrait 3 détonations pour descendre sous 7 % des PV, et les fissures deviendraient le contenu où F1 perd le plus.
+
+### 13.3 Ses choix (sans Roar, Viral à l'arme) battent-ils F1 ?
+
+**Sa build principale (COMM C) :** pas d'Helminth, Gloom et Ombre gardés, Force 174 % puis 234 % avec Molt, Portée 145 ou 175 %, Viral posé à l'arme (Kompressa, Epitaph). Chiffres en M30, DÉD.
+
+| Contenu | Build de Ruby | F1 | Avantage |
+|---|---|---|---|
+| S1 (SP ~175, packs) | 0,935 à 174 % avec 1 stack : il faut 2 stacks par cible (1,052) pendant les 109 premiers kills de Molt, puis 1,085. Le Viral se pose à l'arme sur chaque pack, en restant visible. Gloom à 61 % au départ | 1,075 dès le départ, sans tir et invisible ; Gloom à 95 % | **F1** |
+| S2 et S3 (500 à 9 999) | Fenêtres visibles à chaque tir et à chaque Reunite ; une balle tue le corps dès le niveau 415 (M6) | Invisible tant que le Huras tient | **F1** |
+| Eximus (hors Entropiques) | Le Viral ne prend pas sous OG (CONF). Elle retire d'abord l'OG avec la lourde de l'Ombre (Slash forcé), puis 2+1 | T1, puis Circumvent (T20) | **À égalité** tant que T1 et T20 ne sont pas faits. Si l'OG résiste au nuke et que Circumvent échoue : avantage Ruby, grâce à l'Ombre |
+| Void Cascade (Entropiques) | Les griffes sont de la mêlée (CONF), donc peut-être efficaces dans la bulle (T21 e). Mais la Transference force Reunite | Mêlée de Sevagoth (fiche B) | **Selon T21 e** |
+| Huras souvent neutralisé (T4 négatif) | Ne dépend pas de l'invisibilité | Perd sa couche principale | **Ruby** |
+| Helminth indisponible ou réservé à autre chose | Fonctionne sans | Demande Roar | **Ruby** |
+
+**Réponse :**
+- Sur S1 à S3 tels qu'on les a définis, ses choix ne battent pas F1 (DÉD).
+- Ils gagnent dans trois cas : si T4 échoue, si tu veux garder l'Helminth pour autre chose, et peut-être contre les Entropiques si T21 e est positif.
+- Son « je n'ai jamais aimé Roar » est un goût, pas un argument de calcul.
+
+### 13.4 Ses variantes, et ce qui reste à faire
+
+- **« Shadowless Nuke : Roar on 4th »** = la structure de F1.
+- **« Shadow Nuke : Roar on 3rd »** = F2.
+- **« Nuke Cascade : Viral & Tempest »** = la config C (T23, M31).
+- **Mods de « Shadowless Nuke » :** pas reçus, et Overframe refuse l'accès automatique (HTTP 403). **La comparaison ligne par ligne avec F1 se fera quand tu les enverras.**
+- **Hors sujet, à évaluer plus tard :** son calculateur compare aussi Roar à d'autres Helminths.
+  - Rest & Rage et Webbed Embrace posent une vulnérabilité de 50 % × Force (CONF), qui se multiplie avec celle de Reap (CONF, wiki Damage Vulnerability).
+  - À 273 %, cela donnerait 1,398 au lieu de 1,075 (DÉD). Mais sur une zone de 5 m (Rage) ou 6,67 m (Webbed Embrace en Helminth), au lieu de tout le rayon de Sow pour Roar.
 
 ---
 
@@ -1171,6 +1290,7 @@ Prix : warframe.market, vendeurs « en jeu », crossplay, relevés le 29/10/2026
 ---
 
 ## Sources (consultées le 29/10/2026 sauf mention)
+- **Ajouts v5 (30/10/2026) :** RubyBlossom5, calculateur « Sevagoth's Breakpoints » (PDF joint, 9 pages, export Google Sheets) ; sa page Overframe [« The Reaper's Bible »](https://overframe.gg/build/874263/sevagoth-prime/go-to-sevagoth-shadow-claws-blossoming-death-in-depth-build/) (résumé fourni, accès automatique refusé en 403) ; wiki [Smite](https://wiki.warframe.com/w/Smite), [Radiation Damage](https://wiki.warframe.com/w/Damage/Radiation_Damage), [Anarchs](https://wiki.warframe.com/w/Anarchs), [True Damage](https://wiki.warframe.com/w/Damage/True_Damage), [Faction Damage Bonus](https://wiki.warframe.com/w/Faction_Damage_Bonus), [Archon Shard](https://wiki.warframe.com/w/Archon_Shard) (Émeraude), [Damage Vulnerability](https://wiki.warframe.com/w/Damage_Vulnerability), [Rest & Rage](https://wiki.warframe.com/w/Rest_%26_Rage), [Webbed Embrace](https://wiki.warframe.com/w/Webbed_Embrace).
 - **Ajouts v4 (30/10/2026) :** wiki [Shadow Haze](https://wiki.warframe.com/w/Shadow_Haze) (verrouillage, détection 30 m, bug des ombres), [Seismic Bond](https://wiki.warframe.com/w/Seismic_Bond), [Gloom](https://wiki.warframe.com/w/Gloom) (drain dynamique, Seismic Bond seulement si Gloom draine), [Arcane Intention](https://wiki.warframe.com/w/Arcane_Intention) (liste des compétences canalisées), [Channeled Abilities](https://wiki.warframe.com/w/Channeled_Abilities), [Exalted Shadow](https://wiki.warframe.com/w/Exalted_Shadow), [Reunite](https://wiki.warframe.com/w/Reunite), [Stalk](https://wiki.warframe.com/w/Stalk) (Reunite casse l'invisibilité), [Operator/Gameplay](https://wiki.warframe.com/w/Operator/Gameplay) (vulnérabilité du corps en Opérateur par compétence), [Void Cascade](https://wiki.warframe.com/w/Void_Cascade), [Tempest Barrage](https://wiki.warframe.com/w/Tempest_Barrage), [Viral Tempest](https://wiki.warframe.com/w/Viral_Tempest), [Viral Damage](https://wiki.warframe.com/w/Damage/Viral_Damage), [Claws (Beast)](https://wiki.warframe.com/w/Claws_(Beast)), [Beast Claws Mods](https://wiki.warframe.com/w/Beast_Claws_Mods), [Huras Kubrow](https://wiki.warframe.com/w/Huras_Kubrow), [Unattributed Damage](https://wiki.warframe.com/w/Unattributed_Damage) (page communautaire, tests datés), [Melee Duplicate](https://wiki.warframe.com/w/Melee_Duplicate), [Evensong](https://wiki.warframe.com/w/Evensong), [Tauron Strike](https://wiki.warframe.com/w/Tauron_Strike), [Overextended](https://wiki.warframe.com/w/Overextended) ; patch notes [Update 44 : Iceblade of Narin](https://wiki.warframe.com/w/Update_44:_Iceblade_of_Narin) (description des Entropiques et « Entropic Eximus Clarifications ») ; prix [warframe.market, Viral Tempest](https://warframe.market/items/viral_tempest). Vidéos A (RubyBlossom5) et B : connues seulement par les résumés fournis avec la demande (COMM), non visionnées.
 - **Ajouts v3 (30/10/2026) :** wiki [Eximus, section Entropic](https://wiki.warframe.com/w/Eximus#Entropic), [Yuvan Peak](https://wiki.warframe.com/w/Yuvan_Peak) (bénédiction Iceblade of Narin), [True Master's Font](https://wiki.warframe.com/w/True_Master%27s_Font) (3 h, 23 h de recharge), [Void Cascade](https://wiki.warframe.com/w/Void_Cascade), [Arcane Circumvent](https://wiki.warframe.com/w/Arcane_Circumvent), [Secondary Fortifier](https://wiki.warframe.com/w/Secondary_Fortifier), [Archon Stretch](https://wiki.warframe.com/w/Archon_Stretch), [Stretch](https://wiki.warframe.com/w/Stretch), [Augur Reach](https://wiki.warframe.com/w/Augur_Reach), [Overextended](https://wiki.warframe.com/w/Overextended), [Cunning Drift](https://wiki.warframe.com/w/Cunning_Drift), [Shadow Haze](https://wiki.warframe.com/w/Shadow_Haze) (section Bugs : ombres qui tournent), [Sevagoth/Abilities, passif](https://wiki.warframe.com/w/Sevagoth/Abilities) (l'Ombre n'utilise pas l'équipement de Sevagoth) ; patch notes [Update 44](https://forums.warframe.com/topic/1523956-update-44-iceblade-of-narin/) ; forum : [Shadows Haze augment spinning shadows, cause of issue found](https://forums.warframe.com/topic/1461820-shadows-haze-augment-spinning-shadows-cause-of-issue-found/) (07/2025), [The fix for Shadow Haze augment still don't work with Sevagoth's Shadow](https://forums.warframe.com/topic/1400398-the-fix-for-shadow-haze-augment-mod-still-dont-work-with-sevagoths-shadow/) (2024) ; prix [warframe.market, Arcane Circumvent](https://warframe.market/items/arcane_circumvent). Guides vidéo V1 à V4 : connus seulement par les résumés fournis avec la demande (COMM), non visionnés.
 - **Ajouts v2 :** wiki [Archon Hunt](https://wiki.warframe.com/w/Archon_Hunt), [Netracells](https://wiki.warframe.com/w/Netracells), [Deep Archimedea](https://wiki.warframe.com/w/Deep_Archimedea), [Temporal Archimedea](https://wiki.warframe.com/w/Temporal_Archimedea), [Search Pulse](https://wiki.warframe.com/w/Search_Pulse), [Bird 3](https://wiki.warframe.com/w/Bird_3), [The Icebind](https://wiki.warframe.com/w/The_Icebind), [The Descendia](https://wiki.warframe.com/w/The_Descendia), [Simulacrum](https://wiki.warframe.com/w/Simulacrum), [Companion](https://wiki.warframe.com/w/Companion), [Huras Kubrow](https://wiki.warframe.com/w/Huras_Kubrow), [Tauron Strike](https://wiki.warframe.com/w/Tauron_Strike), [Focus/Vazarin](https://wiki.warframe.com/w/Focus/Vazarin), [Effects Scaling With Enemy Stats](https://wiki.warframe.com/w/Effects_Scaling_With_Enemy_Stats), [Update 31](https://wiki.warframe.com/w/Update_31) (introduction de l'Overguard), modules `Companions/data` et `DropTables/data`. Recherches sans résultat sur l'interaction % PV / Overguard : [vortexgaming.io](https://vortexgaming.io/en/postdetail/696494), [Steam](https://steamcommunity.com/app/230410/discussions/0/3826414483635039170), [forums Warframe](https://forums.warframe.com/topic/1450429-bad-game-design-overguard/).
