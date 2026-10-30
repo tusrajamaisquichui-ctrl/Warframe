@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sevagoth Prime - modele de theorycraft v5 (patch 44.1.4.1, PS5, 30/10/2026).
+Sevagoth Prime - modele de theorycraft v6 finale (patch 44.1.4.1, PS5, 30/10/2026).
 
 Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que recopier les sorties.
     python3 sevagoth_model.py                 # rapport complet
@@ -11,7 +11,8 @@ Etiquettes : CONF = wiki officiel / patch notes, COMM = communaute, DED = deduit
 TEST = hypothese a mesurer en jeu (voir tests T1..T14 du document).
 v2 : sections M11 a M18 ; v3 : M19 a M23 (portee 100/190/max, Eximus Entropiques, Gloom et Archon Stretch, seuil, Arcane Circumvent) ;
 v4 : M24 a M28 (portee 175/190 optimisee, Seismic Bond reel, boucle de RubyBlossom5, Viral, Entropiques apres U44) ;
-v5 : M29 a M31 (calculateur de RubyBlossom5, sa build principale, eclats Emeraude en config Tempest).
+v5 : M29 a M31 (calculateur de RubyBlossom5, sa build principale, eclats Emeraude en config Tempest) ;
+v6 : M32 a M33 (builds Overframe de RubyBlossom5 recalcules, fiche finale sans test).
 Forces exprimees en multiplicateurs (2,43 = 243 %).
 """
 import argparse
@@ -1397,6 +1398,117 @@ def emerald_report():
     return "\n".join(o)
 
 
+# ===========================================================================
+# v6 finale (30/10/2026) : builds Overframe de RubyBlossom5 (COMM) et fiche sans test
+# ===========================================================================
+MODS.update({   # Module:Mods/data (CONF) ; effets hors Force/Duree/Portee/Efficacite non modelises
+    "Sure Footed": (6, 5, "V", {}), "Primed Sure Footed": (6, 10, "V", {}), "Equilibrium": (4, 10, "N", {}),
+    "Rapid Resilience": (6, 5, "V", {}), "Savage Silence": (6, 3, "Z", {}), "Viral Tempest": (6, 3, "Z", {}),
+    "Flow": (2, 5, "N", {}),   # NON TROUVE ici : cout de Flow (estimation, n'entre que dans la capacite)
+    "Transient Fortitude R7": (6, 7, "M", {"str": 0.40, "dur": -0.20}),
+})
+KNOCKDOWN = {"Power Drift": 0.30, "Sure Footed": 0.60, "Primed Sure Footed": 1.00}   # resistance au renversement (CONF)
+
+
+def _seva(mods, exilus, aura="Brief Respite"):
+    return {"capacity": 60, "innate": SEVA_INNATE, "aura": (aura, None), "exilus": exilus, "mods": mods}
+
+
+RUBY_BUILDS = [  # (nom, config, eclats Crimson (Force), Helminth, arcanes) - COMM, rangs illisibles (rang max suppose)
+    ("1 Soulless Reaper (Roar en 4)", _seva(["Catalyzing Shields", "Augur Reach", "Shadow Haze", "Equilibrium",
+                                           "Transient Fortitude", "Stretch", "Dark Propagation", "Primed Flow"], "Sure Footed"),
+     0.45, "Roar 4", "Concentration + Molt"),
+    ("2 Ravenous Alliance (Roar en 3)", _seva(["Catalyzing Shields", "Augur Reach", "Shadow Haze", "Equilibrium",
+                                             "Transient Fortitude", "Stretch", "Dark Propagation", "Primed Flow"], "Sure Footed"),
+     0.45, "Roar 3", "Concentration + Molt"),
+    ("3 Reaper's Bible (sans Helminth)", _seva(["Catalyzing Shields", "Umbral Intensify", "Shadow Haze", "Equilibrium",
+                                               "Primed Continuity", "Rapid Resilience", "Stretch", "Flow"], "Sure Footed"),
+     0.30, "aucun", "Trickery + Molt"),
+    ("4 Comfy Cascade (Silence en 3)", _seva(["Primed Continuity", "Umbral Intensify", "Shadow Haze", "Primed Flow",
+                                             "Catalyzing Shields", "Stretch", "Savage Silence", "Equilibrium"], "Primed Sure Footed"),
+     0.0, "Silence 3", "Molt + Trickery"),
+    ("5 Viral Pillager (Tempest en 3)", _seva(["Catalyzing Shields", "Intensify", "Shadow Haze", "Primed Flow",
+                                              "Transient Fortitude R7", "Overextended", "Viral Tempest", "Fleeting Expertise"], "Sure Footed"),
+     0.0, "Tempest 3", "Escapist + Energize"),
+]
+
+
+def energy_rot(st, kpm, casts, seismic_eff=0.0, gloom=True, energize=True, orb_eff=0.0, dur_bonus=0.0):
+    """Energie nette (DED) : casts = (Sow, Reap) par pack de pack_size kills ; Roar entretenu ; Gloom a 10 ennemis."""
+    D = st["dur"] + dur_bonus
+    e = st["eff"] + (seismic_eff if gloom else 0)
+    cm = max(2 - e, 0.25)
+    packs = kpm / 60 / v("pack_size")
+    cost = packs * (casts[0] * v("sow_cost") + casts[1] * v("reap_cost")) * cm + v("roar_cost") * cm / (v("roar_dur") * D)
+    if gloom:
+        cost += v("gloom_drain") * 10 * max(cm / D, 0.25)
+    orbs = kpm / 60 * v("orb_drop")
+    return orbs * v("orb_energy") * (1 + orb_eff) + (energize_rate(orbs) * v("energize") if energize else 0) - cost
+
+
+def ruby_builds_report():
+    o = ["## M32. Builds Overframe de RubyBlossom5 recalcules (COMM pour les mods, DED pour les stats)"]
+    o.append("| Build | Force sans eclats / avec / Molt plein | Duree | Portee | Efficacite | 2e Reap debut / Molt | kills de Molt -> 1,00 | Gloom au lancer (debut / Molt) | Renversement | capacite |")
+    o.append("|---|---|---|---|---|---|---|---|---|---|")
+    for name, cfg, sh, helm, arc in RUBY_BUILDS:
+        st = stats(cfg)
+        S0, S1 = st["str"] + sh, st["str"] + sh + MOLT
+        r = fit(cfg)
+        nuke = (f"{f1_frac(S0):.3f} / {f1_frac(S1):.3f}" if helm.startswith("Roar") else "sans Roar")
+        k = kills_to(S0, threshold_f1()) if helm.startswith("Roar") else None
+        o.append(f"| {name} | {st['str']*100:.0f} / {S0*100:.0f} / {S1*100:.0f} % | {st['dur']*100:.1f} % | {st['rng']*100:.0f} % | "
+                 f"{st['eff']*100:.0f} % | {nuke} | {k if k is not None else '-'} | {min(0.35*S0,0.95)*100:.0f} / {min(0.35*S1,0.95)*100:.0f} % | "
+                 f"{KNOCKDOWN.get(cfg['exilus'], 0)*100:.0f} % | {r['total']}/{r['cap']} ({r['forma']} F) |")
+    o.append("Build 5 : avec Transient Fortitude au rang 7 (+40 % / -20 %), le script retrouve ses 110 % de Force et 20 % de Duree affiches (DED).")
+    o.append("Energie a 60 kills/min, Gloom permanent, sans Seismic Bond, rotation de Ruby 2-1-1-1 (1 Sow + 3 Reap par pack) :")
+    cfg = RUBY_BUILDS[0][1]
+    st = stats(cfg)
+    for lab, db in (("Duree 72,5 %", 0.0), ("Concentration toujours active (+60 %)", 0.60)):
+        e = energy_rot(st, 60, (1, 3), energize=False, dur_bonus=db)
+        o.append(f"  Soulless Reaper, {lab} : {e:+.2f}/s hors Equilibrium -> il faut {max(-e,0)*60/55:.1f} orbes de vie/min "
+                 f"(55 d'energie chacun avec Equilibrium, DED), soit {max(-e,0)*60/110:.1f} Eximus/min (2 orbes garanties, CONF)")
+    return "\n".join(o)
+
+
+FINAL_A = ["Shadow Haze", "Dark Propagation", "Umbral Intensify", "Stretch", "Transient Fortitude", "Augur Reach",
+           "Primed Continuity", "Streamline"]   # fiche A v4 (175 % b)
+FINAL_V6 = ["Shadow Haze", "Dark Propagation", "Umbral Intensify", "Stretch", "Transient Fortitude", "Catalyzing Shields",
+            "Primed Continuity", "Streamline"]  # fiche finale v6 : 175 % b avec Catalyzing a la place d'Augur Reach (145 %)
+
+
+def final_report():
+    o = ["## M33. Fiche finale sans test : variantes (arcanes Energize + Circumvent, donc sans Molt)"]
+    o.append("| Variante | Exilus | Force (4 Crimson tau) | 2e Reap | Force avec 3 tau + 1 normal -> 2e Reap | Gloom | Duree | Portee | Catalyzing | "
+             "Energie 60 kpm : 10 stacks / 0 stack / Gloom coupe | seuil kpm (Gloom coupe) | Renversement | capacite |")
+    o.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+    rows = [
+        ("**Fiche finale v6 (145 %)**", FINAL_V6, "Power Drift"),
+        ("Fiche A v4 (175 % b)", FINAL_A, "Power Drift"),
+        ("Fiche finale v6 + Sure Footed", FINAL_V6, "Sure Footed"),
+        ("175 % b + Sure Footed", FINAL_A, "Sure Footed"),
+        ("Fiche A de base (100 %)", BUILDS["F1"]["seva"]["mods"], "Power Drift"),
+        ("Fiche A de base (100 %) + Sure Footed", BUILDS["F1"]["seva"]["mods"], "Sure Footed"),
+    ]
+    for lab, mods, ex in rows:
+        cfg = _seva(mods, ex)
+        st = stats(cfg, SHARDS)
+        S = st["str"]
+        s0 = stats(cfg)
+        r = fit(cfg)
+        e10 = energy_rot(s0, 60, (1, 2), 0.30, True, True, 0.75)
+        e0 = energy_rot(s0, 60, (1, 2), 0.0, True, True, 0.75)
+        eo = energy_rot(s0, 60, (1, 2), 0.0, False, True, 0.75)
+        thr = next((k for k in range(5, 400) if energy_rot(s0, k, (1, 2), 0.0, False, True, 0.75) >= 0), None)
+        o.append(f"| {lab} | {ex} | {S*100:.0f} % | {f1_frac(S):.3f} | {(S-0.05)*100:.0f} % -> {f1_frac(S-0.05):.3f} | "
+                 f"{min(0.35*S,0.95)*100:.1f} % | {st['dur']*100:.1f} % | {st['rng']*100:.0f} % | {'oui' if st['catalyzing'] else 'non'} | "
+                 f"{e10:+.2f} / {e0:+.2f} / {eo:+.2f} | ~{thr} | {KNOCKDOWN[ex]*100:.0f} % | {r['total']}/{r['cap']} ({r['forma']} F) |")
+    s0 = stats(_seva(FINAL_V6, "Power Drift"))["str"]
+    o.append(f"Version jouable maintenant (meme mods, sans eclat, sans Helminth donc sans Roar, Molt + Energize) : Force {s0*100:.0f} % "
+             f"(Molt plein {(s0+MOLT)*100:.0f} %). Sans Roar, il faut du Viral : 1 stack -> {frac(v('reap_vuln')*s0, 1.0, 1):.3f} au depart, "
+             f"{frac(v('reap_vuln')*(s0+MOLT), 1.0, 1):.3f} Molt plein ; sans Viral : {frac(v('reap_vuln')*s0):.3f}.")
+    o.append(f"Des que Roar arrive (Helminth), sans eclat : {f1_frac(s0):.3f} au depart, one-shot apres {kills_to(s0, threshold_f1())} kills de Molt.")
+    return "\n".join(o)
+
 SECTIONS = {"summary": summary_report, "capacity": capacity_report, "nuke": nuke_report, "eximus": eximus_report,
             "claws": claws_report, "survival": survival_report, "energy": energy_report, "well": well_report,
             "clear": clear_report, "sensitivity": sensitivity_report, "formula": formula_report,
@@ -1405,7 +1517,8 @@ SECTIONS = {"summary": summary_report, "capacity": capacity_report, "nuke": nuke
             "range3": range_v3_report, "entropic": entropic_report, "gloom": gloom_report, "seuil": threshold_v3_report,
             "circumvent": circumvent_report, "range4": range_v4_report, "seismic": seismic_report,
             "ruby": ruby_loop_report, "viral": viral_report, "entropic4": entropic_v4_report,
-            "calc": calc_compare_report, "ruby_main": ruby_main_report, "emerald": emerald_report}
+            "calc": calc_compare_report, "ruby_main": ruby_main_report, "emerald": emerald_report,
+            "ruby_builds": ruby_builds_report, "final": final_report}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()

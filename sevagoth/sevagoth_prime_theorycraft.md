@@ -1,9 +1,182 @@
 # Sevagoth Prime : theorycraft complet et auditable
 
-**Version 5.0 du 30/10/2026.** Patch **Hotfix 44.1.4.1** (« Iceblade of Narin : The Icebind »), en ligne sur PSN depuis le 28/10/2026.
-Build acté : **F1 « Faucheuse invisible »**, en deux fiches : **A** pour le Steel Path et l'endurance, **B** pour Void Cascade et le level cap. Modèle de calcul : [`sevagoth_model.py`](sevagoth_model.py) (sections M1 à M31). Sortie brute : [`model_output.txt`](model_output.txt). Paramètres et sources : [`model_params.txt`](model_params.txt).
+**Version 6.0 (finale) du 30/10/2026.** Patch **Hotfix 44.1.4.1** (« Iceblade of Narin : The Icebind »), en ligne sur PSN depuis le 28/10/2026.
+Build acté : **F1 « Faucheuse invisible »**. **Fiche finale à monter sans test : section 0.** Les fiches A et B (section 2) restent la référence après tests. Modèle de calcul : [`sevagoth_model.py`](sevagoth_model.py) (sections M1 à M33). Sortie brute : [`model_output.txt`](model_output.txt). Paramètres et sources : [`model_params.txt`](model_params.txt).
 
 Étiquettes : **CONF** = wiki officiel ou patch notes · **COMM** = communauté · **DÉD** = déduit par le modèle · **TEST** = à mesurer en jeu · **NON TROUVÉ** = aucune source.
+
+---
+
+## 0. Version finale v6 : le build à monter sans test
+
+*Cette section clôt le theorycraft. Le reste du document (v1 à v5) sert de référence et de protocoles de test. Contexte : PS5, MR9, Arcane Energize au rang max, Rhino rang 30 pour Roar, Helminth bientôt disponible, aucun test fait. Sources de la v6 : 5 builds Overframe de RubyBlossom5, relevés et en captures (COMM). Calculs : M32 et M33.*
+
+### 0.1 Verdict
+
+1. **Un seul build : F1, avec Roar en slot 4, à 145 % de Portée et en gardant Catalyzing.** Force 274 %, one-shot dès le départ (1,080), Gloom à 95 % dès le lancer (DÉD).
+2. **Les builds de Ruby à structure F1 et F2 (1 et 2) ne battent F1 sur aucun contenu.** Ils partent à 200 % de Force, soit 0,80 au 2e Reap, et attendent 226 kills de Molt. Leur énergie tombe à −19,8/s sans Equilibrium (DÉD, M32).
+3. **On lui prend une idée : garder Catalyzing.** Pour cela, on descend de 175 % à 145 % de Portée : c'est l'option qui reste bonne quel que soit le résultat de T16.
+4. **Énergie :** Energize + Streamline + Primed Continuity. Le build reste positif même Gloom coupé (+2,66/s, et dès ~13 kills/min). Seismic Bond est un bonus, pas une condition.
+5. **Overguard :** Circumvent remplace Molt dès que la Force tient le seuil sans lui. **Zariman :** même fiche, mêlée contre les Entropiques, Gloom coupé avant les champs d'Exolizer.
+
+### 0.2 Comparaison : fiche A v4 (175 % b) contre « The Soulless Reaper » (build 1)
+
+**Stats recalculées par le script** (M32, DÉD) : elles collent exactement aux captures (COMM).
+
+| | Fiche A v4 | Soulless Reaper | Build 2 (Roar en 3) |
+|---|---|---|---|
+| Force sans éclats / avec / Molt plein | 214 / 274 / 334 % | 155 / 200 / 260 % | 155 / 200 / 260 % |
+| Durée / Portée / Efficacité | 127,5 / 175 / 130 % | 72,5 / 175 / 100 % | idem build 1 |
+| 2e Reap : départ / Molt plein | **1,080** / 1,333 | 0,800 / 1,023 (226 kills de Molt) | idem |
+| Gloom au lancer : départ / Molt plein | **95 %** / 95 % | 70 % / 91 % | idem |
+| Énergie à 60 kills/min | **+2,66 à +2,89/s** | **−19,8/s** hors Equilibrium (−13,5 si Concentration joue en permanence) : il faudrait ~22 orbes de vie/min, soit ~11 Eximus/min | idem |
+| Résistance au renversement | 30 % (Power Drift, CONF) | 60 % (Sure Footed, CONF) | 60 % |
+
+**Ligne par ligne.** Dans la colonne « Qui a raison », les trois verdicts portent sur S1 / S2 / S3. Ensuite : la décision v6.
+
+| Ligne | Fiche A v4 | Soulless Reaper | Qui a raison, et pourquoi | Décision v6 |
+|---|---|---|---|---|
+| Aura | Brief Respite | Brief Respite | identique | gardée |
+| Exilus | Power Drift (+15 % Force, 30 % anti-renversement) | Sure Footed (60 %) | F1 / partagé / Ruby. La Force sert le one-shot ; un renversement ne tue que si tu es visible | **rejeté** (pari n°4) ; en Void Cascade une fois les 4 Crimson tau posés |
+| Slot | Umbral Intensify (+44 % Force) | Equilibrium (orbes de vie → énergie) | F1 / F1 / F1. Le one-shot dès le départ vaut plus qu'une énergie qu'Energize fournit déjà | **rejeté** |
+| Slot | Stretch | Stretch | identique | gardé |
+| Slot | Transient Fortitude | Transient Fortitude | identique | gardé |
+| Slot | Augur Reach | Augur Reach | identique (Portée 175 %) | **retiré** de la finale : il cède sa place à Catalyzing (145 %) |
+| Slot | Primed Continuity | Catalyzing Shields | F1 pour l'énergie et la Durée ; Ruby pour le gating si l'invisibilité tombe | **les deux gardés** : c'est Augur Reach qui sort |
+| Slot | Streamline (+30 % Efficacité) | Primed Flow (+185 % d'énergie max) | F1 / F1 / F1. Un plus gros réservoir ne compense pas un drain négatif | **rejeté** |
+| Slot | Shadow Haze, Dark Propagation | idem | identique | gardés |
+| Arcanes | Molt + Energize | Concentration (+60 % de Durée pendant 3 s après un sort, CONF) + Molt | F1 / F1 / F1. Energize est la source d'énergie (CONF + DÉD) | Energize gardé ; Molt remplacé par Circumvent à terme |
+| Éclats | 4 Crimson tau + Amber tau (orbes d'énergie) | 3 Crimson tau + Amber (vitesse de lancement) + 1 au choix | F1 / F1 / F1. 274 % contre 200 % | **rejeté** |
+| Focus | Vazarin | Madurai ou Zenurik (relancer Gloom) | F1. À 274 %, rien à relancer | Vazarin |
+| Compagnon | Huras | Shade ou Huras | identique | Huras |
+| Rotation | Reap → Sow → Reap | 2-1-1-1 (Sow puis 3 Reap) | F1 / F1 / F1. 3 sorts au lieu de 4 par pack (DÉD) | F1 |
+
+**Décisions :**
+- **a) Force dès le départ : F1.** À 200 % de départ, Ruby n'a pas de one-shot avant 226 kills de Molt (DÉD). La finale garde 274 % **et** prend de la Portée (145 %), sans dépendre de Molt.
+- **b) Sure Footed : rejeté dans la fiche principale.**
+  - Power Drift donne déjà 30 % de résistance (CONF).
+  - Sure Footed coûte 15 % de Force : il resterait 259 %, soit 1,020 avec 4 Crimson tau. Avec un Crimson tauforgé de moins, on tombe à 0,9999, juste sous le seuil (M33).
+  - Gloom retomberait aussi à 90,6 %.
+  - Adopté seulement en Void Cascade, une fois les 4 Crimson tau posés, ou si les renversements gênent en jeu (pari n°4).
+- **c) Énergie : F1.** Streamline + Energize + Seismic Bond donnent un bilan positif sans dépendre des orbes de vie. Celui de Ruby est à −19,8/s hors Equilibrium (DÉD), d'où son « DO NOT USE outside of Steel Path » (COMM).
+- **d) Gloom figé au lancer : F1.** Le ralentissement suit la Force du lancer (CONF). À 274 %, il est à 95 % dès le départ. Sa méthode (relancer après Molt avec un bonus de Focus) répare un départ à 200 % qu'on n'a pas.
+
+**Les autres builds :**
+- **Build 4 (Void Cascade au level cap)** fait réviser la fiche B sur deux points :
+  - Sure Footed (Primed chez elle) ;
+  - purger les Exolizers avant de combattre près d'eux. Selon elle, un ennemi dans un champ non purgé est immunisé aux compétences et tue au-delà du niveau 2000 (COMM).
+  - Silence et Arcane Trickery (15 % de chance de 30 s d'invisibilité sur un coup de grâce, CONF) relèvent d'un autre archétype : voir le parking.
+- **Build 5, la route Tempest (référence seulement) :** Tempest en slot 3, Durée 20 % (Transient Fortitude rang 7 + Fleeting Expertise), Efficacité 160 %, Portée 190 %, Force 110 %, éclats Émeraude. Le script retrouve ses stats (M32). C'est une variante « barrage court en boucle » ; T23 suppose au contraire une Durée de 155 %.
+
+### 0.3 La fiche finale sans test
+
+**Sevagoth Prime**
+- **Helminth :** Roar (Rhino absorbé) en **slot 4**, à la place d'Exalted Shadow. Le passif Tombstone reste actif (CONF).
+- **Aura :** Brief Respite, sur Aura Forma. **Exilus :** Power Drift.
+- **Mods et polarités :**
+
+| Slot | Mod | Polarité |
+|---|---|---|
+| 1 | Shadow Haze | – (Zenurik conseillé) |
+| 2 | Dark Propagation | – (Zenurik conseillé) |
+| 3 | Umbral Intensify | **Umbra Forma** |
+| 4 | Stretch | Naramon (innée) |
+| 5 | Transient Fortitude | Madurai (innée) |
+| 6 | Primed Continuity | **Madurai Forma** |
+| 7 | Catalyzing Shields | Vazarin (innée) |
+| 8 | Streamline | – |
+
+- **Capacité :** 71/74, **3 Forma** (Aura, Umbra, Madurai) (DÉD, `fit`).
+- **Arcanes :** Arcane Energize (déjà rang max) + **Arcane Circumvent R5**. Tant que la Force sans Molt reste sous 254 %, Molt Augmented prend la place de Circumvent.
+- **Éclats :** 4 × Crimson tauforgé (Force) + 1 × Amber tauforgé (orbes d'énergie +75 %).
+- **Focus :** Vazarin. **Parazon :** Hard Reset.
+- **Stats** (DÉD, M33) :
+  - Force 274 %, Durée 127,5 %, Portée 145 %, Efficacité 130 % (160 % sous Gloom avec 10 stacks de Seismic Bond) ;
+  - 2e Reap **1,080** (1,059 s'il manque un Crimson tauforgé) ; Gloom **95 %** ; Roar ×1,82, 38,3 s ; Sow 23,2 m ; mini-Reap 11,6 m.
+  - **Énergie à 60 kills/min :** +2,89/s (Gloom, 10 stacks) ; −1,46/s (Gloom, 0 stack) ; **+2,66/s Gloom coupé**. Seuil : ~13 kills/min Gloom coupé.
+- **Compagnon : Huras Kubrow.**
+  - Mods : Stalk, Seismic Bond, Enhanced Vitality, Metal Fiber, Medi-Pet Kit, Momentous Bond.
+  - Arme (griffes de bête) : posture Assassin Posture.
+- **Armes :**
+  - Epitaph Prime, ou ta secondaire, avec Secondary Fortifier. C'est l'urgence anti-Overguard, et un vol d'OG probable sur les coups du Tombstone (COMM, v5).
+  - Une mêlée modée, pour le Zariman.
+- **Rotation :**
+  1. Roar → Gloom.
+  2. Par pack : **Reap → Sow → Reap**.
+  3. Eximus : **2 roulades Circumvent** à travers lui, puis un 3e Reap.
+  4. Roar toutes les 38 s.
+  5. **Si la barre d'énergie baisse, couper Gloom** et ne le relancer que sur les gros packs.
+  6. **Ne jamais tirer.**
+- **Après les tests :** si T16 montre que 175 % rapporte nettement plus, remplacer Catalyzing par Augur Reach, ce qui redonne la fiche A v4.
+
+**Version jouable maintenant** (Energize, pas encore d'Helminth) :
+- **Même fiche**, mais le slot 4 garde Exalted Shadow (aucune infusion), et les arcanes sont Energize + **Molt Augmented**.
+- **Sans éclat, la Force est de 214 %** (DÉD). Sans Roar, le nuke ne fait que 0,518 : il faut du Viral. **Avec 1 stack, on passe à 1,035 dès le départ**, puis 1,185 Molt plein.
+  - Amorce : un tir non chargé de l'Epitaph modée Viral, qui touche en zone. Il casse l'invisibilité pendant 7 s (CONF).
+  - C'est la logique du build 3 de Ruby (COMM).
+- **Rotation :** tir Viral sur le pack → Reap → Sow → Reap. Exalted Shadow sert de sortie de secours : 5 s d'invulnérabilité, et le corps devient non ciblable (CONF).
+- **Mods manquants :** Intensify à la place d'Umbral Intensify (−14 % de Force), Continuity à la place de Primed Continuity.
+- **Dès que l'Helminth arrive :** absorber le Rhino, mettre Roar en slot 4 et arrêter l'amorce. Sans éclat, on est à 0,850 au départ, puis one-shot après 167 kills de Molt (DÉD).
+
+**Void Cascade / Zariman, sans bénédiction :**
+- même fiche ;
+- Sure Footed à la place de Power Drift une fois les 4 Crimson tau posés ;
+- couper Gloom avant d'entrer dans un champ d'Exolizer (en Opérateur, le corps devient vulnérable, CONF) ;
+- purger les Exolizers avant de combattre près d'eux (COMM, build 4) ;
+- Entropiques : entrer dans la bulle, 2 roulades Circumvent, puis mêlée (CONF, U44). Si c'est trop long, les ignorer.
+
+### 0.4 Table des paris (du plus risqué au moins risqué)
+
+| # | Hypothèse non testée | Pari pris | Si elle est fausse | Test |
+|---|---|---|---|---|
+| 1 | Le Huras garde l'invisibilité en S2/S3, avec au plus 1 neutralisation par 10 min | Huras, avec Catalyzing en filet | Calculated Redirection, puis Shade. S3 redevient « difficile » | T4 |
+| 2 | Power Drift (30 %) et l'invisibilité suffisent contre les renversements (COMM contraire : Sure Footed dans les 5 builds de Ruby) | Power Drift | Sure Footed : 259 %, 1,020 avec 4 Crimson tau | T4, en observation |
+| 3 | Le Huras tient au moins 9 stacks de Seismic Bond, ce qui rend Gloom permanent rentable | Gloom en combat, coupé si l'énergie baisse | Gloom à la demande ; Seismic Bond remplacé par un mod de survie | T22 |
+| 4 | Circumvent retire l'OG en 2 roulades à tout niveau, sans casser Stalk (CONF pour le retrait, DÉD pour l'invisibilité) | Circumvent à la place de Molt | Molt revient ; plan B Epitaph + Fortifier, visible | T20, après T1 |
+| 5 | 145 % de Portée vaut au moins 100 %, et presque 175 % (COMM, test de Ruby) | 145 % avec Catalyzing | 175 % nettement meilleur : Catalyzing → Augur Reach. Portée inutile : Stretch → Augur Secrets (100 %, 298 %) | T16 |
+| 6 | La mêlée tue les Entropiques de l'intérieur de la bulle | Une mêlée modée | Les ignorer, ou les laisser à l'escouade | T21 |
+| 7 | Roar fait mieux que Tempest + Viral Tempest | Roar | Config C (Tempest, éclats Émeraude) | T23 |
+| 8 | Le drain de Gloom suit l'efficacité (CONF, wiki) | Pas de relance de Gloom | Relancer Gloom à 10 stacks | T22, étape 1 |
+| 9 | La formule du nuke et le seuil de 254,02 % (CONF, recoupé par le calculateur de Ruby) | – | – | déjà validé |
+
+- **Confiance globale (DÉD, estimation) : ≈ 65 %** que la fiche n'ait besoin d'aucun changement après tous les tests. Environ 80 % en S1, 65 % en S2, 45 % en S3.
+- **Les 3 paris les plus susceptibles d'être faux :**
+  - **n°1, la tenue du Huras au-delà du niveau 500** : il prend les dégâts de zone, et rien ne chiffre leur fréquence ;
+  - **n°2, les renversements** : 5 builds sur 5 de l'auteure la plus expérimentée prennent Sure Footed ;
+  - **n°3, les stacks de Seismic Bond** : le +0,55/s de Gloom n'existe qu'à 10 stacks.
+- Aucun de ces trois paris ne casse le one-shot : on corrige par un échange de mod ou une règle de jeu.
+
+### 0.5 Checklist de farm, dans l'ordre
+
+| # | Pièce | Échéance | Où, et à quelle condition | Pour |
+|---|---|---|---|---|
+| 1 | **Molt Augmented** | maintenant | marché (~50 p) | version jouable maintenant |
+| 2 | Mods Viral pour l'Epitaph (Froid + Toxine) | maintenant | ce que tu as | amorce, jusqu'à l'Helminth |
+| 3 | **Crimson normal chez Bird 3** | **avant le lundi 02/11, 00:00 UTC** (puis la semaine du 16/11) | il faut Cavia rang 5 (Illuminate) et 30 000 de réputation (CONF). À sauter si tu n'y as pas accès | Force |
+| 4 | **Helminth : absorber le Rhino, Roar en slot 4** | dès que l'Helminth arrive | – | fin de l'amorce Viral : le plus gros gain |
+| 5 | **Taubound : Crimson tauforgé (375), Amber tauforgé (375)**, Secondary Fortifier ×21 (168, facultatif) | **avant le 17/11** (l'événement ne reviendra pas, CONF) | Praghasa ; 918 Moonflesh, soit 2 à 4,5 h en Steel Path sur Eris (DÉD) | Force, orbes d'énergie, anti-OG |
+| 6 | Huras Kubrow + Seismic Bond (Son, Entrati rang 3) + mods de survie + Assassin Posture | dès que possible | œuf de Kubrow (taux NON TROUVÉ) | invisibilité |
+| 7 | Mods finaux : Stretch, Transient Fortitude, Primed Continuity (Baro), Catalyzing, Streamline, Umbral Intensify, Shadow Haze, Dark Propagation, Brief Respite, Power Drift ; 3 Forma | au fil de l'eau | v1, section H | fiche finale |
+| 8 | Crimson jusqu'à 3 tauforgés + 1 normal (269 %), puis **Arcane Circumvent R5** à la place de Molt | dès que la Force sans Molt dépasse 254 % | marché (~45 p au rang 5, ou 21 × 3 p) | anti-OG |
+| 9 | 4e Crimson tauforgé | Archon Hunt d'Amar, semaines du 09/11 et du 30/11, si tu y as accès | section 4 | marge (1,080) |
+| 10 | Une mêlée modée | avant le Zariman | ta meilleure mêlée | Entropiques |
+
+### 0.6 Parking (idées non évaluées, une ligne chacune)
+- Smite en slot 4 retire 100 % de l'Overguard de sa cible (CONF), mais Roar sort de la fiche. Non évalué.
+- Rest & Rage et Webbed Embrace donneraient (1 + 0,5 × Force) au lieu du (1 + 0,3 × Force) de Roar, mais dans une zone de 5 à 7 m. Non évalué.
+- Build 4 (Silence + Trickery) pour un Void Cascade au-delà du niveau 2000 : autre archétype.
+- Build 5 : Tempest en boucle avec une Durée de 20 %, à ajouter à T23 si la route Viral est un jour testée.
+
+---
+
+## Changelog v5 → v6 (finale)
+
+- **Section 0 ajoutée :** verdict final, comparaison avec les builds de RubyBlossom5, fiche finale sans test, version jouable maintenant, table des paris, checklist de farm.
+- **Fiche finale :** la fiche A v4 avec **Catalyzing à la place d'Augur Reach** (145 %). Force, énergie et one-shot sont inchangés ; on récupère le gating (DÉD, M33).
+- **Arcanes de la finale :** Energize + Circumvent, avec Molt pendant la progression.
+- **Sure Footed :** rejeté dans la fiche principale, adopté en Void Cascade avec 4 Crimson tau.
+- **Les 5 builds de Ruby recalculés** (M32) : leurs stats collent aux captures, y compris Transient Fortitude au rang 7 dans le build 5.
+- Script : sections M32 et M33 ; mods ajoutés : Sure Footed, Primed Sure Footed, Equilibrium, Rapid Resilience, Savage Silence, Viral Tempest et Flow (coût de Flow non trouvé, estimé à 2 + 5 ; il ne joue que sur la capacité du build 3).
 
 ---
 

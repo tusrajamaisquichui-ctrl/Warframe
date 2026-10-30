@@ -438,3 +438,28 @@ CONF : Tempest Barrage pose Corrosif a 100 % ; Emeraude tauforge = +15 % de dega
 | 0 Crimson tau + 4 Emeraude tau | 213 % | 1.652 | 1.600 | 74.5 % | 2.13 |
 A comparer : F1 (Roar, 4 Crimson tau) 1,075 sans aucun Viral, sur tout le rayon de Sow.
 
+## M32. Builds Overframe de RubyBlossom5 recalcules (COMM pour les mods, DED pour les stats)
+| Build | Force sans eclats / avec / Molt plein | Duree | Portee | Efficacite | 2e Reap debut / Molt | kills de Molt -> 1,00 | Gloom au lancer (debut / Molt) | Renversement | capacite |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 Soulless Reaper (Roar en 4) | 155 / 200 / 260 % | 72.5 % | 175 % | 100 % | 0.800 / 1.023 | 226 | 70 / 91 % | 60 % | 74/74 (2 F) |
+| 2 Ravenous Alliance (Roar en 3) | 155 / 200 / 260 % | 72.5 % | 175 % | 100 % | 0.800 / 1.023 | 226 | 70 / 91 % | 60 % | 74/74 (2 F) |
+| 3 Reaper's Bible (sans Helminth) | 144 / 174 / 234 % | 155.0 % | 145 % | 100 % | sans Roar | - | 61 / 82 % | 60 % | 71/74 (3 F) |
+| 4 Comfy Cascade (Silence en 3) | 144 / 144 / 204 % | 155.0 % | 145 % | 100 % | sans Roar | - | 50 / 71 % | 100 % | 71/74 (4 F) |
+| 5 Viral Pillager (Tempest en 3) | 110 / 110 / 170 % | 20.0 % | 190 % | 160 % | sans Roar | - | 38 / 60 % | 60 % | 73/74 (3 F) |
+Build 5 : avec Transient Fortitude au rang 7 (+40 % / -20 %), le script retrouve ses 110 % de Force et 20 % de Duree affiches (DED).
+Energie a 60 kills/min, Gloom permanent, sans Seismic Bond, rotation de Ruby 2-1-1-1 (1 Sow + 3 Reap par pack) :
+  Soulless Reaper, Duree 72,5 % : -19.78/s hors Equilibrium -> il faut 21.6 orbes de vie/min (55 d'energie chacun avec Equilibrium, DED), soit 10.8 Eximus/min (2 orbes garanties, CONF)
+  Soulless Reaper, Concentration toujours active (+60 %) : -13.53/s hors Equilibrium -> il faut 14.8 orbes de vie/min (55 d'energie chacun avec Equilibrium, DED), soit 7.4 Eximus/min (2 orbes garanties, CONF)
+
+## M33. Fiche finale sans test : variantes (arcanes Energize + Circumvent, donc sans Molt)
+| Variante | Exilus | Force (4 Crimson tau) | 2e Reap | Force avec 3 tau + 1 normal -> 2e Reap | Gloom | Duree | Portee | Catalyzing | Energie 60 kpm : 10 stacks / 0 stack / Gloom coupe | seuil kpm (Gloom coupe) | Renversement | capacite |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Fiche finale v6 (145 %)** | Power Drift | 274 % | 1.080 | 269 % -> 1.059 | 95.0 % | 127.5 % | 145 % | oui | +2.89 / -1.46 / +2.66 | ~13 | 30 % | 71/74 (3 F) |
+| Fiche A v4 (175 % b) | Power Drift | 274 % | 1.080 | 269 % -> 1.059 | 95.0 % | 127.5 % | 175 % | non | +2.89 / -1.46 / +2.66 | ~13 | 30 % | 71/74 (3 F) |
+| Fiche finale v6 + Sure Footed | Sure Footed | 259 % | 1.020 | 254 % -> 1.000 | 90.6 % | 127.5 % | 145 % | oui | +2.89 / -1.46 / +2.66 | ~13 | 60 % | 73/74 (3 F) |
+| 175 % b + Sure Footed | Sure Footed | 259 % | 1.020 | 254 % -> 1.000 | 90.6 % | 127.5 % | 175 % | non | +2.89 / -1.46 / +2.66 | ~13 | 60 % | 73/74 (3 F) |
+| Fiche A de base (100 %) | Power Drift | 273 % | 1.075 | 268 % -> 1.055 | 95.0 % | 155.0 % | 100 % | oui | +3.45 / -0.49 / +2.90 | ~10 | 30 % | 72/74 (2 F) |
+| Fiche A de base (100 %) + Sure Footed | Sure Footed | 258 % | 1.016 | 253 % -> 0.996 | 90.3 % | 155.0 % | 100 % | oui | +3.45 / -0.49 / +2.90 | ~10 | 60 % | 74/74 (2 F) |
+Version jouable maintenant (meme mods, sans eclat, sans Helminth donc sans Roar, Molt + Energize) : Force 214 % (Molt plein 274 %). Sans Roar, il faut du Viral : 1 stack -> 1.035 au depart, 1.185 Molt plein ; sans Viral : 0.518.
+Des que Roar arrive (Helminth), sans eclat : 0.850 au depart, one-shot apres 167 kills de Molt.
+
