@@ -321,3 +321,73 @@ Circumvent (CONF, wiki) : une roulade a travers un ennemi a 4 m vole 25 % (rang 
 | S3 9999 | 12,418,720 | 2 / 25 % | 4 | 10,000 | 7 |
 Roulade : pas une attaque d'arme -> ne devrait pas casser Stalk/Ghost (DED depuis la page Ghost, T20). Epitaph : casse l'invisibilite, 7 s.
 
+## M24. Portee 175 % et 190 % : meilleures configs de Force (F1, 4 Crimson tauforges, P5)
+Mini-Reap : rayon 8 m x Portee (CONF) ; detection 30 m fixe (CONF) ; Sow 16 m x Portee. Le rayon de Sow depasse la detection au-dela de 187.5 % (DED).
+Toutes les combinaisons des 5 slots echangeables (Augur Secrets, Intensify, Catalyzing, Primed Continuity, Streamline) avec Stretch, Augur Reach, Transient Fortitude, Overextended (rangs 0 a 5) et l'exilus Power/Cunning Drift ; capacite verifiee. Ne sont gardees que les configs non dominees (Force, energie, Catalyzing). Energie : 10 stacks de Seismic Bond (cf. M25).
+| Config | Portee | Ajoute | Retire | Force debut / Molt | 2e Reap debut | kills Molt -> 1,00 | Duree | Efficacite | Catalyzing | energie 60 kpm (pack constant) | rayon mini-Reap / Sow | capacite |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 100 % : F1 actuel | 100 % | - | - | 273 / 333 % | 1.075 | 0 | 155.0 % | 130 % | oui | +3.45 | 8.0 / 16.0 m | 72/74 (2 F) |
+| 175 % a | 175 % | Stretch, Augur Reach, Transient Fortitude | Augur Secrets, Catalyzing Shields, Primed Continuity | 304 / 364 % | 1.205 | 0 | 72.5 % | 130 % | non | +0.51 | 14.0 / 28.0 m | 70/74 (3 F) |
+| 175 % b | 175 % | Stretch, Augur Reach, Transient Fortitude | Augur Secrets, Intensify, Catalyzing Shields | 274 / 334 % | 1.080 | 0 | 127.5 % | 130 % | non | +2.89 | 14.0 / 28.0 m | 71/74 (3 F) |
+| 175 % c | 175 % | Stretch, Augur Reach, Transient Fortitude | Augur Secrets, Intensify, Primed Continuity | 274 / 334 % | 1.080 | 0 | 72.5 % | 130 % | oui | +0.51 | 14.0 / 28.0 m | 71/74 (2 F) |
+| 175 % d | 175 % | Stretch, Augur Reach | Augur Secrets, Catalyzing Shields | 249 / 309 % | 0.981 | 21 | 155.0 % | 130 % | non | +3.45 | 14.0 / 28.0 m | 74/74 (2 F) |
+| 175 % e | 175 % | Stretch, Augur Reach | Augur Secrets, Primed Continuity | 249 / 309 % | 0.981 | 21 | 100.0 % | 130 % | oui | +2.03 | 14.0 / 28.0 m | 69/74 (2 F) |
+| 175 % f | 175 % | Transient Fortitude, Overextended R4 | Augur Secrets, Intensify | 224 / 284 % | 0.886 | 126 | 127.5 % | 130 % | oui | +2.89 | 14.0 / 28.0 m | 72/74 (3 F) |
+| 175 % g | 175 % | Stretch, Augur Reach | Augur Secrets, Intensify | 219 / 279 % | 0.868 | 146 | 155.0 % | 130 % | oui | +3.45 | 14.0 / 28.0 m | 70/74 (2 F) |
+| 190 % a | 190 % | Stretch, Augur Reach, Transient Fortitude, Cunning Drift | Augur Secrets, Catalyzing Shields, Primed Continuity, Power Drift | 289 / 349 % | 1.141 | 0 | 72.5 % | 130 % | non | +0.51 | 15.2 / 30.4 m | 70/74 (3 F) |
+| 190 % b | 190 % | Stretch, Augur Reach, Transient Fortitude, Cunning Drift | Augur Secrets, Intensify, Catalyzing Shields, Power Drift | 259 / 319 % | 1.020 | 0 | 127.5 % | 130 % | non | +2.89 | 15.2 / 30.4 m | 71/74 (3 F) |
+| 190 % c | 190 % | Stretch, Augur Reach, Transient Fortitude, Cunning Drift | Augur Secrets, Intensify, Primed Continuity, Power Drift | 259 / 319 % | 1.020 | 0 | 72.5 % | 130 % | oui | +0.51 | 15.2 / 30.4 m | 71/74 (2 F) |
+| 190 % d | 190 % | Stretch, Augur Reach, Cunning Drift | Augur Secrets, Catalyzing Shields, Power Drift | 234 / 294 % | 0.923 | 84 | 155.0 % | 130 % | non | +3.45 | 15.2 / 30.4 m | 74/74 (2 F) |
+| 190 % e | 190 % | Stretch, Augur Reach, Cunning Drift | Augur Secrets, Primed Continuity, Power Drift | 234 / 294 % | 0.923 | 84 | 100.0 % | 130 % | oui | +2.03 | 15.2 / 30.4 m | 69/74 (2 F) |
+| 190 % f | 190 % | Transient Fortitude, Overextended | Augur Secrets, Intensify | 214 / 274 % | 0.850 | 167 | 127.5 % | 130 % | oui | +2.89 | 15.2 / 30.4 m | 73/74 (3 F) |
+| 190 % g | 190 % | Stretch, Augur Reach, Cunning Drift | Augur Secrets, Intensify, Power Drift | 204 / 264 % | 0.814 | 209 | 155.0 % | 130 % | oui | +3.45 | 15.2 / 30.4 m | 70/74 (2 F) |
+| 235 % a | 235 % | Stretch, Transient Fortitude, Overextended | Augur Secrets, Catalyzing Shields, Primed Continuity | 244 / 304 % | 0.961 | 42 | 72.5 % | 130 % | non | +0.51 | 18.8 / 37.6 m | 74/74 (2 F) |
+| 235 % b | 235 % | Stretch, Transient Fortitude, Overextended | Augur Secrets, Intensify, Catalyzing Shields | 214 / 274 % | 0.850 | 167 | 127.5 % | 130 % | non | +2.89 | 18.8 / 37.6 m | 70/74 (3 F) |
+| 235 % c | 235 % | Stretch, Transient Fortitude, Overextended | Augur Secrets, Intensify, Primed Continuity | 214 / 274 % | 0.850 | 167 | 72.5 % | 130 % | oui | +0.51 | 18.8 / 37.6 m | 70/74 (3 F) |
+| 235 % d | 235 % | Stretch, Overextended | Augur Secrets, Catalyzing Shields | 189 / 249 % | 0.762 | > 250 | 155.0 % | 130 % | non | +3.45 | 18.8 / 37.6 m | 73/74 (2 F) |
+| 235 % e | 235 % | Stretch, Overextended | Augur Secrets, Primed Continuity | 189 / 249 % | 0.762 | > 250 | 100.0 % | 130 % | oui | +2.03 | 18.8 / 37.6 m | 73/74 (2 F) |
+| 235 % f | 235 % | Stretch, Overextended | Augur Secrets, Intensify | 159 / 219 % | 0.663 | > 250 | 155.0 % | 130 % | oui | +3.45 | 18.8 / 37.6 m | 74/74 (2 F) |
+
+## M25. Seismic Bond reel : stacks et figeage de Gloom (F1 P5, 60 kills/min)
+CONF (wiki Seismic Bond) : +3 %/stack, 12 s par stack, plafond +30 % ; un stack par degat du compagnon pendant une competence canalisee ; Gloom ne compte que s'il draine. CONF (wiki Gloom) : le drain de Gloom suit l'efficacite en continu. v3 supposait +30 % en permanence.
+| Stacks | Efficacite sous Gloom | Gloom permanent (drain dynamique, CONF) | Gloom fige sans stack (hypothese) | Gloom coupe |
+|---|---|---|---|---|
+| 0 | 130 % | -0.49 | -0.49 | +2.90 |
+| 3 | 139 % | +0.69 | +0.26 | +2.90 |
+| 5 | 145 % | +1.48 | +0.75 | +2.90 |
+| 7 | 151 % | +2.27 | +1.25 | +2.90 |
+| 10 | 160 % | +3.45 | +2.00 | +2.90 |
+Seuil : Gloom permanent rapporte plus que Gloom coupe a partir de 9 stacks (DED). Fige sans stack, il ne passe jamais devant (+2.00 au mieux) ; relancer Gloom une fois les stacks montes rend le cas fige identique au cas dynamique.
+
+## M26. Boucle de RubyBlossom5 (Gloom retire, Ombre gardee) contre F1
+CONF : corps invulnerable et non ciblable pendant l'Ombre ; 5 s d'invulnerabilite a l'invocation ; Reunite casse Stalk (Sevagoth reste invisible tant que l'Ombre est sortie) ; 7 s de recharge apres toute invisibilite ; Transference force Reunite ; Death Well : 5 % par ennemi touche par Reap/Sow/DH, sortie a 75 %.
+| Duree d'une boucle (s) | Temps visible apres Reunite (7 s) | Part du temps visible (DED) |
+|---|---|---|
+| 15 | 7 s | 47 % |
+| 20 | 7 s | 35 % |
+| 30 | 7 s | 23 % |
+| 45 | 7 s | 16 % |
+Energie du corps : la boucle lance les memes Sow/Reap/Roar que F1 sans Gloom, donc au mieux le bilan 'Gloom coupe' (+2.90/s) ; les sorts de l'Ombre utilisent sa propre reserve (CONF). F1 Gloom permanent : +3.45/s a 10 stacks, -0.49/s a 0.
+
+## M27. Viral : seuils et sources compatibles avec l'invisibilite
+CONF (wiki Viral) : degats aux PV x(2 + 0,25 x (n - 1)), 10 stacks max, 6 s chacun ; ne s'applique pas tant que l'Overguard tient. CONF (wiki Shadow Haze) : 9 stacks suffisent pour que Sow + 1 Reap tuent avant la vulnerabilite.
+| Stacks Viral | Multiplicateur | Force mini, 2e Reap, avec Roar | sans Roar | 1re detonation seule (sans vulnerabilite) |
+|---|---|---|---|---|
+| 0 | x1.00 | 254.0 % | 600.0 % | non (0.250) |
+| 1 | x2.00 | 104.5 % | 200.0 % | non (0.500) |
+| 2 | x2.25 | 84.0 % | 155.6 % | non (0.562) |
+| 5 | x3.00 | 38.8 % | 66.7 % | non (0.750) |
+| 9 | x4.00 | 0.0 % | 0.0 % | tue (1.000) |
+| 10 | x4.25 | 0.0 % | 0.0 % | tue (1.062) |
+Tempest Barrage + Viral Tempest (Helminth slot 4 a la place de Roar) : delai median avant 1 et 9 stacks (DED, Monte Carlo).
+| Config | Force | Portee | Duree | ennemi au centre : 1 / 9 stacks | a 5 m | a 9 m | part qui atteint 9 stacks (a 9 m) |
+|---|---|---|---|---|---|---|---|
+| 100 %, Force F1 | 273 % | 100 % | 155 % | 0.75 / 3.25 s | 0.75 / 3.25 s | 1.25 / 6.00 s | 93 % |
+| 175 %, Force 219 % | 219 % | 175 % | 155 % | 0.25 / 1.50 s | 0.25 / 1.75 s | 0.50 / 2.75 s | 100 % |
+| 280 %, Force 144 % | 144 % | 280 % | 155 % | 0.25 / 1.50 s | 0.25 / 1.75 s | 0.25 / 2.25 s | 100 % |
+Energie : Tempest 25 par 15.5 s, Roar 75 par 46.5 s -> meme cout par seconde a zone unique (CONF + DED).
+
+## M28. Eximus Entropiques apres les precisions des patch notes U44
+CONF (U44, precisions) : degats non-melee -90 % (Operateur -75 %), bulle cassee ou non ; la bulle empeche les competences de blesser l'Eximus, de l'interieur comme de l'exterieur.
+Nuke F1 sur un Entropique dont la bulle est cassee (DED, si -90 % s'applique au True) : 0.1075 des PV actuels par detonation -> reste 89 % apres 1, 71 % apres 3, 32 % apres 10 detonations.
+

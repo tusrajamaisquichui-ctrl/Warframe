@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sevagoth Prime - modele de theorycraft v3 (patch 44.1.4.1, PS5, 29/10/2026).
+Sevagoth Prime - modele de theorycraft v4 (patch 44.1.4.1, PS5, 30/10/2026).
 
 Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que recopier les sorties.
     python3 sevagoth_model.py                 # rapport complet
@@ -9,11 +9,14 @@ Tout est calcule ici ; le document (sevagoth_prime_theorycraft.md) ne fait que r
 
 Etiquettes : CONF = wiki officiel / patch notes, COMM = communaute, DED = deduit (ce modele),
 TEST = hypothese a mesurer en jeu (voir tests T1..T14 du document).
-v2 : sections M11 a M18 ; v3 : M19 a M23 (portee 100/190/max, Eximus Entropiques, Gloom et Archon Stretch, seuil, Arcane Circumvent).
+v2 : sections M11 a M18 ; v3 : M19 a M23 (portee 100/190/max, Eximus Entropiques, Gloom et Archon Stretch, seuil, Arcane Circumvent) ;
+v4 : M24 a M28 (portee 175/190 optimisee, Seismic Bond reel, boucle de RubyBlossom5, Viral, Entropiques apres U44).
 Forces exprimees en multiplicateurs (2,43 = 243 %).
 """
 import argparse
+import itertools
 import math
+import random
 
 W = "wiki.warframe.com"
 # ---------------------------------------------------------------------------
@@ -1131,6 +1134,197 @@ def circumvent_report():
     o.append("Roulade : pas une attaque d'arme -> ne devrait pas casser Stalk/Ghost (DED depuis la page Ghost, T20). Epitaph : casse l'invisibilite, 7 s.")
     return "\n".join(o)
 
+# ===========================================================================
+# v4 (30/10/2026) : video de RubyBlossom5 (A) et tests Ombre/equipement (B), COMM
+# ===========================================================================
+SWAPPABLE = ["Augur Secrets", "Intensify", "Catalyzing Shields", "Primed Continuity", "Streamline"]
+FIXED_F1 = ["Shadow Haze", "Dark Propagation", "Umbral Intensify"]
+for _r in range(4):   # Overextended aux rangs 0 a 3 : +15 % de Portee et -10 % de Force par rang (CONF, wiki)
+    MODS[f"Overextended R{_r}"] = (6, _r, "V", {"rng": 0.15 * (_r + 1), "str": -0.10 * (_r + 1)})
+POOL_V4 = SWAPPABLE + ["Stretch", "Augur Reach", "Transient Fortitude"] + [f"Overextended R{r}" for r in range(5)] + ["Overextended"]
+SHADOW_DETECT = 30.0   # m, detection des mini-Reap, fixe (CONF, wiki Shadow Haze)
+
+
+def range_configs(target):
+    """Toutes les configs F1 (4 Crimson tauforges) dont la Portee vaut `target`, triees par Force de depart."""
+    out = []
+    base = BUILDS["F1"]["seva"]
+    for combo in itertools.combinations(POOL_V4, 5):
+        if sum(m.startswith("Overextended") for m in combo) > 1:
+            continue
+        for ex in ("Power Drift", "Cunning Drift"):
+            cfg = dict(base)
+            cfg["mods"] = FIXED_F1 + list(combo)
+            cfg["exilus"] = ex
+            st = stats(cfg, SHARDS)
+            if abs(st["rng"] - target) > 1e-6:
+                continue
+            r = fit(cfg)
+            if not r["fits"]:
+                continue
+            out.append((st["str"], cfg, st, r))
+    out.sort(key=lambda x: (-x[0], -x[2]["dur"], -x[2]["eff"]))
+    return out
+
+
+def _row(lab, cfg, st, r):
+    S, R = st["str"], st["rng"]
+    e = tier_energy(cfg, 60, True, 0.75, True, 1.0)
+    k = kills_to(S, threshold_f1())
+    out = [m for m in SWAPPABLE if m not in cfg["mods"]] + (["Power Drift"] if cfg["exilus"] != "Power Drift" else [])
+    inn = [m for m in cfg["mods"] if m not in FIXED_F1 + SWAPPABLE] + (["Cunning Drift"] if cfg["exilus"] == "Cunning Drift" else [])
+    return (f"| {lab} | {R*100:.0f} % | {', '.join(inn) or '-'} | {', '.join(out) or '-'} | {S*100:.0f} / {(S+MOLT)*100:.0f} % | "
+            f"{f1_frac(S):.3f} | {k if k is not None else '> 250'} | {st['dur']*100:.1f} % | {st['eff']*100:.0f} % | "
+            f"{'oui' if st['catalyzing'] else 'non'} | {e:+.2f} | {8*R:.1f} / {16*R:.1f} m | {r['total']}/{r['cap']} ({r['forma']} F) |")
+
+
+def range_v4_report():
+    o = ["## M24. Portee 175 % et 190 % : meilleures configs de Force (F1, 4 Crimson tauforges, P5)"]
+    o.append(f"Mini-Reap : rayon 8 m x Portee (CONF) ; detection {SHADOW_DETECT:.0f} m fixe (CONF) ; Sow 16 m x Portee. "
+             f"Le rayon de Sow depasse la detection au-dela de {SHADOW_DETECT/16*100:.1f} % (DED).")
+    o.append("Toutes les combinaisons des 5 slots echangeables (Augur Secrets, Intensify, Catalyzing, Primed Continuity, Streamline) "
+             "avec Stretch, Augur Reach, Transient Fortitude, Overextended (rangs 0 a 5) et l'exilus Power/Cunning Drift ; capacite verifiee. "
+             "Ne sont gardees que les configs non dominees (Force, energie, Catalyzing). Energie : 10 stacks de Seismic Bond (cf. M25).")
+    o.append("| Config | Portee | Ajoute | Retire | Force debut / Molt | 2e Reap debut | kills Molt -> 1,00 | Duree | Efficacite | Catalyzing | energie 60 kpm (pack constant) | rayon mini-Reap / Sow | capacite |")
+    o.append("|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+    o.append(_row("100 % : F1 actuel", BUILDS["F1"]["seva"], stats(BUILDS["F1"]["seva"], SHARDS), fit(BUILDS["F1"]["seva"])))
+    for tgt in (1.75, 1.90, 2.35):
+        rows = [(S, cfg, st, r, tier_energy(cfg, 60, True, 0.75, True, 1.0)) for S, cfg, st, r in range_configs(tgt)]
+        front = []
+        for x in rows:
+            dominated = any(y[0] >= x[0] - 1e-9 and y[4] >= x[4] - 1e-9 and y[2]["catalyzing"] >= x[2]["catalyzing"]
+                            and (y[0] > x[0] + 1e-9 or y[4] > x[4] + 1e-9 or y[2]["catalyzing"] > x[2]["catalyzing"]) for y in rows)
+            if not dominated and not any(abs(f[0] - x[0]) < 1e-9 and abs(f[4] - x[4]) < 1e-9 and f[2]["catalyzing"] == x[2]["catalyzing"] for f in front):
+                front.append(x)
+        front = [x for x in front if x[4] > 0]
+        for i, (S, cfg, st, r, e) in enumerate(sorted(front, key=lambda x: -x[0])):
+            o.append(_row(f"{tgt*100:.0f} % {chr(97+i)}", cfg, st, r))
+    return "\n".join(o)
+
+
+def seismic_energy(cfg, stacks_eff, mode):
+    """Energie nette (60 kpm, P5) avec Seismic Bond a `stacks_eff` (0 a 0,30).
+    mode 'dyn' : le drain de Gloom suit l'efficacite (CONF, page Gloom) ; 'snap0' : drain fige sans stack ; 'off' : Gloom coupe."""
+    st = stats(cfg, 0)
+    e_cast = st["eff"] + (stacks_eff if mode != "off" else 0)
+    e_drain = st["eff"] + (stacks_eff if mode == "dyn" else 0)
+    cm, cd = max(2 - e_cast, 0.25), max(2 - e_drain, 0.25)
+    packs = 60 / 60 / v("pack_size")
+    cost = packs * (v("sow_cost") + 2 * v("reap_cost")) * cm + v("roar_cost") * cm / (v("roar_dur") * st["dur"])
+    if mode != "off":
+        cost += v("gloom_drain") * 10 * max(cd / st["dur"], 0.25)
+    orbs = 60 / 60 * v("orb_drop")
+    return orbs * v("orb_energy") * 1.75 + energize_rate(orbs) * v("energize") - cost
+
+
+def seismic_report():
+    o = ["## M25. Seismic Bond reel : stacks et figeage de Gloom (F1 P5, 60 kills/min)"]
+    o.append("CONF (wiki Seismic Bond) : +3 %/stack, 12 s par stack, plafond +30 % ; un stack par degat du compagnon pendant une "
+             "competence canalisee ; Gloom ne compte que s'il draine. CONF (wiki Gloom) : le drain de Gloom suit l'efficacite en continu. "
+             "v3 supposait +30 % en permanence.")
+    cfg = BUILDS["F1"]["seva"]
+    off = seismic_energy(cfg, 0, "off")
+    o.append("| Stacks | Efficacite sous Gloom | Gloom permanent (drain dynamique, CONF) | Gloom fige sans stack (hypothese) | Gloom coupe |")
+    o.append("|---|---|---|---|---|")
+    for n in (0, 3, 5, 7, 10):
+        e = 0.03 * n
+        o.append(f"| {n} | {(stats(cfg)['eff']+e)*100:.0f} % | {seismic_energy(cfg, e, 'dyn'):+.2f} | {seismic_energy(cfg, e, 'snap0'):+.2f} | {off:+.2f} |")
+    be = next((n for n in range(11) if seismic_energy(cfg, 0.03 * n, "dyn") >= off), None)
+    o.append(f"Seuil : Gloom permanent rapporte plus que Gloom coupe a partir de {be} stacks (DED). "
+             f"Fige sans stack, il ne passe jamais devant ({seismic_energy(cfg, 0.30, 'snap0'):+.2f} au mieux) ; "
+             "relancer Gloom une fois les stacks montes rend le cas fige identique au cas dynamique.")
+    return "\n".join(o)
+
+
+def ruby_loop_report():
+    o = ["## M26. Boucle de RubyBlossom5 (Gloom retire, Ombre gardee) contre F1"]
+    o.append("CONF : corps invulnerable et non ciblable pendant l'Ombre ; 5 s d'invulnerabilite a l'invocation ; Reunite casse Stalk "
+             "(Sevagoth reste invisible tant que l'Ombre est sortie) ; 7 s de recharge apres toute invisibilite ; "
+             "Transference force Reunite ; Death Well : 5 % par ennemi touche par Reap/Sow/DH, sortie a 75 %.")
+    o.append("| Duree d'une boucle (s) | Temps visible apres Reunite (7 s) | Part du temps visible (DED) |")
+    o.append("|---|---|---|")
+    for T in (15, 20, 30, 45):
+        o.append(f"| {T} | 7 s | {7/T*100:.0f} % |")
+    cfg = BUILDS["F1"]["seva"]
+    o.append(f"Energie du corps : la boucle lance les memes Sow/Reap/Roar que F1 sans Gloom, donc au mieux le bilan 'Gloom coupe' "
+             f"({seismic_energy(cfg, 0, 'off'):+.2f}/s) ; les sorts de l'Ombre utilisent sa propre reserve (CONF). "
+             f"F1 Gloom permanent : {seismic_energy(cfg, 0.30, 'dyn'):+.2f}/s a 10 stacks, {seismic_energy(cfg, 0.0, 'dyn'):+.2f}/s a 0.")
+    return "\n".join(o)
+
+
+def viral_threshold(n, roar=True, first=False):
+    """Force minimale pour un one-shot : 2e Reap (vulnerabilite) ou 1re detonation (sans vulnerabilite)."""
+    V = viral_mult(n)
+    if first:
+        return 0.0 if v("detonate_pct") * V >= 1 else None
+    lo, hi = 0.0, 6.0
+    f = (lambda S: frac(v("reap_vuln") * S, roar_mult(S) if roar else 1.0, n))
+    if f(hi) < 1:
+        return None
+    for _ in range(80):
+        mid = (lo + hi) / 2
+        lo, hi = (lo, mid) if f(mid) >= 1 else (mid, hi)
+    return hi
+
+
+def tempest_sim(S, R, dur, r_pos, trials=4000, seed=7):
+    """Monte Carlo (DED) : stacks Viral d'un ennemi immobile a r_pos m du centre d'un Tempest Barrage.
+    CONF : 4 missiles/s, zone de 10 m (fixe), explosion 5 m x Portee, Viral Tempest R3 : 100 % x Force par missile,
+    Viral 6 s par stack. NON TROUVE : repartition des impacts (supposee uniforme dans le disque)."""
+    rnd = random.Random(seed)
+    T, rexp, dt = 10 * dur, 5 * R, 0.25
+    t1, t9 = [], []
+    for _ in range(trials):
+        stacks, a1, a9, t = [], None, None, 0.0
+        while t < T:
+            t += dt
+            ang, rad = rnd.random() * 2 * math.pi, 10 * math.sqrt(rnd.random())
+            x, y = rad * math.cos(ang) - r_pos, rad * math.sin(ang)
+            if x * x + y * y <= rexp * rexp:
+                k = int(S) + (1 if rnd.random() < S - int(S) else 0)
+                stacks += [t] * k
+            stacks = [s for s in stacks if t - s < 6.0][-10:]
+            if a1 is None and len(stacks) >= 1:
+                a1 = t
+            if a9 is None and len(stacks) >= 9:
+                a9 = t
+        t1.append(a1 if a1 is not None else float("inf"))
+        t9.append(a9 if a9 is not None else float("inf"))
+    med = lambda xs: sorted(xs)[len(xs) // 2]
+    return med(t1), med(t9), sum(x < float("inf") for x in t9) / trials
+
+
+def viral_report():
+    o = ["## M27. Viral : seuils et sources compatibles avec l'invisibilite"]
+    o.append("CONF (wiki Viral) : degats aux PV x(2 + 0,25 x (n - 1)), 10 stacks max, 6 s chacun ; ne s'applique pas tant que l'Overguard tient. "
+             "CONF (wiki Shadow Haze) : 9 stacks suffisent pour que Sow + 1 Reap tuent avant la vulnerabilite.")
+    o.append("| Stacks Viral | Multiplicateur | Force mini, 2e Reap, avec Roar | sans Roar | 1re detonation seule (sans vulnerabilite) |")
+    o.append("|---|---|---|---|---|")
+    for n in (0, 1, 2, 5, 9, 10):
+        a, b, c = viral_threshold(n, True), viral_threshold(n, False), viral_threshold(n, first=True)
+        o.append(f"| {n} | x{viral_mult(n):.2f} | {a*100:.1f} % | {b*100:.1f} % | {'tue (' + format(v('detonate_pct')*viral_mult(n), '.3f') + ')' if c is not None else 'non (' + format(v('detonate_pct')*viral_mult(n), '.3f') + ')'} |")
+    o.append("Tempest Barrage + Viral Tempest (Helminth slot 4 a la place de Roar) : delai median avant 1 et 9 stacks (DED, Monte Carlo).")
+    o.append("| Config | Force | Portee | Duree | ennemi au centre : 1 / 9 stacks | a 5 m | a 9 m | part qui atteint 9 stacks (a 9 m) |")
+    o.append("|---|---|---|---|---|---|---|---|")
+    for lab, S, R, D in (("100 %, Force F1", 2.73, 1.0, 1.55), ("175 %, Force 219 %", 2.19, 1.75, 1.55), ("280 %, Force 144 %", 1.44, 2.80, 1.55)):
+        c = [tempest_sim(S, R, D, rp) for rp in (0.0, 5.0, 9.0)]
+        o.append(f"| {lab} | {S*100:.0f} % | {R*100:.0f} % | {D*100:.0f} % | {c[0][0]:.2f} / {c[0][1]:.2f} s | {c[1][0]:.2f} / {c[1][1]:.2f} s | "
+                 f"{c[2][0]:.2f} / {c[2][1]:.2f} s | {c[2][2]*100:.0f} % |")
+    o.append(f"Energie : Tempest 25 par {10*1.55:.1f} s, Roar 75 par {30*1.55:.1f} s -> meme cout par seconde a zone unique (CONF + DED).")
+    return "\n".join(o)
+
+
+def entropic_v4_report():
+    o = ["## M28. Eximus Entropiques apres les precisions des patch notes U44"]
+    o.append("CONF (U44, precisions) : degats non-melee -90 % (Operateur -75 %), bulle cassee ou non ; la bulle empeche les competences "
+             "de blesser l'Eximus, de l'interieur comme de l'exterieur.")
+    S = SHARDS + stats(BUILDS["F1"]["seva"])["str"]
+    f = f1_frac(S)
+    rem = [(1 - 0.10 * f) ** k for k in (1, 3, 10)]
+    o.append(f"Nuke F1 sur un Entropique dont la bulle est cassee (DED, si -90 % s'applique au True) : {0.10*f:.4f} des PV actuels par "
+             f"detonation -> reste {rem[0]*100:.0f} % apres 1, {rem[1]*100:.0f} % apres 3, {rem[2]*100:.0f} % apres 10 detonations.")
+    return "\n".join(o)
+
 
 SECTIONS = {"summary": summary_report, "capacity": capacity_report, "nuke": nuke_report, "eximus": eximus_report,
             "claws": claws_report, "survival": survival_report, "energy": energy_report, "well": well_report,
@@ -1138,7 +1332,8 @@ SECTIONS = {"summary": summary_report, "capacity": capacity_report, "nuke": nuke
             "shards": shards_report, "tau": tau_sources_report, "range": range_report, "tiers": tiers_report,
             "huras": huras_report, "taubound": taubound_report, "blast": blast_report,
             "range3": range_v3_report, "entropic": entropic_report, "gloom": gloom_report, "seuil": threshold_v3_report,
-            "circumvent": circumvent_report}
+            "circumvent": circumvent_report, "range4": range_v4_report, "seismic": seismic_report,
+            "ruby": ruby_loop_report, "viral": viral_report, "entropic4": entropic_v4_report}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
